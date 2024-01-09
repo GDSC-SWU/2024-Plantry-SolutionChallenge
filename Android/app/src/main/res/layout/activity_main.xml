@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/white1"
         tools:context=".MainActivity">
 
         <androidx.fragment.app.FragmentContainerView
@@ -63,6 +63,8 @@
             app:itemPaddingBottom="8dp"
             app:itemPaddingTop="6dp"
             app:itemRippleColor="@null"
+            app:itemTextAppearanceActive="@style/TextAppearance.Plantry.Navigation1"
+            app:itemTextAppearanceInactive="@style/TextAppearance.Plantry.Navigation2"
             app:itemTextColor="@drawable/selector_navigation_text"
             app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"

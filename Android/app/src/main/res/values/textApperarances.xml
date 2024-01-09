@@ -8,24 +8,69 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
-    <style name="TextAppearance.Plantry.Title">
+    <style name="TextAppearance.Plantry.Heding1">
         <item name="fontFamily">@font/font_roboto_bold</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">24sp</item>
     </style>
 
-    <style name="TextAppearance.Plantry.SubTitle">
-        <item name="fontFamily">@font/font_roboto_medium</item>
+    <style name="TextAppearance.Plantry.Heding2">
+        <item name="fontFamily">@font/font_roboto_bold</item>
         <item name="android:textSize">22sp</item>
     </style>
 
-    <style name="TextAppearance.Plantry.Content">
+    <style name="TextAppearance.Plantry.Heding3">
         <item name="fontFamily">@font/font_roboto_medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="lineHeight">24dp</item>
+    </style>
+
+    <style name="TextAppearance.Plantry.Button1">
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TextAppearance.Plantry.Button2">
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextAppearance.Plantry.Body1">
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="TextAppearance.Plantry.Body2">
+        <item name="fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextAppearance.Plantry.Body4">
+        <item name="fontFamily">@font/roboto_bold</item>
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="TextAppearance.Plantry.Detail">
-        <item name="fontFamily">@font/font_roboto_regular</item>
+    <style name="TextAppearance.Plantry.Body5">
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextAppearance.Plantry.Body6">
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextAppearance.Plantry.Caption">
+        <item name="fontFamily">@font/roboto_regular</item>
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="TextAppearance.Plantry.Navigation1">
+        <item name="fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextAppearance.Plantry.Navigation2">
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">12sp</item>
+    </style>
 </resources>
