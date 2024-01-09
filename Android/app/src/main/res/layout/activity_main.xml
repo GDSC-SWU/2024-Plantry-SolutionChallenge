@@ -15,19 +15,20 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fcv_main_container"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:defaultNavHost="true"
             app:layout_constraintBottom_toTopOf="@id/bnv_main_navigation"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:navGraph="@navigation/main_navigation"  />
+            app:navGraph="@navigation/main_navigation" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="25dp"
-            android:elevation="10dp"
             android:background="@drawable/shadow_bnv_5"
+            android:elevation="10dp"
             app:layout_constraintBottom_toTopOf="@id/bnv_main_navigation"
             app:layout_constraintEnd_toEndOf="@id/bnv_main_navigation"
             app:layout_constraintStart_toStartOf="@id/bnv_main_navigation" />
