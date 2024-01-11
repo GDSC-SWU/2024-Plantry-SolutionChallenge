@@ -36,9 +36,13 @@ public class User {
     private LocalDateTime createdAt;
 
     @Builder
-    public User(@NotNull String email, String nickname, String profileImagePath, String deviceToken) {
+    public User(@NotNull String email, String nickname, String profileImagePath) {
         this.email = email;
         this.nickname = nickname;
+        this.profileImagePath = profileImagePath;
+    }
+
+    public void updateUser(String profileImagePath, String deviceToken) {
         this.profileImagePath = profileImagePath;
         this.deviceToken = deviceToken;
     }
