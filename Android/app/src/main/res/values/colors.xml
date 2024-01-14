@@ -6,6 +6,10 @@
     <color name="gray3">#ACACAC</color>
     <color name="gray4">#F8F7F3</color>
 
+    <color name="system_gray">#BFBFBF</color>
+    <color name="shadow">#0D222222</color>
+    <color name="popup_background">#80222222</color>
+
     <color name="white1">#FFFFFF</color>
     <color name="white2">#F7F8FA</color>
 
