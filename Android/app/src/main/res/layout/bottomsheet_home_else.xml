@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/v_home_bottom_sheet_top_line"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginHorizontal="147dp"
+            android:layout_marginTop="11dp"
+            android:background="@drawable/shape_fill_system_gray_4_rec"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_home_bottom_sheet_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:drawableStart="@drawable/ic_home_popup_edit"
+            android:drawablePadding="17dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="24dp"
+            android:text="@string/home_bottom_sheet_edit"
+            android:textAppearance="@style/TextAppearance.Plantry.Body6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/v_home_bottom_sheet_top_line" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="56dp"
+            android:background="@color/line1"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_bottom_sheet_edit" />
+
+         <TextView
+            android:id="@+id/tv_home_bottom_sheet_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_home_popup_delete"
+            android:drawablePadding="17dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="24dp"
+            android:text="@string/home_bottom_sheet_delete"
+            android:textAppearance="@style/TextAppearance.Plantry.Body6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_bottom_sheet_edit" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="56dp"
+            android:background="@color/line1"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_bottom_sheet_delete" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginHorizontal="147dp"
+            android:layout_marginVertical="9dp"
+            android:background="@drawable/shape_fill_system_gray_4_rec"
+            android:backgroundTint="@color/primary_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_bottom_sheet_delete" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
