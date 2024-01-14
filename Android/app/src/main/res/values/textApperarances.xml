@@ -4,7 +4,7 @@
     <style name="TextAppearance.Plantry" parent="">
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/dark</item>
-        <item name="android:textAllCaps">false</item>
+        <item name="textAllCaps">false</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
@@ -41,6 +41,10 @@
 
     <style name="TextAppearance.Plantry.Body2">
         <item name="fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="TextAppearance.Plantry.Body3">
+        <item name="fontFamily">@font/roboto_medium</item>
         <item name="android:textSize">18sp</item>
     </style>
 
