@@ -21,7 +21,7 @@
     <color name="line1">#F1F1F1</color>
     <color name="line2">#D1D1D1</color>
 
-    <color name="highlight_readday">#FF6259</color>
+    <color name="highlight_redday">#FF6259</color>
     <color name="highlight_orangedday">#FF9500</color>
 
     <color name="error_color">#D92D20</color>
@@ -32,4 +32,5 @@
     <color name="cover_green">#A2E5B3</color>
     <color name="cover_blue">#8AC2FF</color>
     <color name="cover_purple">#DAAFF0</color>
+    <color name="white3">#FCFCFF</color>
 </resources>
