@@ -1,9 +1,60 @@
 <resources>
     <string name="app_name">Plantry</string>
+
     <string name="menu_home">Home</string>
     <string name="menu_community">Community</string>
     <string name="menu_add_food">Add Foods</string>
     <string name="menu_store">Store</string>
     <string name="menu_profile">Profile</string>
+
     <string name="signin_google_login">Sign In with Google</string>
+
+    <string name="home_sub_title">Your Plantry</string>
+
+    <string name="home_item_add_pantry">Add Pantry</string>
+    <string name="home_item_pantry_name">pantry name</string>
+
+    <string name="home_plus_popup_title">Cover</string>
+    <string name="home_plus_popup_subtitle">Show your Pantry Cover!</string>
+    <string name="home_plus_popup_cover_title">Title</string>
+    <string name="home_plus_popup_pantry_name">Pantry’s Name (0/12)</string>
+    <string name="home_plus_popup_cover_color">Cover Color</string>
+    <string name="home_plus_popup_error_message2">Please write another name because is already used.</string>
+    <string name="home_plus_popup_error_message1">Please write within 12 letters!</string>
+
+    <string name="popup_button_delete">Delete</string>
+    <string name="popup_button_cancle">Cancel</string>
+    <string name="popup_button_confirm">Confirm</string>
+
+    <string name="home_delete_popup_subtitle">This action cannot be undone.</string>
+    <string name="home_delete_popup_title">Delete Pantry</string>
+
+    <string name="home_bottom_sheet_edit">Edit</string>
+    <string name="home_bottom_sheet_delete">Delete</string>
+
+    <string name="home_pantry_name">Pantry Name</string>
+    <string name="home_pantry_search">Search</string>
+
+    <string name="home_pantry_item_d_day_expired">Expired</string>
+    <string name="home_pantry_item_d_day_text">D-day (2)</string>
+    <string name="home_pantry_item_content_food_name">food_name</string>
+    <string name="home_pantry_item_content_sell_by_date">Sell-by Date</string>
+    <string name="home_pantry_item_content_use_by_date">Use-by Date</string>
+    <string name="home_pantry_item_content_d_day">D+21</string>
+    <string name="home_pantry_item_content_food_img">🪸</string>
+    <string name="home_pantry_item_content_count">1</string>
+
+    <string name="home_bottom_sheet_alarm_title">Deadline Alarm (Can be duplicated)</string>
+    <string name="home_bottomsheet_alarm_deadline">Alarm at Deadline (9 A.M)</string>
+    <string name="home_bottom_sheet_alarm_one">Alarm 1 days ago</string>
+    <string name="home_bottom_sheet_alarm_three">Alarm 3 days ago</string>
+    <string name="home_bottom_sheet_alarm_seven">Alarm 7 days ago</string>
+
+    <string name="home_pantry_all">All</string>
+    <string name="home_pantry_cold">Cold</string>
+    <string name="home_pantry_freeze">Freeze</string>
+    <string name="home_pantry_etc">etc</string>
+
+    <string name="home_pantry_empty_fill_ingrefients">"There's no food in your pantry.\n Please fill the pantry with <font color="#828282">Your Ingredients!"</font></string>
+    <string name="home_pantry_empty_add_food">Going to Add Foods</string>
 </resources>
