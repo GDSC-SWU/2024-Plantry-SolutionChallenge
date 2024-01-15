@@ -1,7 +1,9 @@
 package com.plantry.presentation.home.ui
 
+import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.DialogFragment.STYLE_NO_TITLE
+import androidx.navigation.fragment.findNavController
 import com.plantry.R
 import com.plantry.coreui.base.BindingFragment
 import com.plantry.data.dto.ResponseHomeDto
@@ -35,15 +37,21 @@ class FragmentHome : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             override fun onClick(view: View, position: Int) {
                 when (view.id) {
                     R.id.cl_home_item_layout -> {
-                        if(position.equals(list.size -1)){
+                        if (position.equals(list.size - 1)) {
                             val pantryPlusPopUp = HomePlusPopUp()
-                            pantryPlusPopUp.setStyle(STYLE_NO_TITLE, R.style.Theme_Plantry_AlertDialog)
+                            pantryPlusPopUp.setStyle(
+                                STYLE_NO_TITLE,
+                                R.style.Theme_Plantry_AlertDialog
+                            )
                             pantryPlusPopUp.show(parentFragmentManager, POP_UP)
-                        }
-                        else{
-                            // 일반 pantry 화면 넘어가는 로직
+                        } else {
+                            arguments = Bundle().apply {
+                                putString("pantry_name", list[position].name)
+                            }
+                            findNavController().navigate(R.id.action_home_to_home_pantry, arguments)
                         }
                     }
+
                     R.id.iv_home_item_else -> {
                         val editAndDeleteBottomsheet = HomeElseBottomSheet()
                         editAndDeleteBottomsheet.show(parentFragmentManager, BOTTOM_SHEET)

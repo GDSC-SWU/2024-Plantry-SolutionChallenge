@@ -7,7 +7,19 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.plantry.presentation.home.ui.FragmentHome"
-        android:label="HomeFragment" />
+        android:label="HomeFragment">
+        <action
+            android:id="@+id/action_home_to_home_pantry"
+            app:destination="@id/detail_home_pantry" />
+    </fragment>
+    <fragment
+        android:id="@+id/detail_home_pantry"
+        android:name="com.plantry.presentation.home.ui.FragmentHomePantry"
+        android:label="HomePantryFragment">
+        <action
+            android:id="@+id/action_home_pantry_to_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_community"
         android:name="com.plantry.presentation.community.FragmentCommunity"
