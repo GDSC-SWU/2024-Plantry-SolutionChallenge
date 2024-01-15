@@ -46,6 +46,7 @@
             android:id="@+id/rcv_home_pantry_item_d_day_content_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/v_home_pantry_item_d_day_background"
             tools:listitem="@layout/item_home_pantry_content"
