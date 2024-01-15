@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.plantry.presentation.home.FragmentHome"
+        android:name="com.plantry.presentation.home.ui.FragmentHome"
         android:label="HomeFragment" />
     <fragment
         android:id="@+id/navigation_community"
