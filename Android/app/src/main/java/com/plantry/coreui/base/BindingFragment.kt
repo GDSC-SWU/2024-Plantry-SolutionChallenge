@@ -8,6 +8,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.plantry.MainActivity
 
 
 // 의존성 분리를 위한 interface 선언
@@ -19,6 +20,8 @@ abstract class BindingFragment<T : ViewDataBinding>(
         get() = requireNotNull(_binding) {
 
         }
+
+    protected open var bnvVisibility = View.VISIBLE
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,9 +36,18 @@ abstract class BindingFragment<T : ViewDataBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        setBnvVisibility()
     }
 
     protected abstract fun initView()
+
+    private fun setBnvVisibility(){
+        if (activity is MainActivity) {
+            val  mainActivity = activity as MainActivity
+            mainActivity.setBottomNavigationVisibility(bnvVisibility)
+        }
+    }
+
 
     override fun onDestroyView() {
         _binding = null
