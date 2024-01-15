@@ -3,7 +3,7 @@
     <style name="Theme.Plantry" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary_color</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/white1</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/green1</item>
         <item name="colorSecondaryVariant">@color/gray1</item>
@@ -13,7 +13,21 @@
     </style>
 
     <style name="Theme.Toolbar" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/white</item>
-        <item name="android:windowBackground">@color/white</item>
+        <item name="colorPrimary">@color/white1</item>
+        <item name="android:windowBackground">@color/white1</item>
     </style>
+
+    <style name="Theme.Plantry.AlertDialog">
+        <!-- 꽉 채운 화면에 배경 없이 custom view 영역만 보이게 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+
+        <!-- Dim 처리 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:colorBackground">?attr/colorBackgroundFloating</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+
+        <!-- Dialog 가 센터에 나오게 -->
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
 </resources>
