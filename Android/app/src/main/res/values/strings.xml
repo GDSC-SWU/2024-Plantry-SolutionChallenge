@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Plantry</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_community">Community</string>
+    <string name="menu_add_food">Add Foods</string>
+    <string name="menu_store">Store</string>
+    <string name="menu_profile">Profile</string>
+    <string name="signin_google_login">Sign In with Google</string>
+</resources>
