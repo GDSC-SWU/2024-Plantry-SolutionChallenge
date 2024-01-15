@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data></data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/v_home_pantry_item_d_day_background"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white2"
+            app:layout_constraintBottom_toTopOf="@id/rcv_home_pantry_item_d_day_content_list"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_home_pantry_item_d_day_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="19dp"
+            android:layout_marginStart="18dp"
+            android:background="@drawable/shape_fill_highlight_redday_oval"
+            android:padding="5dp"
+            app:layout_constraintBottom_toBottomOf="@id/v_home_pantry_item_d_day_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/v_home_pantry_item_d_day_background" />
+
+        <TextView
+            android:id="@+id/tv_home_pantry_item_d_day_day"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:textAppearance="@style/TextAppearance.Plantry.Body5"
+            app:layout_constraintBottom_toBottomOf="@id/iv_home_pantry_item_d_day_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_home_pantry_item_d_day_color"
+            app:layout_constraintTop_toTopOf="@id/iv_home_pantry_item_d_day_color"
+            tools:text="@string/home_pantry_item_d_day_text" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_home_pantry_item_d_day_content_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/v_home_pantry_item_d_day_background"
+            tools:listitem="@layout/item_home_pantry_content"
+            tools:itemCount="2"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

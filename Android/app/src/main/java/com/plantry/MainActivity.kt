@@ -27,6 +27,14 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         }
     }
 
+
+    // 바텀 네비게이션 가리기
+    fun setBottomNavigationVisibility(visibility: Int) {
+        binding.bnvMainNavigation.visibility = visibility
+        binding.ivMainPlus.visibility = visibility
+        binding.ivMainPlusBg.visibility = visibility
+    }
+
     // 라이트 모드로만 제공하기 위한 함수
     private fun setDarkMode() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)

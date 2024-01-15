@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="dark">#222222</color>
-    <color name="gray1">#828282</color>
-    <color name="gray2">#ACACAC</color>
-    <color name="gray3">#F8F7F3</color>
-    <color name="white">#FFFFFF</color>
+    <color name="gray1">#74777F</color>
+    <color name="gray2">#828282</color>
+    <color name="gray3">#ACACAC</color>
+    <color name="gray4">#F8F7F3</color>
+
+    <color name="system_gray">#BFBFBF</color>
+    <color name="shadow">#0D222222</color>
+    <color name="popup_background">#80222222</color>
+
+    <color name="white1">#FFFFFF</color>
+    <color name="white2">#F7F8FA</color>
 
     <color name="primary_color">#203A40</color>
     <color name="green1">#304D30</color>
     <color name="green2">#B6C4B6</color>
     <color name="green3">#EEF0E5</color>
-    <color name="point_color">#F0FEB3</color>
+
+    <color name="line1">#F1F1F1</color>
+    <color name="line2">#D1D1D1</color>
+
+    <color name="highlight_redday">#FF6259</color>
+    <color name="highlight_orangedday">#FF9500</color>
+
     <color name="error_color">#D92D20</color>
 
     <color name="cover_red">#FFA5A0</color>
@@ -19,4 +32,5 @@
     <color name="cover_green">#A2E5B3</color>
     <color name="cover_blue">#8AC2FF</color>
     <color name="cover_purple">#DAAFF0</color>
+    <color name="white3">#FCFCFF</color>
 </resources>

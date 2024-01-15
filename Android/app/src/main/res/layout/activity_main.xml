@@ -10,24 +10,25 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/white1"
         tools:context=".MainActivity">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fcv_main_container"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:defaultNavHost="true"
             app:layout_constraintBottom_toTopOf="@id/bnv_main_navigation"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:navGraph="@navigation/main_navigation"  />
+            app:navGraph="@navigation/main_navigation" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="25dp"
-            android:elevation="10dp"
             android:background="@drawable/shadow_bnv_5"
+            android:elevation="10dp"
             app:layout_constraintBottom_toTopOf="@id/bnv_main_navigation"
             app:layout_constraintEnd_toEndOf="@id/bnv_main_navigation"
             app:layout_constraintStart_toStartOf="@id/bnv_main_navigation" />
@@ -63,6 +64,8 @@
             app:itemPaddingBottom="8dp"
             app:itemPaddingTop="6dp"
             app:itemRippleColor="@null"
+            app:itemTextAppearanceActive="@style/TextAppearance.Plantry.Navigation1"
+            app:itemTextAppearanceInactive="@style/TextAppearance.Plantry.Navigation2"
             app:itemTextColor="@drawable/selector_navigation_text"
             app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"
