@@ -181,4 +181,38 @@ class PantryControllerTest {
         assertThat(foundPantry.getTitle()).as("Data update failed.").isEqualTo(updatedTitle);
         assertThat(foundPantry.getUpdatedAt()).as("Data update failed.").isNotNull();
     }
+
+    @Test
+    @DisplayName("Set pantry marked <201>")
+    void setPantryMarked_201() throws Exception {
+        // given
+        String title = "new_pantry";
+        Long pantryId = pantryRepository.save(new Pantry(RandomUtil.getUuid())).getId();
+        userPantryRepository.save(
+                UserPantry.builder()
+                        .user(user)
+                        .pantryId(pantryId)
+                        .title(title)
+                        .color(COLOR)
+                        .build()
+        );
+
+        // when
+        ResultActions resultActions = mockMvc.perform(patch(PANTRY_API_URL + "/mark")
+                .header("Authorization", "Bearer " + accessToken)
+                .param("id", String.valueOf(pantryId)));
+
+        // then
+        resultActions
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.data.id").value(pantryId))
+                .andExpect(jsonPath("$.data.isMarked").value(true))
+                .andDo(print());
+
+        UserPantry foundPantry = userPantryRepository.findByPantryId(pantryId)
+                .orElseThrow(() -> new Exception("null"));
+
+        assertThat(foundPantry.getIsMarked()).as("Data update failed.").isTrue();
+        assertThat(foundPantry.getUpdatedAt()).as("Data update failed.").isNotNull();
+    }
 }
