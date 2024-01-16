@@ -6,6 +6,7 @@ import com.gdscplantry.plantry.domain.Pantry.domain.PantryRepository;
 import com.gdscplantry.plantry.domain.Pantry.domain.UserPantry;
 import com.gdscplantry.plantry.domain.Pantry.domain.UserPantryRepository;
 import com.gdscplantry.plantry.domain.Pantry.dto.NewPantryReqDto;
+import com.gdscplantry.plantry.domain.Pantry.dto.UpdatePantryReqDto;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.domain.User.domain.UserRepository;
 import com.gdscplantry.plantry.domain.model.JwtVo;
@@ -25,8 +26,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -57,6 +58,7 @@ class PantryControllerTest {
     final String PANTRY_API_URL = "/api/v1/pantry";
     final String EMAIL = "test@test.com";
     final String NICKNAME = "test_name";
+    final String COLOR = "A2E5B3";
 
     User user;
     String accessToken;
@@ -89,7 +91,6 @@ class PantryControllerTest {
     @DisplayName("Read pantry list")
     void readPantryList_200() throws Exception {
         // given
-        String color = "A2E5B3";
         String[] titles = {"pantry1", "pantry2", "pantry3"};
         Long[] pantries = new Long[3];
 
@@ -100,7 +101,7 @@ class PantryControllerTest {
                             .user(user)
                             .pantryId(pantries[i])
                             .title(titles[i])
-                            .color(color)
+                            .color(COLOR)
                             .build()
             );
         }
@@ -115,7 +116,7 @@ class PantryControllerTest {
                 .andExpect(jsonPath("$.data.result").exists())
                 .andExpect(jsonPath("$.data.result[0].id").value(pantries[0]))
                 .andExpect(jsonPath("$.data.result[0].title").value(titles[0]))
-                .andExpect(jsonPath("$.data.result[0].color").value(color))
+                .andExpect(jsonPath("$.data.result[0].color").value(COLOR))
                 .andExpect(jsonPath("$.data.result[0].isMarked").value(false))
                 .andDo(print());
     }
@@ -125,8 +126,7 @@ class PantryControllerTest {
     void addNewPantry_201() throws Exception {
         // given
         String title = "new_pantry";
-        String color = "A2E5B3";
-        NewPantryReqDto newPantryReqDto = new NewPantryReqDto(title, color);
+        NewPantryReqDto newPantryReqDto = new NewPantryReqDto(title, COLOR);
 
         // when
         ResultActions resultActions = mockMvc.perform(post(PANTRY_API_URL)
@@ -139,8 +139,46 @@ class PantryControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.data.pantryId").exists())
                 .andExpect(jsonPath("$.data.title").value(title))
-                .andExpect(jsonPath("$.data.color").value(color))
+                .andExpect(jsonPath("$.data.color").value(COLOR))
                 .andDo(print());
     }
 
+    @Test
+    @DisplayName("Update pantry <201>")
+    void updatePantry_201() throws Exception {
+        // given
+        String title = "new_pantry";
+        String updatedTitle = "old_pantry";
+        Long pantryId = pantryRepository.save(new Pantry(RandomUtil.getUuid())).getId();
+        userPantryRepository.save(
+                UserPantry.builder()
+                        .user(user)
+                        .pantryId(pantryId)
+                        .title(title)
+                        .color(COLOR)
+                        .build()
+        );
+        UpdatePantryReqDto updatePantryReqDto = new UpdatePantryReqDto(updatedTitle, COLOR);
+
+        // when
+        ResultActions resultActions = mockMvc.perform(patch(PANTRY_API_URL)
+                .header("Authorization", "Bearer " + accessToken)
+                .param("id", String.valueOf(pantryId))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(updatePantryReqDto)));
+
+        // then
+        resultActions
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.data.pantryId").exists())
+                .andExpect(jsonPath("$.data.title").value(updatedTitle))
+                .andExpect(jsonPath("$.data.color").value(COLOR))
+                .andDo(print());
+
+        UserPantry foundPantry = userPantryRepository.findByPantryId(pantryId)
+                .orElseThrow(() -> new Exception("null"));
+
+        assertThat(foundPantry.getTitle()).as("Data update failed.").isEqualTo(updatedTitle);
+        assertThat(foundPantry.getUpdatedAt()).as("Data update failed.").isNotNull();
+    }
 }
