@@ -1,6 +1,6 @@
 package com.gdscplantry.plantry.domain.Pantry.domain;
 
-import com.gdscplantry.plantry.domain.Pantry.dto.UpdatePantryReqDto;
+import com.gdscplantry.plantry.domain.Pantry.dto.pantry.UpdatePantryReqDto;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import jakarta.persistence.*;
 import lombok.Builder;

@@ -1,6 +1,6 @@
 package com.gdscplantry.plantry.domain.Pantry.controller;
 
-import com.gdscplantry.plantry.domain.Pantry.dto.*;
+import com.gdscplantry.plantry.domain.Pantry.dto.pantry.*;
 import com.gdscplantry.plantry.domain.Pantry.service.PantryService;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.global.common.DataResponseDto;
