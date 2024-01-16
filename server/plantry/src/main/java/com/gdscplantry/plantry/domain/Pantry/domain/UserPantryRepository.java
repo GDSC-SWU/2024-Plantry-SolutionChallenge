@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Repository
 public interface UserPantryRepository extends JpaRepository<UserPantry, Long> {
@@ -15,4 +16,6 @@ public interface UserPantryRepository extends JpaRepository<UserPantry, Long> {
             "where up.user = :user " +
             "order by up.isMarked desc, up.title asc")
     ArrayList<PantryListItemDto> findAllByUserWithJPQL(User user);
+
+    Optional<UserPantry> findByPantryId(Long pantryId);
 }
