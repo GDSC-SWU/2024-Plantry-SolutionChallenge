@@ -42,6 +42,13 @@ public class PantryController {
         return ResponseEntity.status(201).body(DataResponseDto.of(pantryResDto, 201));
     }
 
+    @DeleteMapping
+    public ResponseEntity<ResponseDto> deletePantry(@RequestParam("id") @NotNull Long pantryId, @RequestAttribute("user") User user) {
+        pantryService.deletePantry(user, pantryId);
+
+        return ResponseEntity.ok(ResponseDto.of(200));
+    }
+
     @PatchMapping("/mark")
     public ResponseEntity<ResponseDto> setPantryMarked(@RequestParam("id") @NotNull Long pantryId,
                                                        @RequestAttribute("user") User user) {

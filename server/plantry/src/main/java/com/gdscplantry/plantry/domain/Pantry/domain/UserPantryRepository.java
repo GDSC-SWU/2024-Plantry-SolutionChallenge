@@ -18,4 +18,6 @@ public interface UserPantryRepository extends JpaRepository<UserPantry, Long> {
     ArrayList<PantryListItemDto> findAllByUserWithJPQL(User user);
 
     Optional<UserPantry> findByPantryId(Long pantryId);
+
+    Boolean existsByPantryId(Long pantryId);
 }
