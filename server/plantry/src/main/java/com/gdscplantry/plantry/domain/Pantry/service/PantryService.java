@@ -23,6 +23,18 @@ public class PantryService {
     private final PantryRepository pantryRepository;
     private final UserPantryRepository userPantryRepository;
 
+    public UserPantry validatePantryId(User user, Long pantryId) {
+        // Find pantry
+        UserPantry userPantry = userPantryRepository.findByPantryId(pantryId)
+                .orElseThrow(() -> new AppException(PantryErrorCode.PANTRY_NOT_FOUND));
+
+        // Check access rights
+        if (!userPantry.getUser().equals(user))
+            throw new AppException(PantryErrorCode.PANTRY_ACCESS_DENIED);
+
+        return userPantry;
+    }
+
     @Transactional(readOnly = true)
     public PantryListResDto readPantryList(User user) {
         // Find list from DB
@@ -56,29 +68,19 @@ public class PantryService {
 
     @Transactional
     public PantryResDto updatePantry(User user, Long pantryId, UpdatePantryReqDto dto) {
-        // Find pantry
-        UserPantry userPantry = userPantryRepository.findByPantryId(pantryId)
-                .orElseThrow(() -> new AppException(PantryErrorCode.PANTRY_NOT_FOUND));
-
-        // Check access rights
-        if (!userPantry.getUser().equals(user))
-            throw new AppException(PantryErrorCode.PANTRY_ACCESS_DENIED);
+        // Find pantry & Check access rights
+        UserPantry userPantry = validatePantryId(user, pantryId);
 
         // Update pantry
         userPantry.updatePantry(dto);
 
         return new PantryResDto(userPantry);
     }
-
+    
     @Transactional
     public SetPantryMarkedResDto setPantryMarked(User user, Long pantryId) {
-        // Find pantry
-        UserPantry userPantry = userPantryRepository.findByPantryId(pantryId)
-                .orElseThrow(() -> new AppException(PantryErrorCode.PANTRY_NOT_FOUND));
-
-        // Check access rights
-        if (!userPantry.getUser().equals(user))
-            throw new AppException(PantryErrorCode.PANTRY_ACCESS_DENIED);
+        // Find pantry & Check access rights
+        UserPantry userPantry = validatePantryId(user, pantryId);
 
         // Update pantry marked
         Boolean result = userPantry.updateIsMarked();
