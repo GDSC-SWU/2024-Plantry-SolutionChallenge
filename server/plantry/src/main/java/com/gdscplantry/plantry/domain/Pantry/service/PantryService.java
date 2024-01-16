@@ -4,7 +4,7 @@ import com.gdscplantry.plantry.domain.Pantry.domain.Pantry;
 import com.gdscplantry.plantry.domain.Pantry.domain.PantryRepository;
 import com.gdscplantry.plantry.domain.Pantry.domain.UserPantry;
 import com.gdscplantry.plantry.domain.Pantry.domain.UserPantryRepository;
-import com.gdscplantry.plantry.domain.Pantry.dto.*;
+import com.gdscplantry.plantry.domain.Pantry.dto.pantry.*;
 import com.gdscplantry.plantry.domain.Pantry.error.PantryErrorCode;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.global.error.exception.AppException;

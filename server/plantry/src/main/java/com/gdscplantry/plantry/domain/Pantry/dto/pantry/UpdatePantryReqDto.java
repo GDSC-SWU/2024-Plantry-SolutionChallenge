@@ -1,4 +1,4 @@
-package com.gdscplantry.plantry.domain.Pantry.dto;
+package com.gdscplantry.plantry.domain.Pantry.dto.pantry;
 
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;

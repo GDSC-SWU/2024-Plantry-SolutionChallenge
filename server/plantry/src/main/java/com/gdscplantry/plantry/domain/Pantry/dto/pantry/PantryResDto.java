@@ -1,4 +1,4 @@
-package com.gdscplantry.plantry.domain.Pantry.dto;
+package com.gdscplantry.plantry.domain.Pantry.dto.pantry;
 
 import com.gdscplantry.plantry.domain.Pantry.domain.UserPantry;
 import lombok.AllArgsConstructor;
