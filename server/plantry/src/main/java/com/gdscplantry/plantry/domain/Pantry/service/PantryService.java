@@ -35,6 +35,19 @@ public class PantryService {
         return userPantry;
     }
 
+    public void deletePantryData(UserPantry userPantry) {
+        Long pantryId = userPantry.getPantryId();
+
+        // Remove product data from pantry
+
+        // Remove user pantry data
+        userPantryRepository.delete(userPantry);
+
+        // Remove pantry data if the pantry doesn't have any user
+        if (!userPantryRepository.existsByPantryId(pantryId))
+            pantryRepository.deleteById(pantryId);
+    }
+
     @Transactional(readOnly = true)
     public PantryListResDto readPantryList(User user) {
         // Find list from DB
@@ -76,7 +89,16 @@ public class PantryService {
 
         return new PantryResDto(userPantry);
     }
-    
+
+    @Transactional
+    public void deletePantry(User user, Long pantryId) {
+        // Find pantry & Check access rights
+        UserPantry userPantry = validatePantryId(user, pantryId);
+
+        // Remove pantry & related data
+        deletePantryData(userPantry);
+    }
+
     @Transactional
     public SetPantryMarkedResDto setPantryMarked(User user, Long pantryId) {
         // Find pantry & Check access rights
