@@ -183,6 +183,35 @@ class PantryControllerTest {
     }
 
     @Test
+    @DisplayName("Delete pantry <200>")
+    void deletePantry_200() throws Exception {
+        // given
+        String title = "new_pantry";
+        Long pantryId = pantryRepository.save(new Pantry(RandomUtil.getUuid())).getId();
+        userPantryRepository.save(
+                UserPantry.builder()
+                        .user(user)
+                        .pantryId(pantryId)
+                        .title(title)
+                        .color(COLOR)
+                        .build()
+        );
+
+        // when
+        ResultActions resultActions = mockMvc.perform(delete(PANTRY_API_URL)
+                .header("Authorization", "Bearer " + accessToken)
+                .param("id", String.valueOf(pantryId)));
+
+        // then
+        resultActions
+                .andExpect(status().isOk())
+                .andDo(print());
+
+        assertThat(userPantryRepository.findByPantryId(pantryId)).as("Data deletion failed.").isEmpty();
+        assertThat(pantryRepository.findById(pantryId)).as("Data deletion failed.").isEmpty();
+    }
+
+    @Test
     @DisplayName("Set pantry marked <201>")
     void setPantryMarked_201() throws Exception {
         // given
