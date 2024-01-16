@@ -8,12 +8,12 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 @Getter
-public class NewPantryResDto {
+public class PantryResDto {
     private Long pantryId;
     private String title;
     private String color;
 
-    public NewPantryResDto(UserPantry userPantry) {
+    public PantryResDto(UserPantry userPantry) {
         this.pantryId = userPantry.getPantryId();
         this.title = userPantry.getTitle();
         this.color = userPantry.getColor();
