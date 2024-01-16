@@ -5,10 +5,12 @@ import com.gdscplantry.plantry.domain.User.domain.UserRepository;
 import com.gdscplantry.plantry.domain.User.dto.GoogleLoginResDto;
 import com.gdscplantry.plantry.domain.User.error.UserErrorCode;
 import com.gdscplantry.plantry.domain.model.JwtVo;
+import com.gdscplantry.plantry.global.error.GlobalErrorCode;
 import com.gdscplantry.plantry.global.error.exception.AppException;
 import com.gdscplantry.plantry.global.util.FcmUtil;
 import com.gdscplantry.plantry.global.util.GoogleOAuthUtil;
 import com.gdscplantry.plantry.global.util.JwtUtil;
+import com.gdscplantry.plantry.global.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,8 +27,8 @@ public class UserService {
     private final GoogleOAuthUtil googleOAuthUtil;
     private final FcmUtil fcmUtil;
     private final JwtUtil jwtUtil;
+    private final RedisUtil redisUtil;
 
-    @Transactional
     public GoogleLoginResDto googleLogin(String idToken, String deviceToken) {
         if (idToken.isBlank())
             throw new AppException(UserErrorCode.ID_TOKEN_REQUIRED);
@@ -42,8 +44,9 @@ public class UserService {
         }
 
         // Find user from DB
+        User finalGoogleUser = googleUser;
         User user = userRepository.findByEmail(googleUser.getEmail())
-                .orElse(userRepository.save(googleUser));
+                .orElseGet(() -> userRepository.save(finalGoogleUser));
 
         // Validate device-token
         fcmUtil.validateToken(deviceToken);
@@ -53,6 +56,47 @@ public class UserService {
 
         // Generate JWT
         JwtVo jwtVo = jwtUtil.generateTokens(user);
+
+        // Save refreshToken to redis
+        redisUtil.opsForValueSet(user.getId() + "_refresh", jwtVo.getRefreshToken(), 24 * 7);
+
+        return new GoogleLoginResDto(user.getId(), user.getNickname(), jwtVo.getAccessToken(), jwtVo.getRefreshToken());
+    }
+
+    @Transactional
+    public void googleLogout(User user) {
+        // Remove login info
+        redisUtil.delete(user.getId() + "_refresh");
+    }
+
+    @Transactional
+    public void removeUser(User user) {
+        // Remove data
+        // 1. Products
+
+        // 2. Notifications
+
+        // 3. Consumed Products
+
+        // 4. Login data
+        redisUtil.delete(user.getId() + "_refresh");
+
+        // 5. User data
+        userRepository.delete(user);
+    }
+
+    @Transactional
+    public GoogleLoginResDto refreshToken(String refreshToken, User user) {
+        User tokenUser = jwtUtil.validateToken(false, refreshToken);
+
+        if (!user.equals(tokenUser))
+            throw new AppException(GlobalErrorCode.AUTHENTICATION_FAILED);
+
+        // Generate JWT
+        JwtVo jwtVo = jwtUtil.generateTokens(user);
+
+        // Save refreshToken to redis
+        redisUtil.opsForValueSet(user.getId() + "_refresh", jwtVo.getRefreshToken(), 24 * 7);
 
         return new GoogleLoginResDto(user.getId(), user.getNickname(), jwtVo.getAccessToken(), jwtVo.getRefreshToken());
     }
