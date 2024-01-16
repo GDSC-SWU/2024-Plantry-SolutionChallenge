@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
@@ -24,8 +25,10 @@ public class User {
     private Long id;
 
     @NotNull
+    @Column(unique = true)
     private String email;
 
+    @Column(unique = true)
     private String nickname;
 
     private String profileImagePath;
@@ -34,6 +37,9 @@ public class User {
 
     @CreatedDate
     private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 
     @Builder
     public User(@NotNull String email, String nickname, String profileImagePath) {
@@ -45,6 +51,10 @@ public class User {
     public void updateUser(String profileImagePath, String deviceToken) {
         this.profileImagePath = profileImagePath;
         this.deviceToken = deviceToken;
+    }
+
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     @Override
