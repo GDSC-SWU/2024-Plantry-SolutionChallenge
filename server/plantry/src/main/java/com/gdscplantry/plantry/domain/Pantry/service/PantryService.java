@@ -4,11 +4,10 @@ import com.gdscplantry.plantry.domain.Pantry.domain.Pantry;
 import com.gdscplantry.plantry.domain.Pantry.domain.PantryRepository;
 import com.gdscplantry.plantry.domain.Pantry.domain.UserPantry;
 import com.gdscplantry.plantry.domain.Pantry.domain.UserPantryRepository;
-import com.gdscplantry.plantry.domain.Pantry.dto.NewPantryReqDto;
-import com.gdscplantry.plantry.domain.Pantry.dto.NewPantryResDto;
-import com.gdscplantry.plantry.domain.Pantry.dto.PantryListItemDto;
-import com.gdscplantry.plantry.domain.Pantry.dto.PantryListResDto;
+import com.gdscplantry.plantry.domain.Pantry.dto.*;
+import com.gdscplantry.plantry.domain.Pantry.error.PantryErrorCode;
 import com.gdscplantry.plantry.domain.User.domain.User;
+import com.gdscplantry.plantry.global.error.exception.AppException;
 import com.gdscplantry.plantry.global.util.RandomUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +35,7 @@ public class PantryService {
     }
 
     @Transactional
-    public NewPantryResDto addPantry(User user, NewPantryReqDto dto) {
+    public PantryResDto addPantry(User user, NewPantryReqDto dto) {
         // Add pantry
         Pantry pantry = pantryRepository.save(new Pantry(RandomUtil.getUuid()));
 
@@ -52,6 +51,22 @@ public class PantryService {
                 .build();
         userPantryRepository.save(userPantry);
 
-        return new NewPantryResDto(userPantry);
+        return new PantryResDto(userPantry);
+    }
+
+    @Transactional
+    public PantryResDto updatePantry(User user, Long pantryId, UpdatePantryReqDto dto) {
+        // Find pantry
+        UserPantry userPantry = userPantryRepository.findByPantryId(pantryId)
+                .orElseThrow(() -> new AppException(PantryErrorCode.PANTRY_NOT_FOUND));
+
+        // Check access rights
+        if (!userPantry.getUser().equals(user))
+            throw new AppException(PantryErrorCode.PANTRY_ACCESS_DENIED);
+
+        // Update pantry
+        userPantry.updatePantry(dto);
+
+        return new PantryResDto(userPantry);
     }
 }

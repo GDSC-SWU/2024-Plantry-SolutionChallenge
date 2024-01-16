@@ -1,5 +1,6 @@
 package com.gdscplantry.plantry.domain.Pantry.domain;
 
+import com.gdscplantry.plantry.domain.Pantry.dto.UpdatePantryReqDto;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -48,6 +49,11 @@ public class UserPantry {
         this.title = title;
         this.color = color;
         this.isMarked = false;
+    }
+
+    public void updatePantry(UpdatePantryReqDto dto) {
+        this.title = dto.getTitle();
+        this.color = dto.getColor();
     }
 
     @Override
