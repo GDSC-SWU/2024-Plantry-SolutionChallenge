@@ -1,9 +1,6 @@
 package com.gdscplantry.plantry.domain.Pantry.controller;
 
-import com.gdscplantry.plantry.domain.Pantry.dto.NewPantryReqDto;
-import com.gdscplantry.plantry.domain.Pantry.dto.PantryListResDto;
-import com.gdscplantry.plantry.domain.Pantry.dto.PantryResDto;
-import com.gdscplantry.plantry.domain.Pantry.dto.UpdatePantryReqDto;
+import com.gdscplantry.plantry.domain.Pantry.dto.*;
 import com.gdscplantry.plantry.domain.Pantry.service.PantryService;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.global.common.DataResponseDto;
@@ -43,5 +40,13 @@ public class PantryController {
         PantryResDto pantryResDto = pantryService.updatePantry(user, pantryId, updatePantryReqDto);
 
         return ResponseEntity.status(201).body(DataResponseDto.of(pantryResDto, 201));
+    }
+
+    @PatchMapping("/mark")
+    public ResponseEntity<ResponseDto> setPantryMarked(@RequestParam("id") @NotNull Long pantryId,
+                                                       @RequestAttribute("user") User user) {
+        SetPantryMarkedResDto setPantryMarkedResDto = pantryService.setPantryMarked(user, pantryId);
+
+        return ResponseEntity.status(201).body(DataResponseDto.of(setPantryMarkedResDto, 201));
     }
 }
