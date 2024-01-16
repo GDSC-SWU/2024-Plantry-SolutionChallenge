@@ -69,4 +69,20 @@ public class PantryService {
 
         return new PantryResDto(userPantry);
     }
+
+    @Transactional
+    public SetPantryMarkedResDto setPantryMarked(User user, Long pantryId) {
+        // Find pantry
+        UserPantry userPantry = userPantryRepository.findByPantryId(pantryId)
+                .orElseThrow(() -> new AppException(PantryErrorCode.PANTRY_NOT_FOUND));
+
+        // Check access rights
+        if (!userPantry.getUser().equals(user))
+            throw new AppException(PantryErrorCode.PANTRY_ACCESS_DENIED);
+
+        // Update pantry marked
+        Boolean result = userPantry.updateIsMarked();
+
+        return new SetPantryMarkedResDto(pantryId, result);
+    }
 }

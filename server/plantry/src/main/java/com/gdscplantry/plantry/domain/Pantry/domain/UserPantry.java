@@ -56,6 +56,12 @@ public class UserPantry {
         this.color = dto.getColor();
     }
 
+    public Boolean updateIsMarked() {
+        this.isMarked = !this.isMarked;
+
+        return this.isMarked;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
