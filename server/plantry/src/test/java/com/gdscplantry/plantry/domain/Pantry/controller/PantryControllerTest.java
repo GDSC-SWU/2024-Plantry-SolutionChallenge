@@ -1,11 +1,16 @@
 package com.gdscplantry.plantry.domain.Pantry.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gdscplantry.plantry.domain.Pantry.domain.Pantry;
+import com.gdscplantry.plantry.domain.Pantry.domain.PantryRepository;
+import com.gdscplantry.plantry.domain.Pantry.domain.UserPantry;
+import com.gdscplantry.plantry.domain.Pantry.domain.UserPantryRepository;
 import com.gdscplantry.plantry.domain.Pantry.dto.NewPantryReqDto;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.domain.User.domain.UserRepository;
 import com.gdscplantry.plantry.domain.model.JwtVo;
 import com.gdscplantry.plantry.global.util.JwtUtil;
+import com.gdscplantry.plantry.global.util.RandomUtil;
 import com.gdscplantry.plantry.global.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
@@ -20,6 +25,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -41,6 +47,12 @@ class PantryControllerTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PantryRepository pantryRepository;
+
+    @Autowired
+    private UserPantryRepository userPantryRepository;
 
     final String PANTRY_API_URL = "/api/v1/pantry";
     final String EMAIL = "test@test.com";
@@ -74,8 +86,43 @@ class PantryControllerTest {
     }
 
     @Test
-    @DisplayName("Add new pantry successfully")
-    void addNewPantry_Suc() throws Exception {
+    @DisplayName("Read pantry list")
+    void readPantryList_200() throws Exception {
+        // given
+        String color = "A2E5B3";
+        String[] titles = {"pantry1", "pantry2", "pantry3"};
+        Long[] pantries = new Long[3];
+
+        for (int i = 0; i < 3; i++) {
+            pantries[i] = pantryRepository.save(new Pantry(RandomUtil.getUuid())).getId();
+            userPantryRepository.save(
+                    UserPantry.builder()
+                            .user(user)
+                            .pantryId(pantries[i])
+                            .title(titles[i])
+                            .color(color)
+                            .build()
+            );
+        }
+
+        // when
+        ResultActions resultActions = mockMvc.perform(get(PANTRY_API_URL)
+                .header("Authorization", "Bearer " + accessToken));
+
+        // then
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.result").exists())
+                .andExpect(jsonPath("$.data.result[0].id").value(pantries[0]))
+                .andExpect(jsonPath("$.data.result[0].title").value(titles[0]))
+                .andExpect(jsonPath("$.data.result[0].color").value(color))
+                .andExpect(jsonPath("$.data.result[0].isMarked").value(false))
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("Add new pantry <201>")
+    void addNewPantry_201() throws Exception {
         // given
         String title = "new_pantry";
         String color = "A2E5B3";
