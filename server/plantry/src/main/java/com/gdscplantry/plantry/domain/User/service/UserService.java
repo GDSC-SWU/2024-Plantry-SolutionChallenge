@@ -1,5 +1,9 @@
 package com.gdscplantry.plantry.domain.User.service;
 
+import com.gdscplantry.plantry.domain.Pantry.domain.PantryRepository;
+import com.gdscplantry.plantry.domain.Pantry.domain.UserPantry;
+import com.gdscplantry.plantry.domain.Pantry.domain.UserPantryRepository;
+import com.gdscplantry.plantry.domain.Pantry.service.PantryService;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.domain.User.domain.UserRepository;
 import com.gdscplantry.plantry.domain.User.dto.GoogleLoginResDto;
@@ -18,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +33,9 @@ public class UserService {
     private final FcmUtil fcmUtil;
     private final JwtUtil jwtUtil;
     private final RedisUtil redisUtil;
+    private final PantryService pantryService;
+    private final PantryRepository pantryRepository;
+    private final UserPantryRepository userPantryRepository;
 
     @Transactional
     public GoogleLoginResDto googleLogin(String idToken, String deviceToken) {
@@ -73,7 +81,10 @@ public class UserService {
     @Transactional
     public void removeUser(User user) {
         // Remove data
-        // 1. Products
+        // 1. Products & Pantries
+        ArrayList<UserPantry> pantries = userPantryRepository.findAllByUser(user);
+        for (UserPantry userPantry : pantries)
+            pantryService.deletePantryData(userPantry);
 
         // 2. Notifications
 
