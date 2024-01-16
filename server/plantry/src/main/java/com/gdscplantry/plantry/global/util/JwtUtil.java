@@ -3,37 +3,39 @@ package com.gdscplantry.plantry.global.util;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.domain.User.domain.UserRepository;
 import com.gdscplantry.plantry.domain.model.JwtVo;
+import com.gdscplantry.plantry.global.error.GlobalErrorCode;
+import com.gdscplantry.plantry.global.error.exception.AppException;
+import com.gdscplantry.plantry.global.error.exception.FilterException;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
-import java.util.Base64;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 import static io.jsonwebtoken.Jwts.builder;
+import static io.jsonwebtoken.Jwts.parser;
 
 @Component
 @RequiredArgsConstructor
 public class JwtUtil {
     private final UserRepository userRepository;
+    private final RedisUtil redisUtil;
 
     @Value("${JWT_ISSUER}")
     private String ISSUER;
     @Value("${JWT_SECRET_KEY}")
     private String JWT_SECRET_KEY;
 
-    private String PAYLOAD_KEY_ID = "id";
-    private String PAYLOAD_KEY_EMAIL = "email";
-    private String ACCESS_SUBJECT = "access";
-    private String REFRESH_SUBJECT = "refresh";
+    final String PAYLOAD_KEY_ID = "id";
 
     public JwtVo generateTokens(User user) {
         // Payloads
+        final String PAYLOAD_KEY_EMAIL = "email";
+
         Map<String, Object> payloads = new LinkedHashMap<>();
         payloads.put(PAYLOAD_KEY_ID, user.getId());
         payloads.put(PAYLOAD_KEY_EMAIL, user.getEmail());
@@ -44,6 +46,9 @@ public class JwtUtil {
         Date refreshExp = new Date(now.getTime() + Duration.ofDays(7).toMillis());
 
         // Build
+        final String ACCESS_SUBJECT = "access";
+        final String REFRESH_SUBJECT = "refresh";
+
         String accessToken = builder().setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 .setClaims(payloads)
                 .setIssuer(ISSUER)
@@ -62,5 +67,49 @@ public class JwtUtil {
                 .compact();
 
         return new JwtVo(accessToken, refreshToken);
+    }
+
+    // Decode header
+    public String decodeHeader(String header) {
+        final String BEARER = "Bearer ";
+
+        try {
+            return Arrays.stream(header.split(BEARER)).toList().get(1);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new AppException(GlobalErrorCode.INVALID_TOKEN);
+        }
+    }
+
+    // Get payloads
+    public Map<String, Object> getPayloads(String jwt) {
+        return parser()
+                .setSigningKey(JWT_SECRET_KEY.getBytes())
+                .parseClaimsJws(jwt)
+                .getBody();
+    }
+
+    // Validate token
+    @Transactional(readOnly = true)
+    public User validateToken(boolean isAccessToken, String header) {
+        // Decode header
+        String token = decodeHeader(header);
+
+        // Validate token
+        // Get payload
+        Map<String, Object> payloads = getPayloads(token);
+
+        // Find user info
+        User user = userRepository.findById(((Number) payloads.get(PAYLOAD_KEY_ID)).longValue())
+                .orElseThrow(() -> new FilterException(GlobalErrorCode.USER_NOT_FOUND));
+
+        // Find login info
+        String refresh = redisUtil.opsForValueGet(user.getId() + "_refresh");
+
+        if (refresh == null)
+            throw new FilterException(GlobalErrorCode.LOGIN_REQUIRED);
+        else if (!isAccessToken && !refresh.equals(token))
+            throw new FilterException(GlobalErrorCode.AUTHORIZATION_FAILED);
+
+        return user;
     }
 }
