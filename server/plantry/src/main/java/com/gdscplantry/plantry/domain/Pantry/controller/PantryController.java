@@ -2,6 +2,7 @@ package com.gdscplantry.plantry.domain.Pantry.controller;
 
 import com.gdscplantry.plantry.domain.Pantry.dto.NewPantryReqDto;
 import com.gdscplantry.plantry.domain.Pantry.dto.NewPantryResDto;
+import com.gdscplantry.plantry.domain.Pantry.dto.PantryListResDto;
 import com.gdscplantry.plantry.domain.Pantry.service.PantryService;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.global.common.DataResponseDto;
@@ -18,6 +19,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/pantry")
 public class PantryController {
     private final PantryService pantryService;
+
+    @GetMapping
+    public ResponseEntity<ResponseDto> readPantryList(@RequestAttribute("user") User user) {
+        PantryListResDto pantryListResDto = pantryService.readPantryList(user);
+
+        return ResponseEntity.status(200).body(DataResponseDto.of(pantryListResDto, 200));
+    }
 
     @PostMapping
     public ResponseEntity<ResponseDto> addNewPantry(@RequestBody @Valid NewPantryReqDto newPantryReqDto, @RequestAttribute("user") User user) {
