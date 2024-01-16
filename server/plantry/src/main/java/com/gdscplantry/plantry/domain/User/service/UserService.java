@@ -29,6 +29,7 @@ public class UserService {
     private final JwtUtil jwtUtil;
     private final RedisUtil redisUtil;
 
+    @Transactional
     public GoogleLoginResDto googleLogin(String idToken, String deviceToken) {
         if (idToken.isBlank())
             throw new AppException(UserErrorCode.ID_TOKEN_REQUIRED);
