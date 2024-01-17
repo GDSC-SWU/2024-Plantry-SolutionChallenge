@@ -17,7 +17,7 @@ public interface UserPantryRepository extends JpaRepository<UserPantry, Long> {
             "order by up.isMarked desc, up.title asc")
     ArrayList<PantryListItemDto> findAllByUserWithJPQL(User user);
 
-    Optional<UserPantry> findByPantryId(Long pantryId);
+    Optional<UserPantry> findByPantryIdAndUser(Long pantryId, User user);
 
     Boolean existsByPantryId(Long pantryId);
 
