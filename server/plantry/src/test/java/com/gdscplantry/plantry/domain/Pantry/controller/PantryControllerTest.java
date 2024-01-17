@@ -175,7 +175,7 @@ class PantryControllerTest {
                 .andExpect(jsonPath("$.data.color").value(COLOR))
                 .andDo(print());
 
-        UserPantry foundPantry = userPantryRepository.findByPantryId(pantryId)
+        UserPantry foundPantry = userPantryRepository.findByPantryIdAndUser(pantryId, user)
                 .orElseThrow(() -> new Exception("null"));
 
         assertThat(foundPantry.getTitle()).as("Data update failed.").isEqualTo(updatedTitle);
@@ -207,7 +207,7 @@ class PantryControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print());
 
-        assertThat(userPantryRepository.findByPantryId(pantryId)).as("Data deletion failed.").isEmpty();
+        assertThat(userPantryRepository.findByPantryIdAndUser(pantryId, user)).as("Data deletion failed.").isEmpty();
         assertThat(pantryRepository.findById(pantryId)).as("Data deletion failed.").isEmpty();
     }
 
@@ -238,7 +238,7 @@ class PantryControllerTest {
                 .andExpect(jsonPath("$.data.isMarked").value(true))
                 .andDo(print());
 
-        UserPantry foundPantry = userPantryRepository.findByPantryId(pantryId)
+        UserPantry foundPantry = userPantryRepository.findByPantryIdAndUser(pantryId, user)
                 .orElseThrow(() -> new Exception("null"));
 
         assertThat(foundPantry.getIsMarked()).as("Data update failed.").isTrue();
