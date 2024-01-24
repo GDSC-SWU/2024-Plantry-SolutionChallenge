@@ -27,7 +27,7 @@ public class ProductItemResDto {
         this.icon = product.getIcon();
         this.name = product.getName();
         this.isUseByDate = product.getIsUseByDate();
-        this.date = isUseByDate ? product.getUseByDate().format(DateTimeFormatter.ISO_DATE) : product.getSellByDate().format(DateTimeFormatter.ISO_DATE);
+        this.date = product.getDate().format(DateTimeFormatter.ISO_DATE);
         this.storage = product.getStorage().getKey();
         this.count = product.getCount().floatValue();
         this.isNotified = isNotified;

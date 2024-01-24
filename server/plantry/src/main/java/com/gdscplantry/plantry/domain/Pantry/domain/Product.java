@@ -38,9 +38,9 @@ public class Product {
 
     private Boolean isUseByDate;
 
-    private LocalDate useByDate;
+    private LocalDate date;
 
-    private LocalDate sellByDate;
+    private LocalDate useByDateData;
 
     @Enumerated(EnumType.STRING)
     private StorageEnum storage;
@@ -61,12 +61,8 @@ public class Product {
         this.name = name;
         this.storage = storage;
         this.count = count;
-
         this.isUseByDate = isUseByDate;
-        if (isUseByDate)
-            useByDate = date;
-        else
-            sellByDate = date;
+        this.date = date;
     }
 
     public void updateProduct(Product product) {
@@ -74,12 +70,8 @@ public class Product {
         this.name = product.getName();
         this.storage = product.getStorage();
         this.count = product.getCount();
-        
         this.isUseByDate = product.getIsUseByDate();
-        if (isUseByDate)
-            useByDate = product.getUseByDate();
-        else
-            sellByDate = product.getSellByDate();
+        this.date = product.getDate();
     }
 
     public void updateFoodData(Long foodDataId) {
