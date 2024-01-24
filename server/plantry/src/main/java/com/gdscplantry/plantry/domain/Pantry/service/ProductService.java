@@ -37,7 +37,7 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductItemDto addSingleProduct(User user, NewProductReqDto dto) {
+    public ProductItemResDto addSingleProduct(User user, NewProductReqDto dto) {
         // Find pantry & Check access rights
         pantryService.validatePantryId(user, dto.getPantry());
 
@@ -49,12 +49,12 @@ public class ProductService {
 
         // Save default Notifications
 
-        return new ProductItemDto(product, true);
+        return new ProductItemResDto(product, true);
     }
 
 
     @Transactional
-    public NewProductListDto addProducts(User user, NewProductListReqDto dto) {
+    public NewProductListResDto addProducts(User user, NewProductListReqDto dto) {
         ArrayList<Product> products = new ArrayList<>();
 
         for (NewProductReqDto req : dto.getList()) {
@@ -75,15 +75,15 @@ public class ProductService {
         // Save notification data
 
         // Return dto
-        ArrayList<ProductItemDto> result = new ArrayList<>();
+        ArrayList<ProductItemResDto> result = new ArrayList<>();
         for (Product product : products)
-            result.add(new ProductItemDto(product, true));
+            result.add(new ProductItemResDto(product, true));
 
-        return new NewProductListDto(result);
+        return new NewProductListResDto(result);
     }
 
     @Transactional
-    public ProductItemDto updateProduct(User user, Long productId, UpdateProductReqDto updateProductReqDto) {
+    public ProductItemResDto updateProduct(User user, Long productId, UpdateProductReqDto updateProductReqDto) {
         // Find product & check access rights
         Product product = validateProductId(user, productId);
 
@@ -94,11 +94,11 @@ public class ProductService {
         // Update product data
         product.updateProduct(updateProductReqDto.toEntity());
 
-        return new ProductItemDto(product, true);
+        return new ProductItemResDto(product, true);
     }
 
     @Transactional
-    public ProductItemDto updateProductCount(User user, Long productId, Double count) {
+    public ProductItemResDto updateProductCount(User user, Long productId, Double count) {
         // Find product & check access rights
         Product product = validateProductId(user, productId);
 
@@ -111,6 +111,6 @@ public class ProductService {
 
         // Check Notifications
 
-        return new ProductItemDto(product, true);
+        return new ProductItemResDto(product, true);
     }
 }
