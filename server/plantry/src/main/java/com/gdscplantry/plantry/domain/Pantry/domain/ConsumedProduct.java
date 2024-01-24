@@ -3,6 +3,7 @@ package com.gdscplantry.plantry.domain.Pantry.domain;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.domain.model.ProductDeleteTypeEnum;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
@@ -42,6 +43,7 @@ public class ConsumedProduct {
     @CreatedDate
     private LocalDateTime createdAt;
 
+    @Builder
     public ConsumedProduct(User user, BigDecimal count, ProductDeleteTypeEnum type, String product, Long foodDataId, LocalDateTime addedAt) {
         this.user = user;
         this.count = count;

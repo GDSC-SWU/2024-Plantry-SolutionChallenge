@@ -45,4 +45,12 @@ public class ProductController {
 
         return ResponseEntity.status(201).body(DataResponseDto.of(productItemResDto, 201));
     }
+
+    @DeleteMapping
+    public ResponseEntity<ResponseDto> deleteProduct(@RequestParam("product") Long productId, @RequestParam("type") Integer type,
+                                                     @RequestParam("count") Double count, @RequestAttribute User user) {
+        DeleteProductResDto deleteProductResDto = productService.deleteProduct(user, productId, type, count);
+
+        return ResponseEntity.ok(DataResponseDto.of(deleteProductResDto, 200));
+    }
 }
