@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum PantryErrorCode implements ErrorCode {
     INVALID_COUNT(HttpStatus.BAD_REQUEST, "Invalid count value."),
+    INVALID_STORAGE(HttpStatus.BAD_REQUEST, "Invalid storage value."),
     PANTRY_ACCESS_DENIED(HttpStatus.FORBIDDEN, "Pantry access denied."),
     PRODUCT_ACCESS_DENIED(HttpStatus.FORBIDDEN, "Product access denied."),
     PANTRY_NOT_FOUND(HttpStatus.NOT_FOUND, "Pantry not found. (Invalid pantry id.)"),
