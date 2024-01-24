@@ -1,11 +1,10 @@
 package com.gdscplantry.plantry.domain.Pantry.service;
 
-import com.gdscplantry.plantry.domain.Pantry.domain.Product;
-import com.gdscplantry.plantry.domain.Pantry.domain.ProductRepository;
-import com.gdscplantry.plantry.domain.Pantry.domain.UserPantryRepository;
+import com.gdscplantry.plantry.domain.Pantry.domain.*;
 import com.gdscplantry.plantry.domain.Pantry.dto.product.*;
 import com.gdscplantry.plantry.domain.Pantry.error.PantryErrorCode;
 import com.gdscplantry.plantry.domain.User.domain.User;
+import com.gdscplantry.plantry.domain.model.ProductDeleteTypeEnum;
 import com.gdscplantry.plantry.global.error.exception.AppException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +21,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final PantryService pantryService;
     private final UserPantryRepository userPantryRepository;
+    private final ConsumedProductRepository consumedProductRepository;
 
     @Transactional(readOnly = true)
     public Product validateProductId(User user, Long productId) {
@@ -112,5 +112,41 @@ public class ProductService {
         // Check Notifications
 
         return new ProductItemResDto(product, true);
+    }
+
+    @Transactional
+    public DeleteProductResDto deleteProduct(User user, Long productId, Integer type, Double reqCount) {
+        // Find product & check access rights
+        Product product = validateProductId(user, productId);
+
+        // Count validation
+        BigDecimal count = BigDecimal.valueOf(reqCount);
+        if (reqCount % 0.5 != 0 || reqCount <= 0)
+            throw new AppException(PantryErrorCode.INVALID_COUNT);
+        else if (count.compareTo(product.getCount()) > 0)
+            throw new AppException(PantryErrorCode.INVALID_DELETE_COUNT);
+
+        // Find type
+        ProductDeleteTypeEnum typeEnum = ProductDeleteTypeEnum.findByKey(type);
+
+        // Add consumption data
+        consumedProductRepository.save(ConsumedProduct.builder()
+                .user(user)
+                .count(count)
+                .type(typeEnum)
+                .product(product.getName())
+                .foodDataId(product.getFoodDataId())
+                .addedAt(product.getCreatedAt())
+                .build()
+        );
+
+        // Update product data (delete if result count is 0)
+        BigDecimal result = product.getCount().subtract(count);
+        if (result.equals(BigDecimal.ZERO))
+            productRepository.delete(product);
+        else
+            product.updateCount(result);
+
+        return new DeleteProductResDto(product.getId(), typeEnum.getTitle(), result);
     }
 }
