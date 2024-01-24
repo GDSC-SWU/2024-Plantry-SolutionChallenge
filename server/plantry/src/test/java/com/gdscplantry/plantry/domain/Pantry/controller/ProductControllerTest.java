@@ -1,15 +1,14 @@
 package com.gdscplantry.plantry.domain.Pantry.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gdscplantry.plantry.domain.Pantry.domain.Pantry;
-import com.gdscplantry.plantry.domain.Pantry.domain.PantryRepository;
-import com.gdscplantry.plantry.domain.Pantry.domain.UserPantry;
-import com.gdscplantry.plantry.domain.Pantry.domain.UserPantryRepository;
+import com.gdscplantry.plantry.domain.Pantry.domain.*;
 import com.gdscplantry.plantry.domain.Pantry.dto.product.NewProductListReqDto;
 import com.gdscplantry.plantry.domain.Pantry.dto.product.NewProductReqDto;
+import com.gdscplantry.plantry.domain.Pantry.dto.product.UpdateProductReqDto;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.domain.User.domain.UserRepository;
 import com.gdscplantry.plantry.domain.model.JwtVo;
+import com.gdscplantry.plantry.domain.model.StorageEnum;
 import com.gdscplantry.plantry.global.util.JwtUtil;
 import com.gdscplantry.plantry.global.util.RandomUtil;
 import com.gdscplantry.plantry.global.util.RedisUtil;
@@ -26,8 +25,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -55,6 +58,9 @@ class ProductControllerTest {
 
     @Autowired
     private UserPantryRepository userPantryRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     final String PANTRY_API_URL = "/api/v1/pantry/product";
     final String EMAIL = "test@test.com";
@@ -154,4 +160,37 @@ class ProductControllerTest {
                 .andDo(print());
     }
 
+    @Test
+    @DisplayName("Update product <201>")
+    void updateProduct() throws Exception {
+        // given
+        LocalDate date = LocalDate.of(2024, 2, 1);
+        Long productId = productRepository.save(Product.builder()
+                .pantryId(pantries[0])
+                .icon("🥕")
+                .name(names[0])
+                .storage(StorageEnum.Cold)
+                .count(BigDecimal.ONE)
+                .isUseByDate(true)
+                .date(date)
+                .build()
+        ).getId();
+        UpdateProductReqDto dto = new UpdateProductReqDto("🍑", names[0], true, date.format(DateTimeFormatter.ISO_DATE), "Freeze", String.valueOf(1));
+
+        // when
+        ResultActions resultActions = mockMvc.perform(patch(PANTRY_API_URL)
+                .header("Authorization", "Bearer " + accessToken)
+                .param("product", productId.toString())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(dto)));
+
+        // then
+        resultActions
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.data.pantryId").value(pantries[0]))
+                .andExpect(jsonPath("$.data.icon").value("🍑"))
+                .andExpect(jsonPath("$.data.name").value(names[0]))
+                .andExpect(jsonPath("$.data.storage").value(StorageEnum.Freeze.getKey()))
+                .andDo(print());
+    }
 }
