@@ -5,6 +5,7 @@ import com.gdscplantry.plantry.domain.Pantry.dto.product.*;
 import com.gdscplantry.plantry.domain.Pantry.error.PantryErrorCode;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.domain.model.ProductDeleteTypeEnum;
+import com.gdscplantry.plantry.domain.model.StorageEnum;
 import com.gdscplantry.plantry.global.error.exception.AppException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -148,5 +150,29 @@ public class ProductService {
             product.updateCount(result);
 
         return new DeleteProductResDto(product.getId(), typeEnum.getTitle(), result);
+    }
+
+    @Transactional(readOnly = true)
+    public ProductListResDto readProductList(User user, Long pantryId, String filter) {
+        // Find pantry & Check access rights
+        pantryService.validatePantryId(user, pantryId);
+
+        // Validate filter string
+        StorageEnum storageEnum = StorageEnum.findByKey(filter);
+
+        // Find product list
+        LinkedList<ProductListItemResDto> expiredList = productRepository.findAllExpiredByPantryIdAndStorageByJPQL(pantryId, storageEnum);
+        LinkedList<ProductListItemResDto> ddayList = productRepository.findAllDdayByPantryIdAndStorageByJPQL(pantryId, storageEnum);
+        LinkedList<ProductListItemResDto> notExpiredList = productRepository.findAllNotExpiredByPantryIdAndStorageOrderByDateByJPQL(pantryId, storageEnum);
+
+        // Group lists by day
+        Map<Long, List<ProductListItemResDto>> notExpiredMap = notExpiredList.stream()
+                .collect(Collectors.groupingBy(ProductListItemResDto::getDays));
+        Map<Long, List<ProductListItemResDto>> result = new HashMap<>();
+        result.put(-1L, expiredList);
+        result.put(0L, ddayList);
+        result.putAll(notExpiredMap);
+
+        return new ProductListResDto(filter, result);
     }
 }
