@@ -22,6 +22,19 @@ public class ProductService {
     private final PantryService pantryService;
     private final UserPantryRepository userPantryRepository;
 
+    @Transactional(readOnly = true)
+    public Product validateProductId(User user, Long productId) {
+        // Find product
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new AppException(PantryErrorCode.PRODUCT_NOT_FOUND));
+
+        // Check access rights
+        if (!userPantryRepository.existsByPantryIdAndUser(product.getPantryId(), user))
+            throw new AppException(PantryErrorCode.PRODUCT_ACCESS_DENIED);
+
+        return product;
+    }
+
     @Transactional
     public ProductItemDto addSingleProduct(User user, NewProductReqDto dto) {
         // Find pantry & Check access rights
@@ -70,13 +83,8 @@ public class ProductService {
 
     @Transactional
     public ProductItemDto updateProduct(User user, Long productId, UpdateProductReqDto updateProductReqDto) {
-        // Find product
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new AppException(PantryErrorCode.PRODUCT_NOT_FOUND));
-
-        // Check access rights
-        if (!userPantryRepository.existsByPantryIdAndUser(product.getPantryId(), user))
-            throw new AppException(PantryErrorCode.PRODUCT_ACCESS_DENIED);
+        // Find product & check access rights
+        Product product = validateProductId(user, productId);
 
         // Check Notification
 
