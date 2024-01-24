@@ -193,4 +193,35 @@ class ProductControllerTest {
                 .andExpect(jsonPath("$.data.storage").value(StorageEnum.Freeze.getKey()))
                 .andDo(print());
     }
+
+    @Test
+    @DisplayName("Update product count <201>")
+    void updateProductCount() throws Exception {
+        // given
+        LocalDate date = LocalDate.of(2024, 2, 1);
+        Long productId = productRepository.save(Product.builder()
+                .pantryId(pantries[0])
+                .icon("🥕")
+                .name(names[0])
+                .storage(StorageEnum.Cold)
+                .count(BigDecimal.ONE)
+                .isUseByDate(true)
+                .date(date)
+                .build()
+        ).getId();
+
+        // when
+        ResultActions resultActions = mockMvc.perform(patch(PANTRY_API_URL + "/count")
+                .header("Authorization", "Bearer " + accessToken)
+                .param("product", productId.toString())
+                .param("count", String.valueOf(0.5)));
+
+        // then
+        resultActions
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.data.pantryId").value(pantries[0]))
+                .andExpect(jsonPath("$.data.name").value(names[0]))
+                .andExpect(jsonPath("$.data.count").value(0.5))
+                .andDo(print());
+    }
 }
