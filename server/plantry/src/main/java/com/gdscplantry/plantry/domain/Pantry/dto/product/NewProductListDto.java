@@ -10,5 +10,5 @@ import java.util.ArrayList;
 @AllArgsConstructor
 @Getter
 public class NewProductListDto {
-    private ArrayList<NewProductItemDto> result;
+    private ArrayList<ProductItemDto> result;
 }
