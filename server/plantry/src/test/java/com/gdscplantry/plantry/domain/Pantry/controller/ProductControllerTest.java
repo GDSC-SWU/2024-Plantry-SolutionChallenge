@@ -8,6 +8,7 @@ import com.gdscplantry.plantry.domain.Pantry.dto.product.UpdateProductReqDto;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.domain.User.domain.UserRepository;
 import com.gdscplantry.plantry.domain.model.JwtVo;
+import com.gdscplantry.plantry.domain.model.ProductDeleteTypeEnum;
 import com.gdscplantry.plantry.domain.model.StorageEnum;
 import com.gdscplantry.plantry.global.util.JwtUtil;
 import com.gdscplantry.plantry.global.util.RandomUtil;
@@ -30,8 +31,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -61,6 +62,9 @@ class ProductControllerTest {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private ConsumedProductRepository consumedProductRepository;
 
     final String PANTRY_API_URL = "/api/v1/pantry/product";
     final String EMAIL = "test@test.com";
@@ -223,5 +227,104 @@ class ProductControllerTest {
                 .andExpect(jsonPath("$.data.name").value(names[0]))
                 .andExpect(jsonPath("$.data.count").value(0.5))
                 .andDo(print());
+    }
+
+    @Test
+    @DisplayName("Delete product count <200>")
+    void deleteProduct() throws Exception {
+        // given
+        Long productId = productRepository.save(Product.builder()
+                .pantryId(pantries[0])
+                .icon("🥕")
+                .name(names[0])
+                .storage(StorageEnum.Cold)
+                .count(BigDecimal.ONE)
+                .isUseByDate(true)
+                .date(LocalDate.of(2024, 2, 1))
+                .build()
+        ).getId();
+
+        // when
+        ResultActions resultActions = mockMvc.perform(delete(PANTRY_API_URL)
+                .header("Authorization", "Bearer " + accessToken)
+                .param("product", productId.toString())
+                .param("type", String.valueOf(1))
+                .param("count", String.valueOf(0.5)));
+
+        // then
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.id").value(productId))
+                .andExpect(jsonPath("$.data.type").value(ProductDeleteTypeEnum.Ingestion.getTitle()))
+                .andExpect(jsonPath("$.data.result").value(0.5))
+                .andDo(print());
+
+        ArrayList<ConsumedProduct> consumedProducts = consumedProductRepository.findAllByUser(user);
+        assertThat(consumedProducts.get(0).getProduct()).as("Product consumption data save test failed.").isEqualTo(names[0]);
+    }
+
+    @Test
+    @DisplayName("Delete product count <200> 2")
+    void deleteProduct2() throws Exception {
+        // given
+        Long productId = productRepository.save(Product.builder()
+                .pantryId(pantries[0])
+                .icon("🥕")
+                .name(names[0])
+                .storage(StorageEnum.Cold)
+                .count(BigDecimal.ONE)
+                .isUseByDate(true)
+                .date(LocalDate.of(2024, 2, 1))
+                .build()
+        ).getId();
+
+        // when
+        ResultActions resultActions = mockMvc.perform(delete(PANTRY_API_URL)
+                .header("Authorization", "Bearer " + accessToken)
+                .param("product", productId.toString())
+                .param("type", String.valueOf(1))
+                .param("count", String.valueOf(1)));
+
+        // then
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.id").value(productId))
+                .andExpect(jsonPath("$.data.type").value(ProductDeleteTypeEnum.Ingestion.getTitle()))
+                .andExpect(jsonPath("$.data.result").value(0))
+                .andDo(print());
+
+        ArrayList<ConsumedProduct> consumedProducts = consumedProductRepository.findAllByUser(user);
+        assertThat(consumedProducts.get(0).getProduct()).as("Product consumption data save test failed.").isEqualTo(names[0]);
+    }
+
+    @Test
+    @DisplayName("Delete product count <400>")
+    void deleteProduct_fail400() throws Exception {
+        // given
+        Long productId = productRepository.save(Product.builder()
+                .pantryId(pantries[0])
+                .icon("🥕")
+                .name(names[0])
+                .storage(StorageEnum.Cold)
+                .count(BigDecimal.ONE)
+                .isUseByDate(true)
+                .date(LocalDate.of(2024, 2, 1))
+                .build()
+        ).getId();
+
+        // when
+        ResultActions resultActions = mockMvc.perform(delete(PANTRY_API_URL)
+                .header("Authorization", "Bearer " + accessToken)
+                .param("product", productId.toString())
+                .param("type", String.valueOf(1))
+                .param("count", String.valueOf(2)));
+
+        // then
+        resultActions
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+
+        ArrayList<ConsumedProduct> consumedProducts = consumedProductRepository.findAllByUser(user);
+        assertThat(consumedProducts.size()).isEqualTo(0);
     }
 }
