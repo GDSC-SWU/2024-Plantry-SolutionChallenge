@@ -2,11 +2,11 @@ package com.gdscplantry.plantry.domain.Pantry.service;
 
 import com.gdscplantry.plantry.domain.Pantry.domain.Product;
 import com.gdscplantry.plantry.domain.Pantry.domain.ProductRepository;
-import com.gdscplantry.plantry.domain.Pantry.dto.product.NewProductItemDto;
-import com.gdscplantry.plantry.domain.Pantry.dto.product.NewProductListDto;
-import com.gdscplantry.plantry.domain.Pantry.dto.product.NewProductListReqDto;
-import com.gdscplantry.plantry.domain.Pantry.dto.product.NewProductReqDto;
+import com.gdscplantry.plantry.domain.Pantry.domain.UserPantryRepository;
+import com.gdscplantry.plantry.domain.Pantry.dto.product.*;
+import com.gdscplantry.plantry.domain.Pantry.error.PantryErrorCode;
 import com.gdscplantry.plantry.domain.User.domain.User;
+import com.gdscplantry.plantry.global.error.exception.AppException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,9 +20,10 @@ import java.util.ArrayList;
 public class ProductService {
     private final ProductRepository productRepository;
     private final PantryService pantryService;
+    private final UserPantryRepository userPantryRepository;
 
     @Transactional
-    public NewProductItemDto addSingleProduct(User user, NewProductReqDto dto) {
+    public ProductItemDto addSingleProduct(User user, NewProductReqDto dto) {
         // Find pantry & Check access rights
         pantryService.validatePantryId(user, dto.getPantry());
 
@@ -34,7 +35,7 @@ public class ProductService {
 
         // Save default Notifications
 
-        return new NewProductItemDto(product, true);
+        return new ProductItemDto(product, true);
     }
 
 
@@ -60,10 +61,30 @@ public class ProductService {
         // Save notification data
 
         // Return dto
-        ArrayList<NewProductItemDto> result = new ArrayList<>();
+        ArrayList<ProductItemDto> result = new ArrayList<>();
         for (Product product : products)
-            result.add(new NewProductItemDto(product, true));
+            result.add(new ProductItemDto(product, true));
 
         return new NewProductListDto(result);
+    }
+
+    @Transactional
+    public ProductItemDto updateProduct(User user, Long productId, UpdateProductReqDto updateProductReqDto) {
+        // Find product
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new AppException(PantryErrorCode.PRODUCT_NOT_FOUND));
+
+        // Check access rights
+        if (!userPantryRepository.existsByPantryIdAndUser(product.getPantryId(), user))
+            throw new AppException(PantryErrorCode.PRODUCT_ACCESS_DENIED);
+
+        // Check Notification
+
+        // Update notification if notification exists
+
+        // Update product data
+        product.updateProduct(updateProductReqDto.toEntity());
+
+        return new ProductItemDto(product, true);
     }
 }

@@ -1,9 +1,6 @@
 package com.gdscplantry.plantry.domain.Pantry.controller;
 
-import com.gdscplantry.plantry.domain.Pantry.dto.product.NewProductItemDto;
-import com.gdscplantry.plantry.domain.Pantry.dto.product.NewProductListDto;
-import com.gdscplantry.plantry.domain.Pantry.dto.product.NewProductListReqDto;
-import com.gdscplantry.plantry.domain.Pantry.dto.product.NewProductReqDto;
+import com.gdscplantry.plantry.domain.Pantry.dto.product.*;
 import com.gdscplantry.plantry.domain.Pantry.service.ProductService;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.global.common.DataResponseDto;
@@ -23,9 +20,9 @@ public class ProductController {
 
     @PostMapping("/single")
     public ResponseEntity<ResponseDto> addNewProduct(@Valid @RequestBody NewProductReqDto newProductReqDto, @RequestAttribute User user) {
-        NewProductItemDto newProductItemDto = productService.addSingleProduct(user, newProductReqDto);
+        ProductItemDto productItemDto = productService.addSingleProduct(user, newProductReqDto);
 
-        return ResponseEntity.status(201).body(DataResponseDto.of(newProductItemDto, 201));
+        return ResponseEntity.status(201).body(DataResponseDto.of(productItemDto, 201));
     }
 
     @PostMapping
@@ -33,5 +30,12 @@ public class ProductController {
         NewProductListDto newProductListDto = productService.addProducts(user, newProductListReqDto);
 
         return ResponseEntity.status(201).body(DataResponseDto.of(newProductListDto, 201));
+    }
+
+    @PatchMapping
+    public ResponseEntity<ResponseDto> updateProduct(@RequestParam("product") Long productId, @Valid @RequestBody UpdateProductReqDto updateProductReqDto, @RequestAttribute User user) {
+        ProductItemDto productItemDto = productService.updateProduct(user, productId, updateProductReqDto);
+
+        return ResponseEntity.status(201).body(DataResponseDto.of(productItemDto, 201));
     }
 }
