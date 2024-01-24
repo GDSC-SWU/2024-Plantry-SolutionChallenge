@@ -53,4 +53,11 @@ public class ProductController {
 
         return ResponseEntity.ok(DataResponseDto.of(deleteProductResDto, 200));
     }
+
+    @GetMapping
+    public ResponseEntity<ResponseDto> readProductList(@RequestParam("pantry") Long pantryId, @RequestParam("filter") String filter, @RequestAttribute User user) {
+        ProductListResDto productListResDto = productService.readProductList(user, pantryId, filter);
+
+        return ResponseEntity.ok(DataResponseDto.of(productListResDto, 200));
+    }
 }
