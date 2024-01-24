@@ -139,7 +139,6 @@ class ProductControllerTest {
                 .andDo(print());
     }
 
-
     @Test
     @DisplayName("Add multiple products <201>")
     void addMultipleProducts() throws Exception {
@@ -326,5 +325,31 @@ class ProductControllerTest {
 
         ArrayList<ConsumedProduct> consumedProducts = consumedProductRepository.findAllByUser(user);
         assertThat(consumedProducts.size()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("Read product list <200>")
+    void readProductList() throws Exception {
+        // given
+        for (int i = 0; i < 3; i++)
+            productRepository.save(new NewProductReqDto(pantries[0], "🍑", names[i], false, "2024-01-30", "Cold", String.valueOf(2)).toEntity());
+        for (int i = 0; i < 3; i++)
+            productRepository.save(new NewProductReqDto(pantries[0], "🍑", names[i], false, "2024-01-24", "Cold", String.valueOf(2)).toEntity());
+        for (int i = 0; i < 3; i++)
+            productRepository.save(new NewProductReqDto(pantries[0], "🍑", names[i], false, "2024-02-15", "Cold", String.valueOf(2)).toEntity());
+
+        // when
+        ResultActions resultActions = mockMvc.perform(get(PANTRY_API_URL)
+                .header("Authorization", "Bearer " + accessToken)
+                .param("pantry", pantries[0].toString())
+                .param("filter", "Cold")
+        );
+
+        // then
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.filter").value("Cold"))
+                .andExpect(jsonPath("$.data.result['-1'].length()").value(3))
+                .andDo(print());
     }
 }
