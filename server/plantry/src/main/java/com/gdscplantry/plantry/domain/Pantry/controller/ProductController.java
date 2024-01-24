@@ -38,4 +38,11 @@ public class ProductController {
 
         return ResponseEntity.status(201).body(DataResponseDto.of(productItemDto, 201));
     }
+
+    @PatchMapping("/count")
+    public ResponseEntity<ResponseDto> updateProductCount(@RequestParam("product") Long productId, @RequestParam("count") Double count, @RequestAttribute User user) {
+        ProductItemDto productItemDto = productService.updateProductCount(user, productId, count);
+
+        return ResponseEntity.status(201).body(DataResponseDto.of(productItemDto, 201));
+    }
 }

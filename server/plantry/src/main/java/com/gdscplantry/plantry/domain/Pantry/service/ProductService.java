@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 @Service
@@ -86,12 +87,29 @@ public class ProductService {
         // Find product & check access rights
         Product product = validateProductId(user, productId);
 
-        // Check Notification
+        // Check Notifications
 
-        // Update notification if notification exists
+        // Update notifications if notifications exist
 
         // Update product data
         product.updateProduct(updateProductReqDto.toEntity());
+
+        return new ProductItemDto(product, true);
+    }
+
+    @Transactional
+    public ProductItemDto updateProductCount(User user, Long productId, Double count) {
+        // Find product & check access rights
+        Product product = validateProductId(user, productId);
+
+        // Count validation (1 / 0.5)
+        if (count % 0.5 != 0 || count <= 0)
+            throw new AppException(PantryErrorCode.INVALID_COUNT);
+
+        // Update product data
+        product.updateCount(BigDecimal.valueOf(count));
+
+        // Check Notifications
 
         return new ProductItemDto(product, true);
     }
