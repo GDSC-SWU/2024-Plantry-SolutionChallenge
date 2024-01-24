@@ -20,29 +20,29 @@ public class ProductController {
 
     @PostMapping("/single")
     public ResponseEntity<ResponseDto> addNewProduct(@Valid @RequestBody NewProductReqDto newProductReqDto, @RequestAttribute User user) {
-        ProductItemDto productItemDto = productService.addSingleProduct(user, newProductReqDto);
+        ProductItemResDto productItemResDto = productService.addSingleProduct(user, newProductReqDto);
 
-        return ResponseEntity.status(201).body(DataResponseDto.of(productItemDto, 201));
+        return ResponseEntity.status(201).body(DataResponseDto.of(productItemResDto, 201));
     }
 
     @PostMapping
     public ResponseEntity<ResponseDto> addNewProducts(@Valid @RequestBody NewProductListReqDto newProductListReqDto, @RequestAttribute User user) {
-        NewProductListDto newProductListDto = productService.addProducts(user, newProductListReqDto);
+        NewProductListResDto newProductListResDto = productService.addProducts(user, newProductListReqDto);
 
-        return ResponseEntity.status(201).body(DataResponseDto.of(newProductListDto, 201));
+        return ResponseEntity.status(201).body(DataResponseDto.of(newProductListResDto, 201));
     }
 
     @PatchMapping
     public ResponseEntity<ResponseDto> updateProduct(@RequestParam("product") Long productId, @Valid @RequestBody UpdateProductReqDto updateProductReqDto, @RequestAttribute User user) {
-        ProductItemDto productItemDto = productService.updateProduct(user, productId, updateProductReqDto);
+        ProductItemResDto productItemResDto = productService.updateProduct(user, productId, updateProductReqDto);
 
-        return ResponseEntity.status(201).body(DataResponseDto.of(productItemDto, 201));
+        return ResponseEntity.status(201).body(DataResponseDto.of(productItemResDto, 201));
     }
 
     @PatchMapping("/count")
     public ResponseEntity<ResponseDto> updateProductCount(@RequestParam("product") Long productId, @RequestParam("count") Double count, @RequestAttribute User user) {
-        ProductItemDto productItemDto = productService.updateProductCount(user, productId, count);
+        ProductItemResDto productItemResDto = productService.updateProductCount(user, productId, count);
 
-        return ResponseEntity.status(201).body(DataResponseDto.of(productItemDto, 201));
+        return ResponseEntity.status(201).body(DataResponseDto.of(productItemResDto, 201));
     }
 }

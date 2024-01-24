@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 @Builder
 @AllArgsConstructor
 @Getter
-public class ProductItemDto {
+public class ProductItemResDto {
     private Long pantryId;
     private Long productId;
     private String icon;
@@ -21,7 +21,7 @@ public class ProductItemDto {
     private Float count;
     private Boolean isNotified;
 
-    public ProductItemDto(Product product, Boolean isNotified) {
+    public ProductItemResDto(Product product, Boolean isNotified) {
         this.pantryId = product.getPantryId();
         this.productId = product.getId();
         this.icon = product.getIcon();

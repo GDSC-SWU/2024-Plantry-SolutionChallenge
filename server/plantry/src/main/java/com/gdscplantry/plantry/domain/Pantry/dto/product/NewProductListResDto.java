@@ -9,6 +9,6 @@ import java.util.ArrayList;
 @Builder
 @AllArgsConstructor
 @Getter
-public class NewProductListDto {
-    private ArrayList<ProductItemDto> result;
+public class NewProductListResDto {
+    private ArrayList<ProductItemResDto> result;
 }
