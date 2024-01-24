@@ -69,6 +69,19 @@ public class Product {
             sellByDate = date;
     }
 
+    public void updateProduct(Product product) {
+        this.icon = product.getIcon();
+        this.name = product.getName();
+        this.storage = product.getStorage();
+        this.count = product.getCount();
+        
+        this.isUseByDate = product.getIsUseByDate();
+        if (isUseByDate)
+            useByDate = product.getUseByDate();
+        else
+            sellByDate = product.getSellByDate();
+    }
+
     public void updateFoodData(Long foodDataId) {
         this.foodDataId = foodDataId;
     }
