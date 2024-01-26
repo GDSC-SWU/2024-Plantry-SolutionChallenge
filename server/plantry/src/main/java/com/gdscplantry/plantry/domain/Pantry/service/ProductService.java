@@ -38,6 +38,17 @@ public class ProductService {
         return product;
     }
 
+    public Map<Long, List<ProductListItemResDto>> groupProductList(LinkedList<ProductListItemResDto> expiredList, LinkedList<ProductListItemResDto> ddayList, LinkedList<ProductListItemResDto> notExpiredList) {
+        Map<Long, List<ProductListItemResDto>> notExpiredMap = notExpiredList.stream()
+                .collect(Collectors.groupingBy(ProductListItemResDto::getDays));
+        Map<Long, List<ProductListItemResDto>> result = new HashMap<>();
+        result.put(-1L, expiredList);
+        result.put(0L, ddayList);
+        result.putAll(notExpiredMap);
+
+        return result;
+    }
+
     @Transactional
     public ProductItemResDto addSingleProduct(User user, NewProductReqDto dto) {
         // Find pantry & Check access rights
@@ -166,12 +177,26 @@ public class ProductService {
         LinkedList<ProductListItemResDto> notExpiredList = productRepository.findAllNotExpiredByPantryIdAndStorageOrderByDateByJPQL(pantryId, storageEnum);
 
         // Group lists by day
-        Map<Long, List<ProductListItemResDto>> notExpiredMap = notExpiredList.stream()
-                .collect(Collectors.groupingBy(ProductListItemResDto::getDays));
-        Map<Long, List<ProductListItemResDto>> result = new HashMap<>();
-        result.put(-1L, expiredList);
-        result.put(0L, ddayList);
-        result.putAll(notExpiredMap);
+        Map<Long, List<ProductListItemResDto>> result = groupProductList(expiredList, ddayList, notExpiredList);
+
+        return new ProductListResDto(filter, result);
+    }
+
+    @Transactional
+    public ProductListResDto productSearchList(User user, Long pantryId, String filter, String query) {
+        // Find pantry & Check access rights
+        pantryService.validatePantryId(user, pantryId);
+
+        // Validate filter string
+        StorageEnum storageEnum = StorageEnum.findByKey(filter);
+
+        // Find product list
+        LinkedList<ProductListItemResDto> expiredList = productRepository.findAllExpiredByPantryIdAndStorageAndQueryByJPQL(pantryId, storageEnum, query);
+        LinkedList<ProductListItemResDto> ddayList = productRepository.findAllDdayByPantryIdAndStorageAndQueryByJPQL(pantryId, storageEnum, query);
+        LinkedList<ProductListItemResDto> notExpiredList = productRepository.findAllNotExpiredByPantryIdAndStorageAndQueryOrderByDateByJPQL(pantryId, storageEnum, query);
+        
+        // Group lists by day
+        Map<Long, List<ProductListItemResDto>> result = groupProductList(expiredList, ddayList, notExpiredList);
 
         return new ProductListResDto(filter, result);
     }

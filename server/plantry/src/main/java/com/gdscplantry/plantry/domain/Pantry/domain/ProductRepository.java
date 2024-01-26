@@ -12,9 +12,9 @@ import java.util.LinkedList;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "select new com.gdscplantry.plantry.domain.Pantry.dto.product.ProductListItemResDto(p) " +
             "from Product p " +
-            "where p.pantryId = :pantryId and p.storage = :storageEnum and p.date > current date " +
+            "where p.pantryId = :pantryId and p.storage = :storage and p.date > current date " +
             "order by p.date desc ")
-    LinkedList<ProductListItemResDto> findAllNotExpiredByPantryIdAndStorageOrderByDateByJPQL(Long pantryId, StorageEnum storageEnum);
+    LinkedList<ProductListItemResDto> findAllNotExpiredByPantryIdAndStorageOrderByDateByJPQL(Long pantryId, StorageEnum storage);
 
     @Query(value = "select new com.gdscplantry.plantry.domain.Pantry.dto.product.ProductListItemResDto(p) " +
             "from Product p " +
@@ -27,4 +27,23 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "where p.pantryId = :pantryId and p.storage = :storage " +
             "and p.date = current date ")
     LinkedList<ProductListItemResDto> findAllDdayByPantryIdAndStorageByJPQL(Long pantryId, StorageEnum storage);
+
+
+    @Query(value = "select new com.gdscplantry.plantry.domain.Pantry.dto.product.ProductListItemResDto(p) " +
+            "from Product p " +
+            "where p.pantryId = :pantryId and p.storage = :storage and p.date > current date and p.name like %:query% " +
+            "order by p.date desc ")
+    LinkedList<ProductListItemResDto> findAllNotExpiredByPantryIdAndStorageAndQueryOrderByDateByJPQL(Long pantryId, StorageEnum storage, String query);
+
+    @Query(value = "select new com.gdscplantry.plantry.domain.Pantry.dto.product.ProductListItemResDto(p) " +
+            "from Product p " +
+            "where p.pantryId = :pantryId and p.storage = :storage and p.name like %:query% " +
+            "and p.date < current date ")
+    LinkedList<ProductListItemResDto> findAllExpiredByPantryIdAndStorageAndQueryByJPQL(Long pantryId, StorageEnum storage, String query);
+
+    @Query(value = "select new com.gdscplantry.plantry.domain.Pantry.dto.product.ProductListItemResDto(p) " +
+            "from Product p " +
+            "where p.pantryId = :pantryId and p.storage = :storage and p.name like %:query% " +
+            "and p.date = current date ")
+    LinkedList<ProductListItemResDto> findAllDdayByPantryIdAndStorageAndQueryByJPQL(Long pantryId, StorageEnum storage, String query);
 }

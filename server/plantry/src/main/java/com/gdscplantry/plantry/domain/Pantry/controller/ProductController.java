@@ -6,6 +6,7 @@ import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.global.common.DataResponseDto;
 import com.gdscplantry.plantry.global.common.ResponseDto;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -57,6 +58,14 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<ResponseDto> readProductList(@RequestParam("pantry") Long pantryId, @RequestParam("filter") String filter, @RequestAttribute User user) {
         ProductListResDto productListResDto = productService.readProductList(user, pantryId, filter);
+
+        return ResponseEntity.ok(DataResponseDto.of(productListResDto, 200));
+    }
+
+    @GetMapping("/query")
+    public ResponseEntity<ResponseDto> searchProductList(@RequestParam("pantry") Long pantryId, @RequestParam("filter") String filter,
+                                                         @RequestParam("query") @NotBlank String query, @RequestAttribute User user) {
+        ProductListResDto productListResDto = productService.productSearchList(user, pantryId, filter, query);
 
         return ResponseEntity.ok(DataResponseDto.of(productListResDto, 200));
     }
