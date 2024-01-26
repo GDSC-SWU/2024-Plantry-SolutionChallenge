@@ -352,4 +352,33 @@ class ProductControllerTest {
                 .andExpect(jsonPath("$.data.result['-1'].length()").value(3))
                 .andDo(print());
     }
+
+
+    @Test
+    @DisplayName("Search product list <200>")
+    void searchProductList() throws Exception {
+        // given
+        for (int i = 0; i < 3; i++)
+            productRepository.save(new NewProductReqDto(pantries[0], "🍑", names[i], false, "2024-01-30", "Cold", String.valueOf(2)).toEntity());
+        for (int i = 0; i < 3; i++)
+            productRepository.save(new NewProductReqDto(pantries[0], "🍑", names[i], false, "2024-01-24", "Freeze", String.valueOf(2)).toEntity());
+        for (int i = 0; i < 3; i++)
+            productRepository.save(new NewProductReqDto(pantries[0], "🍑", names[i], false, "2024-02-15", "Cold", String.valueOf(2)).toEntity());
+        String query = "p";
+
+        // when
+        ResultActions resultActions = mockMvc.perform(get(PANTRY_API_URL + "/query")
+                .header("Authorization", "Bearer " + accessToken)
+                .param("pantry", pantries[0].toString())
+                .param("filter", "Cold")
+                .param("query", query)
+        );
+
+        // then
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.filter").value("Cold"))
+                .andExpect(jsonPath("$.data.result['4'].length()").value(2))
+                .andDo(print());
+    }
 }
