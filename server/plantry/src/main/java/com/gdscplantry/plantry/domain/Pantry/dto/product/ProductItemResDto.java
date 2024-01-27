@@ -24,7 +24,7 @@ public class ProductItemResDto {
     public ProductItemResDto(Product product, Boolean isNotified) {
         this.pantryId = product.getPantryId();
         this.productId = product.getId();
-        this.icon = product.getIcon();
+        this.icon = product.getIcon() == null ? "🍽️" : product.getIcon();
         this.name = product.getName();
         this.isUseByDate = product.getIsUseByDate();
         this.date = product.getDate().format(DateTimeFormatter.ISO_DATE);

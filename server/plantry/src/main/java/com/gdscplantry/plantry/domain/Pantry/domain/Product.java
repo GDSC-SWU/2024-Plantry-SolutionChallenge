@@ -58,7 +58,7 @@ public class Product {
     @Builder
     public Product(@NotNull Long pantryId, String icon, String name, Boolean isUseByDate, LocalDate date, StorageEnum storage, BigDecimal count) {
         this.pantryId = pantryId;
-        this.icon = icon == null ? "🍽️" : icon;
+        this.icon = icon;
         this.name = name;
         this.storage = storage;
         this.count = count;
@@ -77,7 +77,7 @@ public class Product {
 
     public void updateFoodData(FoodDataVo vo) {
         this.foodDataId = vo.getFoodDataId();
-        this.icon = vo.getEmoji();
+        this.icon = this.icon == null && vo.getEmoji() != null ? vo.getEmoji() : this.icon;
         this.useByDateData = vo.getUseByDateData();
     }
 
