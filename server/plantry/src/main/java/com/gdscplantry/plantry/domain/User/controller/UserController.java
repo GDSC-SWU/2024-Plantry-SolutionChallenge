@@ -39,8 +39,8 @@ public class UserController {
     }
 
     @GetMapping("/token")
-    public ResponseEntity<ResponseDto> refreshToken(@RequestHeader("Authorization-Refresh") String refreshToken, @RequestAttribute("user") User user) {
-        GoogleLoginResDto resDto = userService.refreshToken(refreshToken, user);
+    public ResponseEntity<ResponseDto> refreshToken(@RequestHeader("Authorization-Refresh") String refreshToken) {
+        GoogleLoginResDto resDto = userService.refreshToken(refreshToken);
 
         return ResponseEntity.status(201).body(DataResponseDto.of(resDto, 201));
     }
