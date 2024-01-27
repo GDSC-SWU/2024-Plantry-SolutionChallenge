@@ -3,16 +3,19 @@ package com.gdscplantry.plantry.domain.Pantry.service;
 import com.gdscplantry.plantry.domain.Pantry.domain.*;
 import com.gdscplantry.plantry.domain.Pantry.dto.product.*;
 import com.gdscplantry.plantry.domain.Pantry.error.PantryErrorCode;
+import com.gdscplantry.plantry.domain.Pantry.vo.FoodDataVo;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.domain.model.ProductDeleteTypeEnum;
 import com.gdscplantry.plantry.domain.model.StorageEnum;
 import com.gdscplantry.plantry.global.error.exception.AppException;
+import com.gdscplantry.plantry.global.util.FoodDataUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -24,6 +27,7 @@ public class ProductService {
     private final PantryService pantryService;
     private final UserPantryRepository userPantryRepository;
     private final ConsumedProductRepository consumedProductRepository;
+    private final FoodDataUtil foodDataUtil;
 
     @Transactional(readOnly = true)
     public Product validateProductId(User user, Long productId) {
@@ -54,10 +58,14 @@ public class ProductService {
         // Find pantry & Check access rights
         pantryService.validatePantryId(user, dto.getPantry());
 
+        // Entity
+        Product product = dto.toEntity();
+
         // Find from Food Database
+        FoodDataVo foodDataVo = foodDataUtil.findFromFoodDatabase(product.getName(), LocalDate.now());
+        product.updateFoodData(foodDataVo);
 
         // Save data
-        Product product = dto.toEntity();
         productRepository.save(product);
 
         // Save default Notifications
@@ -71,13 +79,17 @@ public class ProductService {
         ArrayList<Product> products = new ArrayList<>();
 
         for (NewProductReqDto req : dto.getList()) {
+            Product product = req.toEntity();
+
             // Find pantry & Check access rights
             pantryService.validatePantryId(user, req.getPantry());
 
             // Find from Food Database
+            FoodDataVo foodDataVo = foodDataUtil.findFromFoodDatabase(req.getName(), LocalDate.now());
+            product.updateFoodData(foodDataVo);
 
             // Add data
-            products.add(req.toEntity());
+            products.add(product);
 
             // Add default Notifications
         }
@@ -194,7 +206,7 @@ public class ProductService {
         LinkedList<ProductListItemResDto> expiredList = productRepository.findAllExpiredByPantryIdAndStorageAndQueryByJPQL(pantryId, storageEnum, query);
         LinkedList<ProductListItemResDto> ddayList = productRepository.findAllDdayByPantryIdAndStorageAndQueryByJPQL(pantryId, storageEnum, query);
         LinkedList<ProductListItemResDto> notExpiredList = productRepository.findAllNotExpiredByPantryIdAndStorageAndQueryOrderByDateByJPQL(pantryId, storageEnum, query);
-        
+
         // Group lists by day
         Map<Long, List<ProductListItemResDto>> result = groupProductList(expiredList, ddayList, notExpiredList);
 
