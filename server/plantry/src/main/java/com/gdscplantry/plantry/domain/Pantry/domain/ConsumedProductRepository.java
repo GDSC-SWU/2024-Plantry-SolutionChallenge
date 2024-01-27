@@ -9,4 +9,6 @@ import java.util.ArrayList;
 @Repository
 public interface ConsumedProductRepository extends JpaRepository<ConsumedProduct, Long> {
     ArrayList<ConsumedProduct> findAllByUser(User user);
+
+    void deleteAllByUser(User user);
 }
