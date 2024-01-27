@@ -1,5 +1,6 @@
 package com.gdscplantry.plantry.domain.Pantry.domain;
 
+import com.gdscplantry.plantry.domain.Pantry.vo.FoodDataVo;
 import com.gdscplantry.plantry.domain.model.StorageEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -74,8 +75,10 @@ public class Product {
         this.date = product.getDate();
     }
 
-    public void updateFoodData(Long foodDataId) {
-        this.foodDataId = foodDataId;
+    public void updateFoodData(FoodDataVo vo) {
+        this.foodDataId = vo.getFoodDataId();
+        this.icon = vo.getEmoji();
+        this.useByDateData = vo.getUseByDateData();
     }
 
     public void updateCount(BigDecimal count) {
