@@ -25,14 +25,8 @@ public class PantryService {
 
     public UserPantry validatePantryId(User user, Long pantryId) {
         // Find pantry
-        UserPantry userPantry = userPantryRepository.findByPantryId(pantryId)
+        return userPantryRepository.findByPantryIdAndUser(pantryId, user)
                 .orElseThrow(() -> new AppException(PantryErrorCode.PANTRY_NOT_FOUND));
-
-        // Check access rights
-        if (!userPantry.getUser().equals(user))
-            throw new AppException(PantryErrorCode.PANTRY_ACCESS_DENIED);
-
-        return userPantry;
     }
 
     public void deletePantryData(UserPantry userPantry) {
