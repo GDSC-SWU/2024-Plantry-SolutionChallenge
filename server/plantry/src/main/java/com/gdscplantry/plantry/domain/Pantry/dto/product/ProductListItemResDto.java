@@ -21,7 +21,7 @@ public class ProductListItemResDto {
     private Boolean isNotified;
 
     public ProductListItemResDto(String icon, String name, Boolean isUseByDate, LocalDate date, BigDecimal count) {
-        this.icon = icon;
+        this.icon = icon == null ? "🍽️" : icon;
         this.name = name;
         this.isUseByDate = isUseByDate;
         this.days = LocalDate.now().until(date, ChronoUnit.DAYS);
@@ -30,7 +30,7 @@ public class ProductListItemResDto {
     }
 
     public ProductListItemResDto(Product product) {
-        this.icon = product.getIcon();
+        this.icon = product.getIcon() == null ? "🍽️" : product.getIcon();
         this.name = product.getName();
         this.isUseByDate = product.getIsUseByDate();
         this.days = LocalDate.now().until(product.getDate(), ChronoUnit.DAYS);
