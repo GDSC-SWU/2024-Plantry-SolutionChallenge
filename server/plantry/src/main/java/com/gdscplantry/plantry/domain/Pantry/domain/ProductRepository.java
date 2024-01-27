@@ -46,4 +46,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "where p.pantryId = :pantryId and p.storage = :storage and p.name like %:query% " +
             "and p.date = current date ")
     LinkedList<ProductListItemResDto> findAllDdayByPantryIdAndStorageAndQueryByJPQL(Long pantryId, StorageEnum storage, String query);
+
+    void deleteAllByPantryId(Long pantryId);
 }

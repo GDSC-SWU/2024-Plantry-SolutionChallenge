@@ -1,9 +1,6 @@
 package com.gdscplantry.plantry.domain.Pantry.service;
 
-import com.gdscplantry.plantry.domain.Pantry.domain.Pantry;
-import com.gdscplantry.plantry.domain.Pantry.domain.PantryRepository;
-import com.gdscplantry.plantry.domain.Pantry.domain.UserPantry;
-import com.gdscplantry.plantry.domain.Pantry.domain.UserPantryRepository;
+import com.gdscplantry.plantry.domain.Pantry.domain.*;
 import com.gdscplantry.plantry.domain.Pantry.dto.pantry.*;
 import com.gdscplantry.plantry.domain.Pantry.error.PantryErrorCode;
 import com.gdscplantry.plantry.domain.User.domain.User;
@@ -22,17 +19,21 @@ import java.util.ArrayList;
 public class PantryService {
     private final PantryRepository pantryRepository;
     private final UserPantryRepository userPantryRepository;
+    private final ProductRepository productRepository;
 
+    @Transactional(readOnly = true)
     public UserPantry validatePantryId(User user, Long pantryId) {
         // Find pantry
         return userPantryRepository.findByPantryIdAndUser(pantryId, user)
                 .orElseThrow(() -> new AppException(PantryErrorCode.PANTRY_NOT_FOUND));
     }
 
+    @Transactional
     public void deletePantryData(UserPantry userPantry) {
         Long pantryId = userPantry.getPantryId();
 
         // Remove product data from pantry
+        productRepository.deleteAllByPantryId(pantryId);
 
         // Remove user pantry data
         userPantryRepository.delete(userPantry);
