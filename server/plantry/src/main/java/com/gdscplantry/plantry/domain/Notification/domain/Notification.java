@@ -28,8 +28,7 @@ public class Notification {
     @ManyToOne
     private User user;
 
-    @Enumerated(EnumType.STRING)
-    private NotificationTypeEnum type;
+    private Integer typeKey;
 
     private String title;
 
@@ -50,7 +49,7 @@ public class Notification {
     @Builder
     public Notification(User user, NotificationTypeEnum type, String title, String body, Long entityId, LocalDateTime notifiedAt) {
         this.user = user;
-        this.type = type;
+        this.typeKey = type.getKey();
         this.title = title;
         this.body = body;
         this.entityId = entityId;
@@ -65,13 +64,13 @@ public class Notification {
 
         return Objects.equals(this.id, notification.getId()) &&
                 Objects.equals(this.user, notification.getUser()) &&
-                Objects.equals(this.type, notification.getType()) &&
+                Objects.equals(this.typeKey, notification.getTypeKey()) &&
                 Objects.equals(this.entityId, notification.getEntityId()) &&
                 Objects.equals(this.notifiedAt, notification.getNotifiedAt());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, type, entityId, notifiedAt);
+        return Objects.hash(id, user, typeKey, entityId, notifiedAt);
     }
 }
