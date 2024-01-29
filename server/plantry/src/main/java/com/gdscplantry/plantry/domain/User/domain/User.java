@@ -35,6 +35,8 @@ public class User {
 
     private String deviceToken;
 
+    private Integer notificationTime;
+
     @CreatedDate
     private LocalDateTime createdAt;
 
@@ -46,6 +48,7 @@ public class User {
         this.email = email;
         this.nickname = nickname;
         this.profileImagePath = profileImagePath;
+        this.notificationTime = 9;
     }
 
     public void updateUser(String profileImagePath, String deviceToken) {
