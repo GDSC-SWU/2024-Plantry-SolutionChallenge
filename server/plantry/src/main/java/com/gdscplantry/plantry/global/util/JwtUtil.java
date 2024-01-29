@@ -5,7 +5,6 @@ import com.gdscplantry.plantry.domain.User.domain.UserRepository;
 import com.gdscplantry.plantry.domain.model.JwtVo;
 import com.gdscplantry.plantry.global.error.GlobalErrorCode;
 import com.gdscplantry.plantry.global.error.exception.AppException;
-import com.gdscplantry.plantry.global.error.exception.FilterException;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
@@ -90,7 +89,7 @@ public class JwtUtil {
 
     // Validate token
     @Transactional(readOnly = true)
-    public User validateToken(boolean isAccessToken, String header) {
+    public User validateToken(boolean isAccessToken, String header) throws AppException {
         // Decode header
         String token = decodeHeader(header);
 
@@ -100,15 +99,15 @@ public class JwtUtil {
 
         // Find user info
         User user = userRepository.findById(((Number) payloads.get(PAYLOAD_KEY_ID)).longValue())
-                .orElseThrow(() -> new FilterException(GlobalErrorCode.USER_NOT_FOUND));
+                .orElseThrow(() -> new AppException(GlobalErrorCode.USER_NOT_FOUND));
 
         // Find login info
         String refresh = redisUtil.opsForValueGet(user.getId() + "_refresh");
 
         if (refresh == null)
-            throw new FilterException(GlobalErrorCode.LOGIN_REQUIRED);
+            throw new AppException(GlobalErrorCode.LOGIN_REQUIRED);
         else if (!isAccessToken && !refresh.equals(token))
-            throw new FilterException(GlobalErrorCode.AUTHORIZATION_FAILED);
+            throw new AppException(GlobalErrorCode.AUTHORIZATION_FAILED);
 
         return user;
     }
