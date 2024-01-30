@@ -1,7 +1,6 @@
 package com.gdscplantry.plantry.domain.Notification.domain;
 
 import com.gdscplantry.plantry.domain.User.domain.User;
-import com.gdscplantry.plantry.domain.model.NotificationTypeEnum;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -47,13 +46,28 @@ public class Notification {
     private LocalDateTime updatedAt;
 
     @Builder
-    public Notification(User user, NotificationTypeEnum type, String title, String body, Long entityId, LocalDateTime notifiedAt) {
+    public Notification(User user, Integer typeKey, String title, String body, Long entityId, LocalDateTime notifiedAt) {
         this.user = user;
-        this.typeKey = type.getKey();
+        this.typeKey = typeKey;
         this.title = title;
         this.body = body;
         this.entityId = entityId;
         this.isChecked = false;
+        this.notifiedAt = notifiedAt;
+    }
+
+    public void updateNotification(Integer typeKey, String title, String body, LocalDateTime notifiedAt) {
+        this.typeKey = typeKey;
+        this.title = title;
+        this.body = body;
+        this.notifiedAt = notifiedAt;
+    }
+
+    public void updateBody(String body) {
+        this.body = body;
+    }
+
+    public void updateNotifiedAt(LocalDateTime notifiedAt) {
         this.notifiedAt = notifiedAt;
     }
 

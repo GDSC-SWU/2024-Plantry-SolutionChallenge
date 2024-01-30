@@ -1,5 +1,8 @@
 package com.gdscplantry.plantry.domain.Pantry.service;
 
+import com.gdscplantry.plantry.domain.Notification.domain.Notification;
+import com.gdscplantry.plantry.domain.Notification.domain.NotificationRepository;
+import com.gdscplantry.plantry.domain.Notification.service.NotificationService;
 import com.gdscplantry.plantry.domain.Pantry.domain.*;
 import com.gdscplantry.plantry.domain.Pantry.dto.pantry.*;
 import com.gdscplantry.plantry.domain.Pantry.error.PantryErrorCode;
@@ -20,6 +23,8 @@ public class PantryService {
     private final PantryRepository pantryRepository;
     private final UserPantryRepository userPantryRepository;
     private final ProductRepository productRepository;
+    private final NotificationRepository notificationRepository;
+    private final NotificationService notificationService;
 
     @Transactional(readOnly = true)
     public UserPantry validatePantryId(User user, Long pantryId) {
@@ -31,6 +36,13 @@ public class PantryService {
     @Transactional
     public void deletePantryData(UserPantry userPantry) {
         Long pantryId = userPantry.getPantryId();
+
+        // Remove pantry share notifications
+        notificationRepository.deleteAllByEntityIdAndTypeKeyGreaterThanEqual(pantryId, 10);
+
+        // Remove exp notifications
+        ArrayList<Notification> notifications = notificationRepository.findAllByPantryIdJoinProductWithJPQL(userPantry.getPantryId());
+        notificationRepository.deleteAll(notifications);
 
         // Remove product data from pantry
         productRepository.deleteAllByPantryId(pantryId);
@@ -81,6 +93,9 @@ public class PantryService {
 
         // Update pantry
         userPantry.updatePantry(dto);
+
+        // Update notifications
+        notificationService.updatePantry(user, userPantry);
 
         return new PantryResDto(userPantry);
     }

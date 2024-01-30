@@ -18,7 +18,7 @@ public class FoodDataVo {
         if (value == null)
             this.useByDateData = null;
         else
-            this.useByDateData = current.plusDays(value);
+            this.useByDateData = current.plusDays(value - 1);
 
     }
 }

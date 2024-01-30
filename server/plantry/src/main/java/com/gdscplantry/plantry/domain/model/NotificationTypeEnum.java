@@ -5,6 +5,9 @@ import com.gdscplantry.plantry.global.error.exception.AppException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 @AllArgsConstructor
 @Getter
 public enum NotificationTypeEnum {
@@ -20,14 +23,25 @@ public enum NotificationTypeEnum {
     EXP_D7(7,
             "[D-7] $name 🚀",
             "$pantry's $name deadline is only 7 days left!"),
-    PANTRY_SHARE_REQ(10, null, null),
-    PANTRY_SHARE_RES(11, null, null),
+    EXP_NON_DDAY(10,
+            "[D-day] $name 🚀",
+            "Today is the deadline for $pantry's $name!\nWith the Use-by Date, We recommend you change it to D$day."),
+    EXP_NON_D1(11,
+            "[D-1] $name 🚀",
+            "$pantry's $name deadline is only 1 days left!\nWith the Use-by Date, We recommend you change it to D$day."),
+    EXP_NON_D3(13,
+            "[D-3] $name 🚀",
+            "$pantry's $name deadline is only 3 days left!\nWith the Use-by Date, We recommend you change it to D$day."),
+    EXP_NON_D7(17,
+            "[D-7] $name 🚀",
+            "$pantry's $name deadline is only 7 days left!\nWith the Use-by Date, We recommend you change it to D$day."),
+    PANTRY_SHARE_REQ(20, null, null),
+    PANTRY_SHARE_RES(21, null, null),
     ;
 
     private final Integer key;
     private final String title;
     private final String body;
-    private static final String addedBody = "\nWith the Use-by Date, We recommend you change it to D-$day.";
 
     public static NotificationTypeEnum findByKey(Integer key) {
         return switch (key) {
@@ -35,35 +49,27 @@ public enum NotificationTypeEnum {
             case 1 -> EXP_D1;
             case 3 -> EXP_D3;
             case 7 -> EXP_D7;
-            case 10 -> PANTRY_SHARE_REQ;
-            case 11 -> PANTRY_SHARE_RES;
+            case 10 -> EXP_NON_DDAY;
+            case 11 -> EXP_NON_D1;
+            case 13 -> EXP_NON_D3;
+            case 17 -> EXP_NON_D7;
+            case 20 -> PANTRY_SHARE_REQ;
+            case 21 -> PANTRY_SHARE_RES;
             default -> throw new AppException(PantryErrorCode.INVALID_DELETE_TYPE);
         };
-    }
-
-    public static String getAddedBody(Integer day) {
-        return addedBody.replace("$day", day.toString());
     }
 
     public static String getTitleStr(String name, Integer key) {
         return findByKey(key).getTitle().replace("$name", name);
     }
 
-    public static String getBodyStr(String pantry, String name, NotificationTypeEnum typeEnum, Boolean isNonUseByDate) {
-        String body = typeEnum.getBody().replace("$pantry", pantry).replace("$name", name);
-        String addedBodyWithDay = getAddedBody(typeEnum.getKey());
-        if (isNonUseByDate)
-            return body + addedBodyWithDay;
-        else
-            return body;
-    }
+    public static String getBodyStr(String pantry, String name, Integer typeKey, LocalDate date, LocalDate useByDateData) {
+        String body = findByKey(typeKey).getBody().replace("$pantry", pantry).replace("$name", name);
 
-    public static String getUpdatedBody(Integer day, String formerBody, Boolean isNonUseByDate) {
-        if (!formerBody.contains("Use-by Date") && isNonUseByDate)
-            return formerBody + getAddedBody(day);
-        else if (formerBody.contains("Use-by Date") && !isNonUseByDate)
-            return formerBody.split("\n")[0];
-        else
-            return formerBody;
+        if (typeKey >= 10 && typeKey <= 17) {
+            long dayLong = (date.until(useByDateData, ChronoUnit.DAYS) + (typeKey - 10)) * -1;
+            return body.replace("$day", dayLong > 0 ? "+" + dayLong : String.valueOf(dayLong));
+        } else
+            return body;
     }
 }
