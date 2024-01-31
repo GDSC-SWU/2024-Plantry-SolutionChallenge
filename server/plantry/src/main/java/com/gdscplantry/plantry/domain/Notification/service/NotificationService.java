@@ -5,7 +5,6 @@ import com.gdscplantry.plantry.domain.Notification.domain.NotificationRepository
 import com.gdscplantry.plantry.domain.Notification.dto.*;
 import com.gdscplantry.plantry.domain.Notification.error.NotificationErrorCode;
 import com.gdscplantry.plantry.domain.Pantry.domain.Product;
-import com.gdscplantry.plantry.domain.Pantry.domain.UserPantryRepository;
 import com.gdscplantry.plantry.domain.Pantry.service.ProductService;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.global.error.exception.AppException;
@@ -22,7 +21,6 @@ import java.util.Collections;
 @Slf4j
 public class NotificationService {
     private final NotificationRepository notificationRepository;
-    private final UserPantryRepository userPantryRepository;
     private final ProductService productService;
 
     final int[] TYPE_KEYS = {0, 1, 3, 7};
