@@ -11,6 +11,7 @@ import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.domain.User.domain.UserRepository;
 import com.gdscplantry.plantry.domain.model.NotificationTypeEnum;
 import com.gdscplantry.plantry.domain.model.StorageEnum;
+import com.gdscplantry.plantry.global.util.NotificationUtil;
 import com.gdscplantry.plantry.global.util.RandomUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -31,9 +32,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @Transactional
 @Slf4j
-class NotificationServiceTest {
+class PantryNotificationServiceTest {
     @Autowired
-    private NotificationService notificationService;
+    private PantryNotificationService pantryNotificationService;
 
     @Autowired
     private UserRepository userRepository;
@@ -156,7 +157,7 @@ class NotificationServiceTest {
         // when
         LocalDateTime[] actualList = new LocalDateTime[8];
         for (int i = 0; i < 8; i++)
-            actualList[i] = notificationService.getNotificationTime(date, TYPE_KEYS[i], userNotificationTime);
+            actualList[i] = NotificationUtil.getNotificationTime(date, TYPE_KEYS[i], userNotificationTime);
 
         // then
         for (int i = 0; i < 8; i++)
@@ -173,7 +174,7 @@ class NotificationServiceTest {
         // when
         int[] actual = new int[8];
         for (int i = 0; i < 8; i++)
-            actual[i] = notificationService.setType(isNonUseByDate, expected[i]);
+            actual[i] = NotificationUtil.setType(isNonUseByDate, expected[i]);
 
         // then
         for (int i = 0; i < 8; i++)
@@ -190,7 +191,7 @@ class NotificationServiceTest {
         // when
         int[] actual = new int[8];
         for (int i = 0; i < 8; i++)
-            actual[i] = notificationService.setType(isNonUseByDate, expected[i]);
+            actual[i] = NotificationUtil.setType(isNonUseByDate, expected[i]);
 
         // then
         for (int i = 0; i < 8; i++)
@@ -208,7 +209,7 @@ class NotificationServiceTest {
         LocalDateTime expectedTime = LocalDateTime.of(2024, 2, 1, 9, 0);
 
         // when
-        ArrayList<Notification> actual = notificationService.addDefaultExpNotification(user, product1);
+        ArrayList<Notification> actual = pantryNotificationService.addDefaultExpNotification(user, product1);
 
         // then
         assertThat(actual.size()).as("Wrong notification size.").isEqualTo(4);
@@ -235,7 +236,7 @@ class NotificationServiceTest {
         LocalDateTime expectedTime = LocalDateTime.of(2024, 2, 1, 9, 0);
 
         // when
-        ArrayList<Notification> actual = notificationService.addDefaultExpNotification(user, product2);
+        ArrayList<Notification> actual = pantryNotificationService.addDefaultExpNotification(user, product2);
 
         // then
         assertThat(actual.size()).as("Wrong notification size.").isEqualTo(4);
@@ -267,7 +268,7 @@ class NotificationServiceTest {
         LocalDateTime expectedTime = LocalDateTime.of(2024, 2, 1, 9, 0);
 
         // when
-        notificationService.updatePantry(user, userPantry);
+        pantryNotificationService.updatePantry(user, userPantry);
 
         // then
         ArrayList<ExpNotificationProductVo> actual = notificationRepository.findAllByUserAndPantryIdJoinProductWithJPQL(user, userPantry.getPantryId());
@@ -300,7 +301,7 @@ class NotificationServiceTest {
         LocalDateTime expectedTime = LocalDateTime.of(2024, 2, 1, 9, 0);
 
         // when
-        notificationService.updateProduct(user, product1);
+        pantryNotificationService.updateProduct(user, product1);
 
         // then
         ArrayList<Notification> actual = notificationRepository.findAllByEntityIdAndTypeKeyLessThan(product1.getId(), 20);
@@ -336,7 +337,7 @@ class NotificationServiceTest {
         LocalDateTime expectedTime3 = LocalDateTime.of(2024, 2, 18, 9, 0);
 
         // when
-        notificationService.updateProduct(user, product2);
+        pantryNotificationService.updateProduct(user, product2);
 
         // then
         ArrayList<Notification> actual = notificationRepository.findAllByEntityIdAndTypeKeyLessThan(product2.getId(), 20);

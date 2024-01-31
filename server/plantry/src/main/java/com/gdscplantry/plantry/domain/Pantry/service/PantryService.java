@@ -2,7 +2,7 @@ package com.gdscplantry.plantry.domain.Pantry.service;
 
 import com.gdscplantry.plantry.domain.Notification.domain.Notification;
 import com.gdscplantry.plantry.domain.Notification.domain.NotificationRepository;
-import com.gdscplantry.plantry.domain.Notification.service.NotificationService;
+import com.gdscplantry.plantry.domain.Notification.service.PantryNotificationService;
 import com.gdscplantry.plantry.domain.Pantry.domain.*;
 import com.gdscplantry.plantry.domain.Pantry.dto.pantry.*;
 import com.gdscplantry.plantry.domain.Pantry.error.PantryErrorCode;
@@ -24,7 +24,7 @@ public class PantryService {
     private final UserPantryRepository userPantryRepository;
     private final ProductRepository productRepository;
     private final NotificationRepository notificationRepository;
-    private final NotificationService notificationService;
+    private final PantryNotificationService pantryNotificationService;
 
     @Transactional(readOnly = true)
     public UserPantry validatePantryId(User user, Long pantryId) {
@@ -95,7 +95,7 @@ public class PantryService {
         userPantry.updatePantry(dto);
 
         // Update notifications
-        notificationService.updatePantry(user, userPantry);
+        pantryNotificationService.updatePantry(user, userPantry);
 
         return new PantryResDto(userPantry);
     }
