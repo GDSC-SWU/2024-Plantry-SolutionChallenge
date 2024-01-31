@@ -67,8 +67,8 @@ public class Notification {
         this.body = body;
     }
 
-    public void updateNotifiedAt(LocalDateTime notifiedAt) {
-        this.notifiedAt = notifiedAt;
+    public void updateIsChecked() {
+        this.isChecked = true;
     }
 
     @Override

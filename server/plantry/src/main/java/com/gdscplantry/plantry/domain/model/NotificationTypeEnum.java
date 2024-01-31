@@ -13,35 +13,44 @@ import java.time.temporal.ChronoUnit;
 public enum NotificationTypeEnum {
     EXP_DDAY(0,
             "[D-day] $name 🚀",
-            "Today is the deadline for $pantry's $name!"),
+            "Today is the deadline for $pantry's $name!",
+            "Exp"),
     EXP_D1(1,
             "[D-1] $name 🚀",
-            "$pantry's $name deadline is only 1 days left!"),
+            "$pantry's $name deadline is only 1 days left!",
+            "Exp"),
     EXP_D3(3,
             "[D-3] $name 🚀",
-            "$pantry's $name deadline is only 3 days left!"),
+            "$pantry's $name deadline is only 3 days left!",
+            "Exp"),
     EXP_D7(7,
             "[D-7] $name 🚀",
-            "$pantry's $name deadline is only 7 days left!"),
+            "$pantry's $name deadline is only 7 days left!",
+            "Exp"),
     EXP_NON_DDAY(10,
             "[D-day] $name 🚀",
-            "Today is the deadline for $pantry's $name!\nWith the Use-by Date, We recommend you change it to D$day."),
+            "Today is the deadline for $pantry's $name!\nWith the Use-by Date, We recommend you change it to D$day.",
+            "Exp"),
     EXP_NON_D1(11,
             "[D-1] $name 🚀",
-            "$pantry's $name deadline is only 1 days left!\nWith the Use-by Date, We recommend you change it to D$day."),
+            "$pantry's $name deadline is only 1 days left!\nWith the Use-by Date, We recommend you change it to D$day.",
+            "Exp"),
     EXP_NON_D3(13,
             "[D-3] $name 🚀",
-            "$pantry's $name deadline is only 3 days left!\nWith the Use-by Date, We recommend you change it to D$day."),
+            "$pantry's $name deadline is only 3 days left!\nWith the Use-by Date, We recommend you change it to D$day.",
+            "Exp"),
     EXP_NON_D7(17,
             "[D-7] $name 🚀",
-            "$pantry's $name deadline is only 7 days left!\nWith the Use-by Date, We recommend you change it to D$day."),
-    PANTRY_SHARE_REQ(20, null, null),
-    PANTRY_SHARE_RES(21, null, null),
+            "$pantry's $name deadline is only 7 days left!\nWith the Use-by Date, We recommend you change it to D$day.",
+            "Exp"),
+    PANTRY_SHARE_REQ(20, null, null, "Pantry Share"),
+    PANTRY_SHARE_RES(21, null, null, "Pantry Share"),
     ;
 
     private final Integer key;
     private final String title;
     private final String body;
+    private final String typeStr;
 
     public static NotificationTypeEnum findByKey(Integer key) {
         return switch (key) {
