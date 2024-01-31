@@ -349,7 +349,7 @@ class ProductControllerTest {
         resultActions
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.filter").value("Cold"))
-                .andExpect(jsonPath("$.data.result['-1'].length()").value(3))
+                .andExpect(jsonPath("$.data.result['-1'].length()").value(6))
                 .andDo(print());
     }
 

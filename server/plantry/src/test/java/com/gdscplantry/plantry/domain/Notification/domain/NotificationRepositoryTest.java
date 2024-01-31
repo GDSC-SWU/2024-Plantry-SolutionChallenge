@@ -284,7 +284,7 @@ class NotificationRepositoryTest {
         addMockExpNotifications();
 
         // when
-        boolean actual = notificationRepository.existsAllByUserAndEntityIdAndTypeKeyLessThan(user, product1.getId(), 20);
+        boolean actual = notificationRepository.existsAllByUserAndEntityIdAndIsOffAndTypeKeyLessThan(user, product1.getId(), false, 20);
 
         // then
         assertThat(actual).as("Wrong existence").isTrue();

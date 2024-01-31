@@ -20,21 +20,21 @@ public class ProductListItemResDto {
     private BigDecimal count;
     private Boolean isNotified;
 
-    public ProductListItemResDto(String icon, String name, Boolean isUseByDate, LocalDate date, BigDecimal count) {
+    public ProductListItemResDto(String icon, String name, Boolean isUseByDate, LocalDate date, BigDecimal count, Boolean isNotified) {
         this.icon = icon == null ? "🍽️" : icon;
         this.name = name;
         this.isUseByDate = isUseByDate;
         this.days = LocalDate.now().until(date, ChronoUnit.DAYS);
         this.count = count;
-        this.isNotified = true;
+        this.isNotified = isNotified;
     }
 
-    public ProductListItemResDto(Product product) {
+    public ProductListItemResDto(Product product, Boolean isNotified) {
         this.icon = product.getIcon() == null ? "🍽️" : product.getIcon();
         this.name = product.getName();
         this.isUseByDate = product.getIsUseByDate();
         this.days = LocalDate.now().until(product.getDate(), ChronoUnit.DAYS);
         this.count = product.getCount();
-        this.isNotified = true;
+        this.isNotified = isNotified;
     }
 }
