@@ -11,7 +11,7 @@ import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.domain.model.NotificationTypeEnum;
 import com.gdscplantry.plantry.global.error.GlobalErrorCode;
 import com.gdscplantry.plantry.global.error.exception.AppException;
-import com.gdscplantry.plantry.global.util.FcmUtil;
+import com.gdscplantry.plantry.global.util.NotificationUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,32 +19,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class NotificationService {
-    private final FcmUtil fcmUtil;
+public class PantryNotificationService {
     private final NotificationRepository notificationRepository;
     private final UserPantryRepository userPantryRepository;
 
-    int[] typeKeys = {0, 1, 3, 7};
-    int[] nonTypeKeys = {10, 11, 13, 17};
-
-    public LocalDateTime getNotificationTime(LocalDate date, Integer typeKey, Integer userNotificationTime) {
-        int days = typeKey >= 10 ? typeKey - 10 : typeKey;
-        return LocalDateTime.of(date.minusDays(days), LocalTime.of(userNotificationTime, 0));
-    }
-
-    public Integer setType(boolean isNonUseByDate, Integer formerKey) {
-        boolean isFormerNon = formerKey >= 10;
-        if (isNonUseByDate == isFormerNon)
-            return formerKey;
-        else
-            return isNonUseByDate ? formerKey + 10 : formerKey - 10;
-    }
+    final int[] TYPE_KEYS = {0, 1, 3, 7};
+    final int[] NON_TYPE_KEYS = {10, 11, 13, 17};
 
     @Transactional(readOnly = true)
     public ArrayList<Notification> addDefaultExpNotification(User user, Product product) {
@@ -57,19 +42,20 @@ public class NotificationService {
                 .orElseThrow(() -> new AppException(PantryErrorCode.PANTRY_NOT_FOUND))
                 .getTitle();
 
-        int[] keys = isNonUseByDate ? nonTypeKeys : typeKeys;
+        int[] keys = isNonUseByDate ? NON_TYPE_KEYS : TYPE_KEYS;
 
         for (int key : keys) {
             LocalDate useByDate = isNonUseByDate ? product.getUseByDateData() : null;
-            LocalDateTime notifiedAt = getNotificationTime(product.getDate(), key, user.getNotificationTime());
-            notificationArrayList.add(Notification.builder()
-                    .user(user)
-                    .typeKey(key)
-                    .title(NotificationTypeEnum.getTitleStr(product.getName(), key))
-                    .body(NotificationTypeEnum.getBodyStr(pantryTitle, product.getName(), key, product.getDate(), useByDate))
-                    .entityId(product.getId())
-                    .notifiedAt(notifiedAt)
-                    .build());
+            LocalDateTime notifiedAt = NotificationUtil.getNotificationTime(product.getDate(), key, user.getNotificationTime());
+            if (notifiedAt.isAfter(LocalDateTime.now()))
+                notificationArrayList.add(Notification.builder()
+                        .user(user)
+                        .typeKey(key)
+                        .title(NotificationTypeEnum.getTitleStr(product.getName(), key))
+                        .body(NotificationTypeEnum.getBodyStr(pantryTitle, product.getName(), key, product.getDate(), useByDate))
+                        .entityId(product.getId())
+                        .notifiedAt(notifiedAt)
+                        .build());
         }
 
         return notificationArrayList;
@@ -107,8 +93,8 @@ public class NotificationService {
 
         for (Notification notification : notifications) {
             LocalDate useByDate = isNonUseByDate ? product.getUseByDateData() : null;
-            Integer newType = setType(isNonUseByDate, notification.getTypeKey());
-            LocalDateTime notifiedAt = getNotificationTime(product.getDate(), newType, notification.getUser().getNotificationTime());
+            Integer newType = NotificationUtil.setType(isNonUseByDate, notification.getTypeKey());
+            LocalDateTime notifiedAt = NotificationUtil.getNotificationTime(product.getDate(), newType, notification.getUser().getNotificationTime());
             String title = NotificationTypeEnum.getTitleStr(product.getName(), newType);
             String body = NotificationTypeEnum.getBodyStr(pantryTitle, product.getName(), newType, product.getDate(), useByDate);
 
