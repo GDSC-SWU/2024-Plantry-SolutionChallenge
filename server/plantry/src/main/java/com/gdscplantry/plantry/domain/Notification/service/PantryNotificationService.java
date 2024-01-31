@@ -80,9 +80,6 @@ public class PantryNotificationService {
     public Boolean updateProduct(User user, Product product) {
         ArrayList<Notification> notifications = notificationRepository.findAllByEntityIdAndTypeKeyLessThan(product.getId(), 20);
 
-        if (notifications.size() == 0)
-            return false;
-
         // Find pantry title
         String pantryTitle = userPantryRepository.findByPantryIdAndUser(product.getPantryId(), user)
                 .orElseThrow(() -> new AppException(GlobalErrorCode.INTERNAL_SERVER_ERROR))
@@ -99,8 +96,10 @@ public class PantryNotificationService {
             String body = NotificationTypeEnum.getBodyStr(pantryTitle, product.getName(), newType, product.getDate(), useByDate);
 
             notification.updateNotification(newType, title, body, notifiedAt);
+            notification.updateIsDeleted(notifiedAt.isBefore(LocalDateTime.now()));
         }
 
-        return true;
+        return notificationRepository.existsAllByUserAndEntityIdAndIsOffAndTypeKeyLessThan(user, product.getId(), false, 20);
     }
+
 }

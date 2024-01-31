@@ -74,7 +74,7 @@ public class ProductService {
         productRepository.save(product);
 
         // Save default Notifications
-        pantryNotificationService.addDefaultExpNotification(user, product);
+        notificationRepository.saveAll(pantryNotificationService.addDefaultExpNotification(user, product));
 
         return new ProductItemResDto(product, true);
     }
@@ -143,7 +143,7 @@ public class ProductService {
         product.updateCount(BigDecimal.valueOf(count));
 
         // Check Notifications
-        boolean isNotified = notificationRepository.existsAllByUserAndEntityIdAndTypeKeyLessThan(user, productId, 20);
+        boolean isNotified = notificationRepository.existsAllByUserAndEntityIdAndIsOffAndTypeKeyLessThan(user, productId, false, 20);
 
         return new ProductItemResDto(product, isNotified);
     }
@@ -198,9 +198,9 @@ public class ProductService {
         StorageEnum storageEnum = StorageEnum.findByKey(filter);
 
         // Find product list
-        LinkedList<ProductListItemResDto> expiredList = productRepository.findAllExpiredByPantryIdAndStorageByJPQL(pantryId, storageEnum);
-        LinkedList<ProductListItemResDto> ddayList = productRepository.findAllDdayByPantryIdAndStorageByJPQL(pantryId, storageEnum);
-        LinkedList<ProductListItemResDto> notExpiredList = productRepository.findAllNotExpiredByPantryIdAndStorageOrderByDateByJPQL(pantryId, storageEnum);
+        LinkedList<ProductListItemResDto> expiredList = productRepository.findAllExpiredByPantryIdAndStorageByJPQL(user, pantryId, storageEnum);
+        LinkedList<ProductListItemResDto> ddayList = productRepository.findAllDdayByPantryIdAndStorageByJPQL(user, pantryId, storageEnum);
+        LinkedList<ProductListItemResDto> notExpiredList = productRepository.findAllNotExpiredByPantryIdAndStorageOrderByDateByJPQL(user, pantryId, storageEnum);
 
         // Group lists by day
         Map<Long, List<ProductListItemResDto>> result = groupProductList(expiredList, ddayList, notExpiredList);
@@ -217,9 +217,9 @@ public class ProductService {
         StorageEnum storageEnum = StorageEnum.findByKey(filter);
 
         // Find product list
-        LinkedList<ProductListItemResDto> expiredList = productRepository.findAllExpiredByPantryIdAndStorageAndQueryByJPQL(pantryId, storageEnum, query);
-        LinkedList<ProductListItemResDto> ddayList = productRepository.findAllDdayByPantryIdAndStorageAndQueryByJPQL(pantryId, storageEnum, query);
-        LinkedList<ProductListItemResDto> notExpiredList = productRepository.findAllNotExpiredByPantryIdAndStorageAndQueryOrderByDateByJPQL(pantryId, storageEnum, query);
+        LinkedList<ProductListItemResDto> expiredList = productRepository.findAllExpiredByPantryIdAndStorageAndQueryByJPQL(user, pantryId, storageEnum, query);
+        LinkedList<ProductListItemResDto> ddayList = productRepository.findAllDdayByPantryIdAndStorageAndQueryByJPQL(user, pantryId, storageEnum, query);
+        LinkedList<ProductListItemResDto> notExpiredList = productRepository.findAllNotExpiredByPantryIdAndStorageAndQueryOrderByDateByJPQL(user, pantryId, storageEnum, query);
 
         // Group lists by day
         Map<Long, List<ProductListItemResDto>> result = groupProductList(expiredList, ddayList, notExpiredList);

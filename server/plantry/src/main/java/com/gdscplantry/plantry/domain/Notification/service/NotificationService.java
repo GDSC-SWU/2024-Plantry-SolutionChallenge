@@ -8,16 +8,12 @@ import com.gdscplantry.plantry.domain.Pantry.domain.Product;
 import com.gdscplantry.plantry.domain.Pantry.domain.UserPantryRepository;
 import com.gdscplantry.plantry.domain.Pantry.service.ProductService;
 import com.gdscplantry.plantry.domain.User.domain.User;
-import com.gdscplantry.plantry.domain.model.NotificationTypeEnum;
-import com.gdscplantry.plantry.global.error.GlobalErrorCode;
 import com.gdscplantry.plantry.global.error.exception.AppException;
-import com.gdscplantry.plantry.global.util.NotificationUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -61,59 +57,20 @@ public class NotificationService {
         if (validateReqList(list))
             throw new AppException(NotificationErrorCode.INVALID_PRODUCT_NOTIFICATION_REQ);
 
-        // Find notifications
+        // Find all notifications of the product
         ArrayList<Notification> notifications = notificationRepository.findAllByEntityIdAndUserAndTypeKeyLessThan(productId, user, 20);
 
-        // If req list is empty
         if (list.size() == 0) {
-            if (notifications.size() > 0)
-                notificationRepository.deleteAll(notifications);
-            return new ProductNotificationListResDto(list);
-        }
-
-        // Find pantry title
-        String pantryTitle = userPantryRepository.findByPantryIdAndUser(product.getPantryId(), user)
-                .orElseThrow(() -> new AppException(GlobalErrorCode.INTERNAL_SERVER_ERROR))
-                .getTitle();
-
-        ArrayList<Notification> addList = new ArrayList<>();
-        ArrayList<Notification> deleteList = new ArrayList<>();
-
-        // If use-by-date recommendation needed
-        boolean isNonUseByDate = !product.getIsUseByDate() && product.getUseByDateData() != null;
-
-        // Add or Delete notifications
-        int index = 0;
-        for (int i = 0; i < 4; i++) {
-            int typeKey = TYPE_KEYS[i];
-            Notification notification = null;
-            if (index < 4)
-                notification = (notifications.get(index)).getTypeKey() == typeKey || notifications.get(index).getTypeKey() == typeKey + 10 ? notifications.get(index++) : null;
-            if (list.contains(typeKey) == (notification != null))
-                continue;
-
-            if (list.contains(typeKey)) {
-                // Add notification
-                LocalDate useByDate = isNonUseByDate ? product.getUseByDateData() : null;
-                int key = isNonUseByDate ? typeKey : typeKey + 10;
-                addList.add(Notification.builder()
-                        .user(user)
-                        .typeKey(key)
-                        .title(NotificationTypeEnum.getTitleStr(product.getName(), key))
-                        .body(NotificationTypeEnum.getBodyStr(pantryTitle, product.getName(), key, product.getDate(), useByDate))
-                        .entityId(product.getId())
-                        .notifiedAt(NotificationUtil.getNotificationTime(product.getDate(), key, user.getNotificationTime()))
-                        .build());
-            } else {
-                // Delete notification
-                deleteList.add(notification);
+            // If req list is empty
+            for (Notification notification : notifications)
+                notification.updateIsOff(true);
+        } else {
+            // Set notification off
+            for (Notification notification : notifications) {
+                int type = notification.getTypeKey() >= 10 ? notification.getTypeKey() - 10 : notification.getTypeKey();
+                notification.updateIsOff(!list.contains(type));
             }
         }
-
-        if (addList.size() > 0)
-            notificationRepository.saveAll(addList);
-        if (deleteList.size() > 0)
-            notificationRepository.deleteAll(deleteList);
 
         return new ProductNotificationListResDto(list);
     }
