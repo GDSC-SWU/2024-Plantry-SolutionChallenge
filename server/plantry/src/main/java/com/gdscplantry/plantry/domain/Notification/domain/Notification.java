@@ -37,6 +37,10 @@ public class Notification {
 
     private Boolean isChecked;
 
+    private Boolean isOff;
+
+    private Boolean isDeleted;
+
     private LocalDateTime notifiedAt;
 
     @CreatedDate
@@ -46,13 +50,15 @@ public class Notification {
     private LocalDateTime updatedAt;
 
     @Builder
-    public Notification(User user, Integer typeKey, String title, String body, Long entityId, LocalDateTime notifiedAt) {
+    public Notification(User user, Integer typeKey, String title, String body, Long entityId, Boolean isDeleted, LocalDateTime notifiedAt) {
         this.user = user;
         this.typeKey = typeKey;
         this.title = title;
         this.body = body;
         this.entityId = entityId;
         this.isChecked = false;
+        this.isOff = false;
+        this.isDeleted = isDeleted == null ? notifiedAt.isBefore(LocalDateTime.now()) : isDeleted;
         this.notifiedAt = notifiedAt;
     }
 
@@ -69,6 +75,14 @@ public class Notification {
 
     public void updateIsChecked() {
         this.isChecked = true;
+    }
+
+    public void updateIsOff(boolean isOff) {
+        this.isOff = isOff;
+    }
+
+    public void updateIsDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     @Override
