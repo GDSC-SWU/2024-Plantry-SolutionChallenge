@@ -23,11 +23,14 @@ public class Pantry {
 
     private String uuid;
 
+    private String code;
+
     @CreatedDate
     private LocalDateTime createdAt;
 
-    public Pantry(String uuid) {
+    public Pantry(String uuid, String code) {
         this.uuid = uuid;
+        this.code = code;
     }
 
     @Override

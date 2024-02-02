@@ -68,8 +68,14 @@ public class PantryService {
 
     @Transactional
     public PantryResDto addPantry(User user, NewPantryReqDto dto) {
+        // Set share code unique
+        String code;
+        do {
+            code = RandomUtil.getRandomNickname();
+        } while (!pantryRepository.existsAllByCode(code));
+
         // Add pantry
-        Pantry pantry = pantryRepository.save(new Pantry(RandomUtil.getUuid()));
+        Pantry pantry = pantryRepository.save(new Pantry(RandomUtil.getUuid(), code));
 
         // Set default color if color is null
         String color = dto.getColor() == null ? "FFA5A0" : dto.getColor();
@@ -80,6 +86,7 @@ public class PantryService {
                 .pantryId(pantry.getId())
                 .title(dto.getTitle())
                 .color(color)
+                .isOwner(true)
                 .build();
         userPantryRepository.save(userPantry);
 
