@@ -43,7 +43,7 @@ public class ScheduledNotificationService {
         LocalDateTime outdatedNotifiedAt = LocalDateTime.now().minusDays(7);
 
         // Find data
-        ArrayList<Notification> notifications = notificationRepository.findAllByNotifiedAtLessThanEqualAndIsChecked(outdatedNotifiedAt, true);
+        ArrayList<Notification> notifications = notificationRepository.findAllByNotifiedAtLessThanEqualAndIsCheckedAndIsDeleted(outdatedNotifiedAt, true, false);
 
         // Set isDeleted true
         for (Notification notification : notifications) {
