@@ -6,9 +6,10 @@ import java.util.UUID;
 
 @Component
 public class RandomUtil {
+    static final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
     static public String getRandomNickname() {
         StringBuilder nickname = new StringBuilder();
-        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
         for (int i = 0; i < 8; i++)
             nickname.append(chars.charAt((int) (Math.random() * chars.length())));
