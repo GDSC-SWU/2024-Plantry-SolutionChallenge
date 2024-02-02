@@ -2,11 +2,13 @@ package com.gdscplantry.plantry.domain.Notification.domain;
 
 import com.gdscplantry.plantry.domain.Notification.dto.NotificationItemResDto;
 import com.gdscplantry.plantry.domain.Notification.vo.ExpNotificationProductVo;
+import com.gdscplantry.plantry.domain.Notification.vo.MessageVo;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Repository
@@ -54,4 +56,13 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
             "from Notification n where n.user = :user and n.isOff = false and n.isDeleted = false and n.notifiedAt < current time " +
             "order by n.notifiedAt desc ")
     ArrayList<NotificationItemResDto> findAllByUserWithJPQL(User user);
+
+    // Find all messages to send with notifiedAt
+    @Query(value = "select new com.gdscplantry.plantry.domain.Notification.vo.MessageVo(u.id, u.deviceToken, n.typeKey, n.title, n.body, n.entityId) " +
+            "from Notification n join User u on n.user = u " +
+            "where n.notifiedAt = :notifiedAt and n.isOff = false and n.isDeleted = false ")
+    ArrayList<MessageVo> findAllByNotifiedAtWithJPQL(LocalDateTime notifiedAt);
+
+    // Find all outdated data with notifiedAt - 7days
+    ArrayList<Notification> findAllByNotifiedAtLessThanEqualAndIsChecked(LocalDateTime notifiedAt, Boolean isChecked);
 }
