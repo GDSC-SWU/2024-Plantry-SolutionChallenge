@@ -2,7 +2,7 @@ package com.gdscplantry.plantry.domain.Pantry.service;
 
 import com.gdscplantry.plantry.domain.Notification.domain.Notification;
 import com.gdscplantry.plantry.domain.Notification.domain.NotificationRepository;
-import com.gdscplantry.plantry.domain.Notification.service.PantryNotificationService;
+import com.gdscplantry.plantry.domain.Notification.service.RelatedNotificationService;
 import com.gdscplantry.plantry.domain.Pantry.domain.*;
 import com.gdscplantry.plantry.domain.Pantry.dto.product.*;
 import com.gdscplantry.plantry.domain.Pantry.error.PantryErrorCode;
@@ -31,7 +31,7 @@ public class ProductService {
     private final UserPantryRepository userPantryRepository;
     private final ConsumedProductRepository consumedProductRepository;
     private final FoodDataUtil foodDataUtil;
-    private final PantryNotificationService pantryNotificationService;
+    private final RelatedNotificationService relatedNotificationService;
     private final NotificationRepository notificationRepository;
 
     @Transactional(readOnly = true)
@@ -74,7 +74,7 @@ public class ProductService {
         productRepository.save(product);
 
         // Save default Notifications
-        notificationRepository.saveAll(pantryNotificationService.addDefaultExpNotification(user, product));
+        notificationRepository.saveAll(relatedNotificationService.addDefaultExpNotification(user, product));
 
         return new ProductItemResDto(product, true);
     }
@@ -99,7 +99,7 @@ public class ProductService {
             products.add(product);
 
             // Add default Notifications
-            notifications.addAll(pantryNotificationService.addDefaultExpNotification(user, product));
+            notifications.addAll(relatedNotificationService.addDefaultExpNotification(user, product));
         }
 
         // Save product data
@@ -125,7 +125,7 @@ public class ProductService {
         product.updateProduct(updateProductReqDto.toEntity());
 
         // Check and update notifications
-        boolean isNotified = pantryNotificationService.updateProduct(user, product);
+        boolean isNotified = relatedNotificationService.updateProduct(user, product);
 
         return new ProductItemResDto(product, isNotified);
     }

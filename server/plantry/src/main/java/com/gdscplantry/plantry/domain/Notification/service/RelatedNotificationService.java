@@ -24,7 +24,7 @@ import java.util.ArrayList;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class PantryNotificationService {
+public class RelatedNotificationService {
     private final NotificationRepository notificationRepository;
     private final UserPantryRepository userPantryRepository;
 
