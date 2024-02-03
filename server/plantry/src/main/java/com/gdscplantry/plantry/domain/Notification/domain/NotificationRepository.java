@@ -52,6 +52,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     // Find user's all exp notifications of the product with product id (Off included)
     ArrayList<Notification> findAllByEntityIdAndUserAndTypeKeyLessThan(Long entityId, User user, Integer typeKey);
 
+    // Find user's sent notification list
     @Query(value = "select new com.gdscplantry.plantry.domain.Notification.dto.NotificationItemResDto(n) " +
             "from Notification n where n.user = :user and n.isOff = false and n.isDeleted = false and n.notifiedAt < current time " +
             "order by n.notifiedAt desc ")
@@ -66,6 +67,6 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     // Find all outdated data with notifiedAt - 7days
     ArrayList<Notification> findAllByNotifiedAtLessThanEqualAndIsCheckedAndIsDeleted(LocalDateTime notifiedAt, Boolean isChecked, Boolean isDeleted);
 
-    // Find all notifications not notified yet
+    // Find user's all notifications not notified yet
     ArrayList<Notification> findAllByUserAndNotifiedAtIsGreaterThanEqual(User user, LocalDateTime notifiedAt);
 }
