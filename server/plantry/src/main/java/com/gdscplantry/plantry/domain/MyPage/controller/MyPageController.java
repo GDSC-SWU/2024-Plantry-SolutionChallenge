@@ -9,9 +9,7 @@ import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.global.common.DataResponseDto;
 import com.gdscplantry.plantry.global.common.ResponseDto;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -42,8 +40,8 @@ public class MyPageController {
     }
 
     @PatchMapping("/notif")
-    public ResponseEntity<ResponseDto> updateNotificationTime(@RequestParam @Valid @NotBlank(message = "Time value required.")
-                                                              @Pattern(regexp = "^[1-9]{1}$|^[1]{1}\\d{1}$|^[2]{1}[0-4]{1}$", message = "Invalid time value. (1-24)")
+    public ResponseEntity<ResponseDto> updateNotificationTime(@RequestParam @Valid @NotNull(message = "Time value required.")
+                                                              @Min(value = 1, message = "Invalid time. (1-24)") @Max(value = 24, message = "Invalid time. (1-24)")
                                                               Integer time,
                                                               @RequestAttribute User user) {
         NotificationTimeResDto notificationTimeResDto = myPageService.updateNotificationTime(user, time);
