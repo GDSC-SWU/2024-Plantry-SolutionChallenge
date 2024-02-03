@@ -14,7 +14,7 @@ public class TermsItemVo {
 
     public TermsItemVo(LocalDateTime createdAt, LocalDateTime updatedAt, String title, String content) {
         this.createdAt = createdAt.format(DateTimeFormatter.ISO_DATE_TIME);
-        this.updatedAt = updatedAt.format(DateTimeFormatter.ISO_DATE_TIME);
+        this.updatedAt = updatedAt == null ? null : updatedAt.format(DateTimeFormatter.ISO_DATE_TIME);
         this.title = title;
         this.content = content;
     }
