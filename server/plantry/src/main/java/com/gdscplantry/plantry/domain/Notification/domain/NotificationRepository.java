@@ -65,4 +65,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
 
     // Find all outdated data with notifiedAt - 7days
     ArrayList<Notification> findAllByNotifiedAtLessThanEqualAndIsCheckedAndIsDeleted(LocalDateTime notifiedAt, Boolean isChecked, Boolean isDeleted);
+
+    // Find all notifications not notified yet
+    ArrayList<Notification> findAllByUserAndNotifiedAtIsGreaterThanEqual(User user, LocalDateTime notifiedAt);
 }

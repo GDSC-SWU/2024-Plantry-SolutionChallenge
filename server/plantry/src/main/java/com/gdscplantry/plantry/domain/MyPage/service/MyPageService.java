@@ -4,6 +4,7 @@ import com.gdscplantry.plantry.domain.MyPage.dto.NotificationTimeResDto;
 import com.gdscplantry.plantry.domain.MyPage.dto.UpdateNicknameResDto;
 import com.gdscplantry.plantry.domain.MyPage.dto.UserProfileResDto;
 import com.gdscplantry.plantry.domain.MyPage.error.MyPageErrorCode;
+import com.gdscplantry.plantry.domain.Notification.service.RelatedNotificationService;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.domain.User.domain.UserRepository;
 import com.gdscplantry.plantry.global.error.exception.AppException;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class MyPageService {
     private final UserRepository userRepository;
+    private final RelatedNotificationService relatedNotificationService;
 
     public UserProfileResDto getUserProfile(User user) {
         return new UserProfileResDto(user.getEmail(), user.getNickname(), user.getProfileImagePath());
@@ -38,6 +40,9 @@ public class MyPageService {
     public NotificationTimeResDto updateNotificationTime(User user, Integer time) {
         // Update data
         user.updateNotificationTime(time);
+
+        // Update notification data
+        relatedNotificationService.updateNotificationTime(user, time);
 
         return new NotificationTimeResDto(time);
     }
