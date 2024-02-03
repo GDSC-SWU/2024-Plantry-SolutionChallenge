@@ -50,7 +50,7 @@ public class MyPageController {
     }
 
     @GetMapping("/terms")
-    public ResponseEntity<ResponseDto> getTerms(@RequestParam @Valid @NotBlank(message = "Type required.") String type, @RequestAttribute User user) {
+    public ResponseEntity<ResponseDto> getTerms(@RequestParam @Valid @NotBlank(message = "Type required.") String type) {
         TermsResDto termsResDto = myPageService.getTerms(type);
 
         return ResponseEntity.ok(DataResponseDto.of(termsResDto, 200));
