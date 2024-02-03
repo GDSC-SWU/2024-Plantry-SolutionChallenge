@@ -60,6 +60,10 @@ public class User {
         this.nickname = nickname;
     }
 
+    public void updateNotificationTime(Integer notificationTime) {
+        this.notificationTime = notificationTime;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;

@@ -1,5 +1,6 @@
 package com.gdscplantry.plantry.domain.MyPage.service;
 
+import com.gdscplantry.plantry.domain.MyPage.dto.NotificationTimeResDto;
 import com.gdscplantry.plantry.domain.MyPage.dto.UpdateNicknameResDto;
 import com.gdscplantry.plantry.domain.MyPage.dto.UserProfileResDto;
 import com.gdscplantry.plantry.domain.MyPage.error.MyPageErrorCode;
@@ -31,5 +32,13 @@ public class MyPageService {
         user.updateNickname(nickname);
 
         return new UpdateNicknameResDto(nickname);
+    }
+
+    @Transactional
+    public NotificationTimeResDto updateNotificationTime(User user, Integer time) {
+        // Update data
+        user.updateNotificationTime(time);
+
+        return new NotificationTimeResDto(time);
     }
 }
