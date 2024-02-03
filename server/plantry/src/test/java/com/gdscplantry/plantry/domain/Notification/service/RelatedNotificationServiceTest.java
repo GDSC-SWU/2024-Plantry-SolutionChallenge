@@ -32,9 +32,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @Transactional
 @Slf4j
-class PantryNotificationServiceTest {
+class RelatedNotificationServiceTest {
     @Autowired
-    private PantryNotificationService pantryNotificationService;
+    private RelatedNotificationService relatedNotificationService;
 
     @Autowired
     private UserRepository userRepository;
@@ -77,7 +77,7 @@ class PantryNotificationServiceTest {
 
     void addMockProduct() {
         // Save pantry
-        pantry = pantryRepository.save(new Pantry(RandomUtil.getUuid()));
+        pantry = pantryRepository.save(new Pantry(RandomUtil.getUuid(), RandomUtil.getRandomNickname()));
         userPantry = userPantryRepository.save(UserPantry.builder()
                 .user(user)
                 .pantryId(pantry.getId())
@@ -209,7 +209,7 @@ class PantryNotificationServiceTest {
         LocalDateTime expectedTime = LocalDateTime.of(2024, 2, 1, 9, 0);
 
         // when
-        ArrayList<Notification> actual = pantryNotificationService.addDefaultExpNotification(user, product1);
+        ArrayList<Notification> actual = relatedNotificationService.addDefaultExpNotification(user, product1);
 
         // then
         assertThat(actual.size()).as("Wrong notification size.").isEqualTo(4);
@@ -236,7 +236,7 @@ class PantryNotificationServiceTest {
         LocalDateTime expectedTime = LocalDateTime.of(2024, 2, 1, 9, 0);
 
         // when
-        ArrayList<Notification> actual = pantryNotificationService.addDefaultExpNotification(user, product2);
+        ArrayList<Notification> actual = relatedNotificationService.addDefaultExpNotification(user, product2);
 
         // then
         assertThat(actual.size()).as("Wrong notification size.").isEqualTo(4);
@@ -268,7 +268,7 @@ class PantryNotificationServiceTest {
         LocalDateTime expectedTime = LocalDateTime.of(2024, 2, 1, 9, 0);
 
         // when
-        pantryNotificationService.updatePantry(user, userPantry);
+        relatedNotificationService.updatePantry(user, userPantry);
 
         // then
         ArrayList<ExpNotificationProductVo> actual = notificationRepository.findAllByUserAndPantryIdJoinProductWithJPQL(user, userPantry.getPantryId());
@@ -301,7 +301,7 @@ class PantryNotificationServiceTest {
         LocalDateTime expectedTime = LocalDateTime.of(2024, 2, 1, 9, 0);
 
         // when
-        pantryNotificationService.updateProduct(user, product1);
+        relatedNotificationService.updateProduct(user, product1);
 
         // then
         ArrayList<Notification> actual = notificationRepository.findAllByEntityIdAndTypeKeyLessThan(product1.getId(), 20);
@@ -337,7 +337,7 @@ class PantryNotificationServiceTest {
         LocalDateTime expectedTime3 = LocalDateTime.of(2024, 2, 18, 9, 0);
 
         // when
-        pantryNotificationService.updateProduct(user, product2);
+        relatedNotificationService.updateProduct(user, product2);
 
         // then
         ArrayList<Notification> actual = notificationRepository.findAllByEntityIdAndTypeKeyLessThan(product2.getId(), 20);
