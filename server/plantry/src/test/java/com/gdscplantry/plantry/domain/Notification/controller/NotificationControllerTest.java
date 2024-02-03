@@ -120,7 +120,7 @@ class NotificationControllerTest {
 
     void addMockProduct() {
         // Save pantry
-        pantry = pantryRepository.save(new Pantry(RandomUtil.getUuid()));
+        pantry = pantryRepository.save(new Pantry(RandomUtil.getUuid(), RandomUtil.getRandomNickname()));
         userPantry = userPantryRepository.save(UserPantry.builder()
                 .user(user)
                 .pantryId(pantry.getId())

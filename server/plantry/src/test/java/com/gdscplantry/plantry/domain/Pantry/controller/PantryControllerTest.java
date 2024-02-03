@@ -95,7 +95,7 @@ class PantryControllerTest {
         Long[] pantries = new Long[3];
 
         for (int i = 0; i < 3; i++) {
-            pantries[i] = pantryRepository.save(new Pantry(RandomUtil.getUuid())).getId();
+            pantries[i] = pantryRepository.save(new Pantry(RandomUtil.getUuid(), RandomUtil.getRandomNickname())).getId();
             userPantryRepository.save(
                     UserPantry.builder()
                             .user(user)
@@ -149,7 +149,7 @@ class PantryControllerTest {
         // given
         String title = "new_pantry";
         String updatedTitle = "old_pantry";
-        Long pantryId = pantryRepository.save(new Pantry(RandomUtil.getUuid())).getId();
+        Long pantryId = pantryRepository.save(new Pantry(RandomUtil.getUuid(), RandomUtil.getRandomNickname())).getId();
         userPantryRepository.save(
                 UserPantry.builder()
                         .user(user)
@@ -187,7 +187,7 @@ class PantryControllerTest {
     void deletePantry_200() throws Exception {
         // given
         String title = "new_pantry";
-        Long pantryId = pantryRepository.save(new Pantry(RandomUtil.getUuid())).getId();
+        Long pantryId = pantryRepository.save(new Pantry(RandomUtil.getUuid(), RandomUtil.getRandomNickname())).getId();
         userPantryRepository.save(
                 UserPantry.builder()
                         .user(user)
@@ -216,7 +216,7 @@ class PantryControllerTest {
     void setPantryMarked_201() throws Exception {
         // given
         String title = "new_pantry";
-        Long pantryId = pantryRepository.save(new Pantry(RandomUtil.getUuid())).getId();
+        Long pantryId = pantryRepository.save(new Pantry(RandomUtil.getUuid(), RandomUtil.getRandomNickname())).getId();
         userPantryRepository.save(
                 UserPantry.builder()
                         .user(user)
