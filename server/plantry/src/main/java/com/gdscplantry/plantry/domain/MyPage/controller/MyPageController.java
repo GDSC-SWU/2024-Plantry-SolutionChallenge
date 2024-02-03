@@ -49,7 +49,7 @@ public class MyPageController {
         return ResponseEntity.status(201).body(DataResponseDto.of(notificationTimeResDto, 201));
     }
 
-    @GetMapping("/term")
+    @GetMapping("/terms")
     public ResponseEntity<ResponseDto> getTerms(@RequestParam @Valid @NotBlank(message = "Type required.") String type, @RequestAttribute User user) {
         TermsResDto termsResDto = myPageService.getTerms(type);
 
