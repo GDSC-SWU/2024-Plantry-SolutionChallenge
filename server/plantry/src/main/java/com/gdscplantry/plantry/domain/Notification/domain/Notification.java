@@ -85,6 +85,10 @@ public class Notification {
         this.isDeleted = isDeleted;
     }
 
+    public void updateNotifiedAt(LocalDateTime notifiedAt) {
+        this.notifiedAt = notifiedAt;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;

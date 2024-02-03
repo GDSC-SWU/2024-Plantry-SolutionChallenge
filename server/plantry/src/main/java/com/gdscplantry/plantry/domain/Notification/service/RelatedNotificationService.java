@@ -102,4 +102,14 @@ public class RelatedNotificationService {
         return notificationRepository.existsAllByUserAndEntityIdAndIsOffAndTypeKeyLessThan(user, product.getId(), false, 20);
     }
 
+    @Transactional
+    public void updateNotificationTime(User user, Integer time) {
+        // Find all notifications not notified yet
+        LocalDateTime now = LocalDateTime.now();
+        ArrayList<Notification> notifications = notificationRepository.findAllByUserAndNotifiedAtIsGreaterThanEqual(user, now);
+
+        // Update data
+        for (Notification notification : notifications)
+            notification.updateNotifiedAt(notification.getNotifiedAt().withHour(time));
+    }
 }
