@@ -1,6 +1,7 @@
 package com.gdscplantry.plantry.domain.MyPage.controller;
 
 import com.gdscplantry.plantry.domain.MyPage.dto.NotificationTimeResDto;
+import com.gdscplantry.plantry.domain.MyPage.dto.TermsResDto;
 import com.gdscplantry.plantry.domain.MyPage.dto.UpdateNicknameResDto;
 import com.gdscplantry.plantry.domain.MyPage.dto.UserProfileResDto;
 import com.gdscplantry.plantry.domain.MyPage.service.MyPageService;
@@ -48,5 +49,12 @@ public class MyPageController {
         NotificationTimeResDto notificationTimeResDto = myPageService.updateNotificationTime(user, time);
 
         return ResponseEntity.status(201).body(DataResponseDto.of(notificationTimeResDto, 201));
+    }
+
+    @GetMapping("/term")
+    public ResponseEntity<ResponseDto> getTerms(@RequestParam @Valid @NotBlank(message = "Type required.") String type, @RequestAttribute User user) {
+        TermsResDto termsResDto = myPageService.getTerms(type);
+
+        return ResponseEntity.ok(DataResponseDto.of(termsResDto, 200));
     }
 }
