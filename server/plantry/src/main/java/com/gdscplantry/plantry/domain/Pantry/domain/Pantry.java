@@ -33,6 +33,10 @@ public class Pantry {
         this.code = code;
     }
 
+    public void updateCode(String code) {
+        this.code = code;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
