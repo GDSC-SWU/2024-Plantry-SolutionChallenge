@@ -15,11 +15,15 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
-    // ApiException
+    // AppException
     @ExceptionHandler(AppException.class)
     public ResponseEntity<ResponseDto> exceptionHandler(AppException e) {
         int code = e.getErrorCode().getHttpStatus().value();
         String message = e.getMessage();
+
+        // Print stack trace if err is internal server err
+        if (code == 500)
+            e.printStackTrace();
 
         return ResponseEntity.status(code).body(ResponseDto.of(code, message));
     }

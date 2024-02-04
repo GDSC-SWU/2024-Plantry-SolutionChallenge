@@ -23,6 +23,7 @@ public class JwtAuthorizationFilter implements Filter {
 
     final String LOGIN_PATH = "/api/v1/user/google";
     final String TOKEN_PATH = "/api/v1/user/token";
+    final String TERMS_PATH = "/api/v1/mypage/terms";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -43,6 +44,12 @@ public class JwtAuthorizationFilter implements Filter {
         } else if (requestURI.equals(TOKEN_PATH) && req.getMethod().equals("GET")) {
             chain.doFilter(request, response);
             return;
+        } else if (requestURI.equals(TERMS_PATH) && req.getMethod().equals("GET")) {
+            chain.doFilter(request, response);
+            return;
+        } else if (requestURI.contains("test")) {
+            chain.doFilter(request, response);
+            return;
         }
 
         // Validate JWT
@@ -50,7 +57,7 @@ public class JwtAuthorizationFilter implements Filter {
             String header = req.getHeader("Authorization");
             if (header == null)
                 throw new FilterException(GlobalErrorCode.ACCESS_TOKEN_REQUIRED);
-            
+
             User user = jwtUtil.validateToken(true, header);
             req.setAttribute("user", user);
 
