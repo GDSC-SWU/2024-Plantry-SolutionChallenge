@@ -41,4 +41,4 @@ out/
 
 ### Secrets ###
 application.properties
-firebase-service-account-file.json
+firebase_account_file.json
