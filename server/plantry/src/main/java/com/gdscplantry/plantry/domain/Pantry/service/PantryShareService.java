@@ -44,7 +44,7 @@ public class PantryShareService {
         String code;
         do {
             code = RandomUtil.getRandomNickname();
-        } while (!pantryRepository.existsAllByCode(code));
+        } while (pantryRepository.existsAllByCode(code));
 
         // Update data
         vo.getPantry().updateCode(code);

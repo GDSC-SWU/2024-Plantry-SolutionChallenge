@@ -72,7 +72,7 @@ public class PantryService {
         String code;
         do {
             code = RandomUtil.getRandomNickname();
-        } while (!pantryRepository.existsAllByCode(code));
+        } while (pantryRepository.existsAllByCode(code));
 
         // Add pantry
         Pantry pantry = pantryRepository.save(new Pantry(RandomUtil.getUuid(), code));
