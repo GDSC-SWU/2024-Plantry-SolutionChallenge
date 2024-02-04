@@ -1,6 +1,7 @@
 package com.gdscplantry.plantry.domain.Pantry.domain;
 
 import com.gdscplantry.plantry.domain.Pantry.dto.pantry.PantryListItemDto;
+import com.gdscplantry.plantry.domain.Pantry.vo.PantryWithCodeVo;
 import com.gdscplantry.plantry.domain.Pantry.vo.UserPantryWithCodeVo;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,4 +31,9 @@ public interface UserPantryRepository extends JpaRepository<UserPantry, Long> {
             "from UserPantry u join Pantry p on u.pantryId = p.id " +
             "where u.user = :user and u.pantryId = :pantryId")
     Optional<UserPantryWithCodeVo> findByUserAndPantryIdWithJPQL(User user, Long pantryId);
+
+    @Query(value = "select new com.gdscplantry.plantry.domain.Pantry.vo.PantryWithCodeVo(u.isOwner, p) " +
+            "from UserPantry u join Pantry p on u.pantryId = p.id " +
+            "where u.user = :user and u.pantryId = :pantryId")
+    Optional<PantryWithCodeVo> findPantryByUserAndPantryIdWithJPQL(User user, Long pantryId);
 }

@@ -23,4 +23,12 @@ public class PantryShareController {
 
         return ResponseEntity.ok(DataResponseDto.of(codeResDto, 200));
     }
+
+    @PatchMapping("/code")
+    public ResponseEntity<ResponseDto> refreshCode(@RequestParam("pantry") Long pantryId, @RequestAttribute User user) {
+        CodeResDto codeResDto = pantryShareService.refreshCode(user, pantryId);
+
+        return ResponseEntity.status(201).body(DataResponseDto.of(codeResDto, 201));
+    }
+    
 }
