@@ -101,7 +101,7 @@ class ProductControllerTest {
         String[] titles = {"pantry1", "pantry2", "pantry3"};
 
         for (int i = 0; i < 3; i++) {
-            Long pantry = pantryRepository.save(new Pantry(RandomUtil.getUuid())).getId();
+            Long pantry = pantryRepository.save(new Pantry(RandomUtil.getUuid(), RandomUtil.getRandomNickname())).getId();
             pantries[i] = pantry;
             userPantryRepository.save(UserPantry.builder()
                     .user(user)
@@ -349,7 +349,7 @@ class ProductControllerTest {
         resultActions
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.filter").value("Cold"))
-                .andExpect(jsonPath("$.data.result['-1'].length()").value(3))
+                .andExpect(jsonPath("$.data.result['-1'].length()").value(6))
                 .andDo(print());
     }
 

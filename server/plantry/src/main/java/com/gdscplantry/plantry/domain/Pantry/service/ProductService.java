@@ -1,5 +1,8 @@
 package com.gdscplantry.plantry.domain.Pantry.service;
 
+import com.gdscplantry.plantry.domain.Notification.domain.Notification;
+import com.gdscplantry.plantry.domain.Notification.domain.NotificationRepository;
+import com.gdscplantry.plantry.domain.Notification.service.RelatedNotificationService;
 import com.gdscplantry.plantry.domain.Pantry.domain.*;
 import com.gdscplantry.plantry.domain.Pantry.dto.product.*;
 import com.gdscplantry.plantry.domain.Pantry.error.PantryErrorCode;
@@ -28,6 +31,8 @@ public class ProductService {
     private final UserPantryRepository userPantryRepository;
     private final ConsumedProductRepository consumedProductRepository;
     private final FoodDataUtil foodDataUtil;
+    private final RelatedNotificationService relatedNotificationService;
+    private final NotificationRepository notificationRepository;
 
     @Transactional(readOnly = true)
     public Product validateProductId(User user, Long productId) {
@@ -69,6 +74,7 @@ public class ProductService {
         productRepository.save(product);
 
         // Save default Notifications
+        notificationRepository.saveAll(relatedNotificationService.addDefaultExpNotification(user, product));
 
         return new ProductItemResDto(product, true);
     }
@@ -77,6 +83,7 @@ public class ProductService {
     @Transactional
     public NewProductListResDto addProducts(User user, NewProductListReqDto dto) {
         ArrayList<Product> products = new ArrayList<>();
+        ArrayList<Notification> notifications = new ArrayList<>();
 
         for (NewProductReqDto req : dto.getList()) {
             Product product = req.toEntity();
@@ -92,12 +99,14 @@ public class ProductService {
             products.add(product);
 
             // Add default Notifications
+            notifications.addAll(relatedNotificationService.addDefaultExpNotification(user, product));
         }
 
         // Save product data
         productRepository.saveAll(products);
 
         // Save notification data
+        notificationRepository.saveAll(notifications);
 
         // Return dto
         ArrayList<ProductItemResDto> result = new ArrayList<>();
@@ -112,14 +121,13 @@ public class ProductService {
         // Find product & check access rights
         Product product = validateProductId(user, productId);
 
-        // Check Notifications
-
-        // Update notifications if notifications exist
-
         // Update product data
         product.updateProduct(updateProductReqDto.toEntity());
 
-        return new ProductItemResDto(product, true);
+        // Check and update notifications
+        boolean isNotified = relatedNotificationService.updateProduct(user, product);
+
+        return new ProductItemResDto(product, isNotified);
     }
 
     @Transactional
@@ -135,8 +143,9 @@ public class ProductService {
         product.updateCount(BigDecimal.valueOf(count));
 
         // Check Notifications
+        boolean isNotified = notificationRepository.existsAllByUserAndEntityIdAndIsOffAndTypeKeyLessThan(user, productId, false, 20);
 
-        return new ProductItemResDto(product, true);
+        return new ProductItemResDto(product, isNotified);
     }
 
     @Transactional
@@ -167,9 +176,14 @@ public class ProductService {
 
         // Update product data (delete if result count is 0)
         BigDecimal result = product.getCount().subtract(count);
-        if (result.equals(BigDecimal.ZERO))
+        if (result.equals(BigDecimal.ZERO)) {
+            // Delete product
             productRepository.delete(product);
-        else
+
+            // Delete product notifications
+            notificationRepository.deleteAllByEntityIdAndTypeKeyLessThan(productId, 10);
+
+        } else
             product.updateCount(result);
 
         return new DeleteProductResDto(product.getId(), typeEnum.getTitle(), result);
@@ -184,9 +198,9 @@ public class ProductService {
         StorageEnum storageEnum = StorageEnum.findByKey(filter);
 
         // Find product list
-        LinkedList<ProductListItemResDto> expiredList = productRepository.findAllExpiredByPantryIdAndStorageByJPQL(pantryId, storageEnum);
-        LinkedList<ProductListItemResDto> ddayList = productRepository.findAllDdayByPantryIdAndStorageByJPQL(pantryId, storageEnum);
-        LinkedList<ProductListItemResDto> notExpiredList = productRepository.findAllNotExpiredByPantryIdAndStorageOrderByDateByJPQL(pantryId, storageEnum);
+        LinkedList<ProductListItemResDto> expiredList = productRepository.findAllExpiredByPantryIdAndStorageByJPQL(user, pantryId, storageEnum);
+        LinkedList<ProductListItemResDto> ddayList = productRepository.findAllDdayByPantryIdAndStorageByJPQL(user, pantryId, storageEnum);
+        LinkedList<ProductListItemResDto> notExpiredList = productRepository.findAllNotExpiredByPantryIdAndStorageOrderByDateByJPQL(user, pantryId, storageEnum);
 
         // Group lists by day
         Map<Long, List<ProductListItemResDto>> result = groupProductList(expiredList, ddayList, notExpiredList);
@@ -203,9 +217,9 @@ public class ProductService {
         StorageEnum storageEnum = StorageEnum.findByKey(filter);
 
         // Find product list
-        LinkedList<ProductListItemResDto> expiredList = productRepository.findAllExpiredByPantryIdAndStorageAndQueryByJPQL(pantryId, storageEnum, query);
-        LinkedList<ProductListItemResDto> ddayList = productRepository.findAllDdayByPantryIdAndStorageAndQueryByJPQL(pantryId, storageEnum, query);
-        LinkedList<ProductListItemResDto> notExpiredList = productRepository.findAllNotExpiredByPantryIdAndStorageAndQueryOrderByDateByJPQL(pantryId, storageEnum, query);
+        LinkedList<ProductListItemResDto> expiredList = productRepository.findAllExpiredByPantryIdAndStorageAndQueryByJPQL(user, pantryId, storageEnum, query);
+        LinkedList<ProductListItemResDto> ddayList = productRepository.findAllDdayByPantryIdAndStorageAndQueryByJPQL(user, pantryId, storageEnum, query);
+        LinkedList<ProductListItemResDto> notExpiredList = productRepository.findAllNotExpiredByPantryIdAndStorageAndQueryOrderByDateByJPQL(user, pantryId, storageEnum, query);
 
         // Group lists by day
         Map<Long, List<ProductListItemResDto>> result = groupProductList(expiredList, ddayList, notExpiredList);

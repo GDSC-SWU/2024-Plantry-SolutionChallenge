@@ -36,6 +36,8 @@ public class UserPantry {
 
     private Boolean isMarked;
 
+    private Boolean isOwner;
+
     @CreatedDate
     private LocalDateTime createdAt;
 
@@ -43,12 +45,13 @@ public class UserPantry {
     private LocalDateTime updatedAt;
 
     @Builder
-    public UserPantry(User user, Long pantryId, String title, String color) {
+    public UserPantry(User user, Long pantryId, String title, String color, Boolean isOwner) {
         this.user = user;
         this.pantryId = pantryId;
         this.title = title;
         this.color = color;
         this.isMarked = false;
+        this.isOwner = isOwner;
     }
 
     public void updatePantry(UpdatePantryReqDto dto) {
