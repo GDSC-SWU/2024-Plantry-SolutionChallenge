@@ -5,9 +5,11 @@ import com.gdscplantry.plantry.domain.Notification.dto.NotificationListResDto;
 import com.gdscplantry.plantry.domain.Notification.dto.ProductNotificationListResDto;
 import com.gdscplantry.plantry.domain.Notification.dto.UpdateProductNotificationReqDto;
 import com.gdscplantry.plantry.domain.Notification.service.NotificationService;
+import com.gdscplantry.plantry.domain.Notification.vo.MessageVo;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.global.common.DataResponseDto;
 import com.gdscplantry.plantry.global.common.ResponseDto;
+import com.gdscplantry.plantry.global.util.FcmUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +22,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/notif")
 public class NotificationController {
     private final NotificationService notificationService;
+    private final FcmUtil fcmUtil;
+
+    @GetMapping("/test")
+    public ResponseEntity<ResponseDto> fcmTest(@RequestParam(value = "token") String deviceToken) {
+        fcmUtil.sendMessage(new MessageVo(0L, deviceToken, -1));
+
+        return ResponseEntity.ok(ResponseDto.of(200));
+    }
 
     @GetMapping("/product")
     public ResponseEntity<ResponseDto> readProductNotificationList(@RequestParam(value = "product") Long productId, @RequestAttribute("user") User user) {
