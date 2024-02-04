@@ -21,6 +21,8 @@ public class RedisConfig {
     private int port;
     @Value("${SPRING_DATA_REDIS_PASSWORD}")
     private String password;
+    @Value("${PROFILE}")
+    private String profile;
 
     // Connect
     @Bean
@@ -28,7 +30,9 @@ public class RedisConfig {
         RedisStandaloneConfiguration redisConfiguration = new RedisStandaloneConfiguration();
         redisConfiguration.setHostName(host);
         redisConfiguration.setPort(port);
-        redisConfiguration.setPassword(password);
+        if (!profile.contains("local"))
+            redisConfiguration.setPassword(password);
+
         return new LettuceConnectionFactory(redisConfiguration);
     }
 
