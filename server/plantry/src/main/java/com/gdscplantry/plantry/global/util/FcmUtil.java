@@ -69,4 +69,29 @@ public class FcmUtil {
             throw new AppException(GlobalErrorCode.FCM_SEND_FAILED);
         }
     }
+
+    public void sendMessage(MessageVo vo) {
+        Notification notification = Notification.builder()
+                .setTitle(vo.getTitle())
+                .setBody(vo.getBody())
+                .build();
+
+        Message message = Message.builder()
+                .setToken(vo.getDeviceToken())
+                .setNotification(notification)
+                .build();
+
+        try {
+            firebaseMessaging.send(message);
+
+            log.info("[FCM] Sending completed successfully. " + LocalDateTime.now());
+            log.info("*** " + vo.getDeviceToken());
+        } catch (FirebaseMessagingException e) {
+            log.error(e.getMessage());
+            throw new AppException(GlobalErrorCode.FCM_SEND_FAILED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new AppException(GlobalErrorCode.FCM_SEND_FAILED);
+        }
+    }
 }

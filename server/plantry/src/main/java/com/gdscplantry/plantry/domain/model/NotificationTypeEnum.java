@@ -11,6 +11,8 @@ import java.time.temporal.ChronoUnit;
 @AllArgsConstructor
 @Getter
 public enum NotificationTypeEnum {
+    TEST(-1,
+            "Test", "This is test message.", "Test"),
     EXP_DDAY(0,
             "[D-day] $name 🚀",
             "Today is the deadline for $pantry's $name!",
@@ -54,6 +56,7 @@ public enum NotificationTypeEnum {
 
     public static NotificationTypeEnum findByKey(Integer key) {
         return switch (key) {
+            case -1 -> TEST;
             case 0 -> EXP_DDAY;
             case 1 -> EXP_D1;
             case 3 -> EXP_D3;
