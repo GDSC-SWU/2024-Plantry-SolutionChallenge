@@ -2,6 +2,7 @@ package com.gdscplantry.plantry.domain.Pantry.controller;
 
 import com.gdscplantry.plantry.domain.Pantry.dto.pantry.PantryResDto;
 import com.gdscplantry.plantry.domain.Pantry.dto.share.CodeResDto;
+import com.gdscplantry.plantry.domain.Pantry.dto.share.PantryMemberResDto;
 import com.gdscplantry.plantry.domain.Pantry.service.PantryShareService;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.global.common.DataResponseDto;
@@ -37,5 +38,12 @@ public class PantryShareController {
         PantryResDto pantryResDto = pantryShareService.postCode(user, code);
 
         return ResponseEntity.status(201).body(DataResponseDto.of(pantryResDto, 201));
+    }
+
+    @GetMapping("/member")
+    public ResponseEntity<ResponseDto> getPantryMember(@RequestParam("pantry") Long pantryId, @RequestAttribute User user) {
+        PantryMemberResDto pantryMemberResDto = pantryShareService.getPantryMember(user, pantryId);
+
+        return ResponseEntity.ok(DataResponseDto.of(pantryMemberResDto, 200));
     }
 }

@@ -7,7 +7,9 @@ import com.gdscplantry.plantry.domain.Pantry.domain.UserPantry;
 import com.gdscplantry.plantry.domain.Pantry.domain.UserPantryRepository;
 import com.gdscplantry.plantry.domain.Pantry.dto.pantry.PantryResDto;
 import com.gdscplantry.plantry.domain.Pantry.dto.share.CodeResDto;
+import com.gdscplantry.plantry.domain.Pantry.dto.share.PantryMemberResDto;
 import com.gdscplantry.plantry.domain.Pantry.error.PantryErrorCode;
+import com.gdscplantry.plantry.domain.Pantry.vo.PantryMemberVo;
 import com.gdscplantry.plantry.domain.Pantry.vo.PantryWithCodeVo;
 import com.gdscplantry.plantry.domain.Pantry.vo.UserPantryWithCodeVo;
 import com.gdscplantry.plantry.domain.User.domain.User;
@@ -17,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
@@ -80,5 +84,17 @@ public class PantryShareService {
         relatedNotificationService.sharePantry(userPantry.getUser(), user, pantry.getId());
 
         return new PantryResDto(newUserPantry);
+    }
+
+    @Transactional(readOnly = true)
+    public PantryMemberResDto getPantryMember(User user, Long pantryId) {
+        // Validate pantry id
+        UserPantry userPantry = userPantryRepository.findByPantryIdAndUser(pantryId, user)
+                .orElseThrow(() -> new AppException(PantryErrorCode.PANTRY_NOT_FOUND));
+
+        // Find member data
+        ArrayList<PantryMemberVo> list = userPantryRepository.findAllByPantryIdWithJPQL(user, pantryId);
+
+        return new PantryMemberResDto(userPantry.getIsOwner(), list);
     }
 }
