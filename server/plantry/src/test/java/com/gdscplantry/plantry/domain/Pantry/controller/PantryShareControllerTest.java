@@ -1,12 +1,14 @@
 package com.gdscplantry.plantry.domain.Pantry.controller;
 
-import com.gdscplantry.plantry.domain.Pantry.domain.Pantry;
-import com.gdscplantry.plantry.domain.Pantry.domain.PantryRepository;
-import com.gdscplantry.plantry.domain.Pantry.domain.UserPantry;
-import com.gdscplantry.plantry.domain.Pantry.domain.UserPantryRepository;
+import com.gdscplantry.plantry.domain.Notification.domain.Notification;
+import com.gdscplantry.plantry.domain.Notification.domain.NotificationRepository;
+import com.gdscplantry.plantry.domain.Pantry.domain.*;
+import com.gdscplantry.plantry.domain.Pantry.vo.FoodDataVo;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.domain.User.domain.UserRepository;
 import com.gdscplantry.plantry.domain.model.JwtVo;
+import com.gdscplantry.plantry.domain.model.NotificationTypeEnum;
+import com.gdscplantry.plantry.domain.model.StorageEnum;
 import com.gdscplantry.plantry.global.util.JwtUtil;
 import com.gdscplantry.plantry.global.util.RandomUtil;
 import com.gdscplantry.plantry.global.util.RedisUtil;
@@ -22,9 +24,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -52,14 +59,27 @@ class PantryShareControllerTest {
     @Autowired
     private UserPantryRepository userPantryRepository;
 
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
+    private NotificationRepository notificationRepository;
+
+    private final int[] TYPE_KEYS = {0, 1, 3, 7, 10, 11, 13, 17};
     final String PANTRY_SHARE_API_URL = "/api/v1/pantry/share";
     final String EMAIL = "test@test.com";
     final String NICKNAME = "test_name";
     final String PANTRY_TITLE = "My pantry";
+    final String PANTRY_COLOR = "A2E5B3";
+    final String PRODUCT_NAME1 = "Orange";
+    final String PRODUCT_NAME2 = "Apple";
     final String SHARE_CODE = "test123F";
     User user;
     String accessToken;
     Pantry pantry;
+    UserPantry userPantry;
+    Product product1;
+    Product product2;
 
     @BeforeEach
     void addMockData() {
@@ -92,13 +112,70 @@ class PantryShareControllerTest {
 
     void addMockPantry() {
         pantry = pantryRepository.save(new Pantry(RandomUtil.getUuid(), SHARE_CODE));
-        userPantryRepository.save(UserPantry.builder()
+        userPantry = userPantryRepository.save(UserPantry.builder()
                 .user(user)
                 .pantryId(pantry.getId())
                 .title(PANTRY_TITLE)
-                .color("A2E5B3")
+                .color(PANTRY_COLOR)
                 .isOwner(true)
                 .build());
+    }
+
+    void addMockProduct() {
+        product1 = productRepository.save(Product.builder()
+                .pantryId(pantry.getId())
+                .icon("🍊")
+                .name(PRODUCT_NAME1)
+                .storage(StorageEnum.Cold)
+                .count(BigDecimal.ONE)
+                .isUseByDate(true)
+                .date(LocalDate.of(2024, 1, 30))
+                .build());
+
+        product2 = productRepository.save(Product.builder()
+                .pantryId(pantry.getId())
+                .icon("🍎")
+                .name(PRODUCT_NAME2)
+                .storage(StorageEnum.Cold)
+                .count(BigDecimal.ONE)
+                .isUseByDate(false)
+                .date(LocalDate.of(2024, 1, 31))
+                .build());
+        product2.updateFoodData(FoodDataVo.builder()
+                .value(10)
+                .current(LocalDate.now())
+                .foodDataId(1L)
+                .build());
+    }
+
+    void addMockNotifications() {
+        ArrayList<Notification> notifications = new ArrayList<>();
+
+        for (int i = 0; i < 4; i++) {
+            LocalDateTime notifiedAt = LocalDateTime.of(product1.getDate().minusDays(TYPE_KEYS[i]), LocalTime.of(9, 0));
+            notifications.add(Notification.builder()
+                    .user(user)
+                    .typeKey(TYPE_KEYS[i])
+                    .title(NotificationTypeEnum.getTitleStr(product1.getName(), TYPE_KEYS[i]))
+                    .body(NotificationTypeEnum.getBodyStr(userPantry.getTitle(), product1.getName(), TYPE_KEYS[i], product1.getDate(), null))
+                    .entityId(product1.getId())
+                    .notifiedAt(notifiedAt)
+                    .build());
+        }
+
+        for (int i = 0; i < 4; i++) {
+            LocalDateTime notifiedAt = LocalDateTime.of(product2.getDate().minusDays(TYPE_KEYS[i]), LocalTime.of(9, 0));
+            notifications.add(Notification.builder()
+                    .user(user)
+                    .typeKey(TYPE_KEYS[i + 4])
+                    .title(NotificationTypeEnum.getTitleStr(product2.getName(), TYPE_KEYS[i + 4]))
+                    .body(NotificationTypeEnum.getBodyStr(userPantry.getTitle(), product2.getName(), TYPE_KEYS[i + 4], product2.getDate(), product2.getUseByDateData()))
+                    .entityId(product2.getId())
+                    .notifiedAt(notifiedAt)
+                    .build());
+        }
+
+        notificationRepository.saveAll(notifications);
     }
 
     @Test
@@ -166,5 +243,40 @@ class PantryShareControllerTest {
         resultActions
                 .andExpect(status().isForbidden())
                 .andDo(print());
+    }
+
+    @Test
+    @DisplayName("Post share-code <201>")
+    void postCode() throws Exception {
+        // given
+        addMockProduct();
+        addMockNotifications();
+        Long pantryId = pantry.getId();
+        User newUser = userRepository.save(User.builder()
+                .email("newUser@test.com")
+                .nickname("newUser")
+                .build());
+        JwtVo vo = jwtUtil.generateTokens(newUser);
+        String newUserAccessToken = vo.getAccessToken();
+        redisUtil.opsForValueSet(newUser.getId() + "_refresh", vo.getRefreshToken(), 24 * 7);
+
+        // when
+        ResultActions resultActions = mockMvc.perform(post(PANTRY_SHARE_API_URL + "/code")
+                .header("Authorization", "Bearer " + newUserAccessToken)
+                .param("code", SHARE_CODE));
+
+        // then
+        resultActions
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.data.pantryId").value(pantryId))
+                .andExpect(jsonPath("$.data.title").value(PANTRY_TITLE))
+                .andExpect(jsonPath("$.data.color").value(PANTRY_COLOR))
+                .andDo(print());
+
+        ArrayList<Notification> actual = notificationRepository.findAllByUser(newUser);
+        assertThat(actual.size()).as("Notification save failed.").isEqualTo(8);
+        assertThat(actual.get(0).getEntityId()).as("Notification save failed.").isEqualTo(product1.getId());
+
+        redisUtil.delete(newUser.getId() + "_refresh");
     }
 }
