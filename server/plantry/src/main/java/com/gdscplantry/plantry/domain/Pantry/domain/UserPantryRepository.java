@@ -36,4 +36,6 @@ public interface UserPantryRepository extends JpaRepository<UserPantry, Long> {
             "from UserPantry u join Pantry p on u.pantryId = p.id " +
             "where u.user = :user and u.pantryId = :pantryId")
     Optional<PantryWithCodeVo> findPantryByUserAndPantryIdWithJPQL(User user, Long pantryId);
+
+    Optional<UserPantry> findByPantryIdAndIsOwner(Long pantryId, Boolean isOwner);
 }

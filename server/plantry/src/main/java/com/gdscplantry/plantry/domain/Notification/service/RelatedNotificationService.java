@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 @Service
@@ -111,5 +112,28 @@ public class RelatedNotificationService {
         // Update data
         for (Notification notification : notifications)
             notification.updateNotifiedAt(notification.getNotifiedAt().withHour(time));
+    }
+
+    @Transactional
+    public void sharePantry(User owner, User user, Long pantryId) {
+        // Find all notifications
+        ArrayList<ExpNotificationProductVo> ownerNotifications = notificationRepository.findAllByUserAndPantryIdJoinProductWithJPQL(owner, pantryId);
+        ArrayList<Notification> notifications = new ArrayList<>();
+
+        // Add notifications
+        for (ExpNotificationProductVo vo : ownerNotifications) {
+            Notification notification = vo.getNotification();
+            notifications.add(Notification.builder()
+                    .user(user)
+                    .typeKey(notification.getTypeKey())
+                    .title(notification.getTitle())
+                    .body(notification.getBody())
+                    .entityId(notification.getEntityId())
+                    .notifiedAt(LocalDateTime.of(notification.getNotifiedAt().toLocalDate(), LocalTime.of(user.getNotificationTime(), 0)))
+                    .build());
+        }
+        
+        // Save data
+        notificationRepository.saveAll(notifications);
     }
 }

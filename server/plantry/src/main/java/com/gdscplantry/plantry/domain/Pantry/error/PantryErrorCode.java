@@ -15,6 +15,8 @@ public enum PantryErrorCode implements ErrorCode {
     PRODUCT_ACCESS_DENIED(HttpStatus.FORBIDDEN, "Product access denied."),
     PANTRY_NOT_FOUND(HttpStatus.NOT_FOUND, "Pantry not found. (Invalid pantry id.)"),
     PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "Product not found. (Invalid product id.)"),
+    INVALID_SHARE_CODE(HttpStatus.NOT_FOUND, "Pantry not found. (Invalid code)"),
+    OWNER_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error - Pantry owner not found."),
     ;
 
     private final HttpStatus httpStatus;
