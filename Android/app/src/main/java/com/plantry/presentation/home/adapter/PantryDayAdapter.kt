@@ -4,12 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.plantry.data.dto.ResponseHomePantryDto
+import com.plantry.data.dto.response.ResponseHomePantryDto
 import com.plantry.databinding.ItemHomePantryDDayBinding
 import com.plantry.presentation.home.viewholder.PantryDayViewHolder
 
 class PantryDayAdapter :
-    ListAdapter<ResponseHomePantryDto.Data.Result, PantryDayViewHolder>(PantryDayDiffCallback()) {
+    ListAdapter<ResponseHomePantryDto.Result, PantryDayViewHolder>(PantryDayDiffCallback()) {
+
+    var itemClick: PantryAdapter.PantryItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PantryDayViewHolder {
         val binding = ItemHomePantryDDayBinding.inflate(
@@ -25,17 +27,17 @@ class PantryDayAdapter :
     }
 }
 
-class PantryDayDiffCallback : DiffUtil.ItemCallback<ResponseHomePantryDto.Data.Result>() {
+class PantryDayDiffCallback : DiffUtil.ItemCallback<ResponseHomePantryDto.Result>() {
     override fun areItemsTheSame(
-        oldItem: ResponseHomePantryDto.Data.Result,
-        newItem: ResponseHomePantryDto.Data.Result
+        oldItem: ResponseHomePantryDto.Result,
+        newItem: ResponseHomePantryDto.Result
     ): Boolean {
         return oldItem.day == newItem.day
     }
 
     override fun areContentsTheSame(
-        oldItem: ResponseHomePantryDto.Data.Result,
-        newItem: ResponseHomePantryDto.Data.Result
+        oldItem: ResponseHomePantryDto.Result,
+        newItem: ResponseHomePantryDto.Result
     ): Boolean {
         return oldItem == newItem
     }

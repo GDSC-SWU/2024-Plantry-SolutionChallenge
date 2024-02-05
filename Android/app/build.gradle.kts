@@ -65,10 +65,13 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
     implementation("androidx.navigation:navigation-fragment-ktx:1.5.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
+    implementation ("androidx.viewpager2:viewpager2:1.0.0")
 
     // Matrial Design
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.navigation:navigation-fragment:2.7.6")
+    implementation ("com.google.android.gms:play-services-auth:20.1.0")
+    implementation ("com.google.android.gms:play-services-auth:20.1.0")
 
     // Test Dependency
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -83,4 +86,13 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp-bom:4.9.0")
     implementation("com.jakewharton.timber:timber:5.0.1")
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
-    implementation("io.coil-kt:coil:2.3.0")}
+    implementation("io.coil-kt:coil:2.3.0")
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    // DataStore
+    implementation ("androidx.datastore:datastore-preferences:1.0.0")
+
+    //Hilt
+    implementation ("com.google.dagger:hilt-android:2.44")
+    kapt ("com.google.dagger:hilt-compiler:2.44")
+}

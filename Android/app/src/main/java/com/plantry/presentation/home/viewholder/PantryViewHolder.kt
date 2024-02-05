@@ -3,7 +3,7 @@ package com.plantry.presentation.home.viewholder
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.plantry.R
-import com.plantry.data.dto.ResponseHomeDto
+import com.plantry.data.dto.response.ResponseHomeDto
 import com.plantry.databinding.ItemHomePantryBinding
 
 class PantryViewHolder(private val binding: ItemHomePantryBinding) :
@@ -12,13 +12,13 @@ class PantryViewHolder(private val binding: ItemHomePantryBinding) :
     private val _item_binding:ItemHomePantryBinding = binding
     val item_binding: ItemHomePantryBinding = _item_binding
 
-    fun bind(pantry: ResponseHomeDto) {
-        if (pantry.name.isNullOrEmpty()) {
+    fun bind(pantry: ResponseHomeDto.Result) {
+        if (pantry.title.isNullOrEmpty()) {
             setVisibilityChange()
         } else {
             _item_binding.ivHomeItemBackground.setBackgroundResource(checkBackgroundColor(pantry.color))
-            _item_binding.tvHomeItemPantryName.text = pantry.name
-            _item_binding.ivHomeItemHeart.isSelected = pantry.heart
+            _item_binding.tvHomeItemPantryName.text = pantry.title
+            _item_binding.ivHomeItemHeart.isSelected = pantry.isMarked
         }
     }
 
@@ -36,27 +36,27 @@ class PantryViewHolder(private val binding: ItemHomePantryBinding) :
 
     private fun checkBackgroundColor(color: String): Int {
         when (color) {
-            "r" -> {
+            "FFA5A0" -> {
                 return R.drawable.shape_fill_cover_red_16_rec_top
             }
 
-            "o" -> {
+            "FFCE8A" -> {
                 return R.drawable.shape_fill_cover_orange_16_rec_top
             }
 
-            "y" -> {
+            "FFE88A" -> {
                 return R.drawable.shape_fill_cover_yellow_16_rec_top
             }
 
-            "g" -> {
+            "A2E5B3" -> {
                 return R.drawable.shape_fill_cover_green_16_rec_top
             }
 
-            "b" -> {
+            "8AC2FF" -> {
                 return R.drawable.shape_fill_cover_blue_16_rec_top
             }
 
-            "p" -> {
+            "DAAFF0" -> {
                 return R.drawable.shape_fill_cover_purple_16_rec_top
             }
         }

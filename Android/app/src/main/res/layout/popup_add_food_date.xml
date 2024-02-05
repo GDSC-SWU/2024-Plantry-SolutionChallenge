@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_fill_white1_28_rec"
+        android:padding="40dp">
+
+        <TextView
+            android:id="@+id/tv_add_food_date_popup_ask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_food_date_ask"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.Plantry.Body6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_add_food_date_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:text="@string/add_food_date_description"
+            android:textAppearance="@style/TextAppearance.Plantry.Body5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_add_food_date_popup_ask" />
+
+        <TextView
+            android:id="@+id/tv_add_food_popup_confirm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/shape_fill_primary_color_8_rec"
+            android:paddingVertical="16dp"
+            android:text="@string/popup_button_confirm"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.Plantry.Body3"
+            android:textColor="@color/white1"
+            app:layout_constraintTop_toBottomOf="@id/tv_add_food_date_description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

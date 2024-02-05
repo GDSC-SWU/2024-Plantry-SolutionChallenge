@@ -25,47 +25,40 @@
             app:navGraph="@navigation/main_navigation" />
 
         <View
+            android:id="@+id/v_bnv_gradation"
             android:layout_width="match_parent"
             android:layout_height="25dp"
+            android:layout_marginBottom="52dp"
             android:background="@drawable/shadow_bnv_5"
-            android:elevation="10dp"
-            app:layout_constraintBottom_toTopOf="@id/bnv_main_navigation"
+            app:layout_constraintBottom_toBottomOf="@id/bnv_main_navigation"
             app:layout_constraintEnd_toEndOf="@id/bnv_main_navigation"
             app:layout_constraintStart_toStartOf="@id/bnv_main_navigation" />
-
-        <ImageView
-            android:id="@+id/iv_main_plus_bg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="20dp"
-            android:src="@drawable/bg_bottom_navigation"
-            app:layout_constraintBottom_toTopOf="@+id/bnv_main_navigation"
-            app:layout_constraintEnd_toEndOf="@+id/bnv_main_navigation"
-            app:layout_constraintStart_toStartOf="@+id/bnv_main_navigation" />
 
         <ImageView
             android:id="@+id/iv_main_plus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:background="@drawable/selector_navigation_add_food"
             android:elevation="20dp"
             android:shadowColor="@android:color/transparent"
-            android:src="@drawable/ic_navigation_add_food"
+            app:layout_constraintBottom_toTopOf="@id/bnv_main_navigation"
             app:layout_constraintEnd_toEndOf="@id/bnv_main_navigation"
             app:layout_constraintStart_toStartOf="@id/bnv_main_navigation"
-            app:layout_constraintTop_toTopOf="@+id/iv_main_plus_bg" />
+            app:layout_constraintTop_toTopOf="@id/bnv_main_navigation" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bnv_main_navigation"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="72dp"
+            android:background="@drawable/shape_fill_white_color_20_rec_top"
+            android:paddingHorizontal="27dp"
             app:itemActiveIndicatorStyle="@null"
             app:itemIconSize="24dp"
-            app:itemPaddingBottom="8dp"
-            app:itemPaddingTop="6dp"
+            app:itemPaddingBottom="14dp"
+            app:itemPaddingTop="16dp"
             app:itemRippleColor="@null"
-            app:itemTextAppearanceActive="@style/TextAppearance.Plantry.Navigation1"
-            app:itemTextAppearanceInactive="@style/TextAppearance.Plantry.Navigation2"
+            app:itemTextAppearanceActive="@style/TextAppearance.Plantry.Navigation3"
+            app:itemTextAppearanceInactive="@style/TextAppearance.Plantry.Navigation4"
             app:itemTextColor="@drawable/selector_navigation_text"
             app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"

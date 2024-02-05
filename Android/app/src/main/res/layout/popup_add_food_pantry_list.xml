@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_fill_white1_8_rec"
+        android:elevation="10dp"
+        android:paddingVertical="4dp">
+        <TextView
+            android:id="@+id/tv_add_food_popup_date_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_line_line2_8_rec"
+            android:drawableEnd="@drawable/ic_add_food_down"
+            android:drawablePadding="8dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:visibility="invisible"
+            android:text="@string/home_pantry_item_content_use_by_date"
+            android:textAppearance="@style/TextAppearance.Plantry.Body5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+        <TextView
+            android:id="@+id/tv_add_food_use_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_add_food_popup_pantry_name"
+            android:maxLength="12"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="10dp"
+            android:text="@string/home_pantry_item_content_use_by_date"
+            android:textAppearance="@style/TextAppearance.Plantry.Body6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tv_add_food_sell_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_add_food_popup_pantry_name"
+            android:maxLength="12"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="10dp"
+            android:text="@string/home_pantry_item_content_sell_by_date"
+            android:textAppearance="@style/TextAppearance.Plantry.Body6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_add_food_use_date" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
