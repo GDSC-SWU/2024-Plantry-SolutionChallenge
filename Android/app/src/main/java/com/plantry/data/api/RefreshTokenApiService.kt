@@ -9,6 +9,5 @@ import retrofit2.http.Header
 interface RefreshTokenApiService : LogoutApiService {
     @GET("/api/v1/user/token")
     suspend fun getToken(
-        @Header("Authorization-Refresh") idToken : String
     ): BaseResponseNullable<RefreshTokenDto>
 }

@@ -17,9 +17,9 @@ class RefreshTokenViewModel: ViewModel() {
     private val _refreshToken: MutableLiveData<UiState<String>> = MutableLiveData()
     val refreshToken: LiveData<UiState<String>> = _refreshToken
 
-    fun getRefreshToken(idToken: String) = viewModelScope.launch {
+    fun getRefreshToken() = viewModelScope.launch {
         runCatching {
-            ApiPool.getRefreshToken.getToken(idToken)
+            ApiPool.getRefreshToken.getToken()
         }.fold(
             {
                 _refreshToken.value = UiState.Success(it.data?.accessToken ?: "")
@@ -27,7 +27,7 @@ class RefreshTokenViewModel: ViewModel() {
                 RetrofitPool.setRefreshToken(it.data?.refreshToken)
             },
             {
-                Log.d("Aaa", it.message.toString())
+                Log.d("Aaa1312", it.message.toString())
             }
         )
     }
