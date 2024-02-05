@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -17,23 +19,32 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", Properties().apply {
+                load(project.rootProject.file("local.properties").inputStream())
+            }["base.url"].toString())
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "BASE_URL", Properties().apply {
+                load(project.rootProject.file("local.properties").inputStream())
+            }["base.url"].toString())
         }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
+
     }
     buildFeatures {
         dataBinding = true
@@ -45,6 +56,7 @@ dependencies {
 
     // Kotlin
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
+
     // AndroidX
     implementation("androidx.activity:activity-ktx:1.1.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
