@@ -4,7 +4,14 @@ import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.plantry.BuildConfig.BASE_URL
 import com.plantry.data.API.API_TAG
-import com.plantry.data.api.ExampleService
+import com.plantry.data.api.LogoutApiService
+import com.plantry.data.api.RefreshTokenApiService
+import com.plantry.data.api.SignInApiService
+import com.plantry.data.dto.BaseResponse
+import com.plantry.data.dto.BaseResponseNullable
+import com.plantry.data.dto.response.RefreshTokenDto
+import com.plantry.data.dto.response.ResponseSignInDto
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -15,11 +22,28 @@ import retrofit2.Retrofit
 
 
 object ApiPool {
-    val getExample = RetrofitPool.retrofit.create(ExampleService::class.java)
+    val getSignIn = RetrofitPool.retrofit.create(SignInApiService::class.java)
+    val deleteLogOut = RetrofitPool.retrofit.create(LogoutApiService::class.java)
+    val getRefreshToken = RetrofitPool.retrofit.create(RefreshTokenApiService::class.java)
 }
 
 
 object RetrofitPool {
+    private var accessToken: String? = null
+    private var refreshToken: String? = null
+    private var userId: Int? = null
+
+    fun setAccessToken(token: String?) {
+        accessToken = token
+    }
+    fun setRefreshToken(token: String?) {
+        refreshToken = token
+    }
+    fun setUserId(id: Int?) {
+        userId = id
+    }
+
+
     val retrofit: Retrofit by lazy {
         val loggingInterceptor = HttpLoggingInterceptor { message ->
             when {
@@ -37,16 +61,57 @@ object RetrofitPool {
 
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
-        val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
-            .build()
+        val okHttpClient =
+            OkHttpClient.Builder().addInterceptor(loggingInterceptor).addInterceptor { chain ->
+                // AccessToken이 있는 경우, 헤더에 추가합니다.
+                val request = accessToken?.let { token ->
+                    chain.request().newBuilder()
+                        .addHeader("Authorization", "Bearer $token")
+                        .build()
+                } ?: chain.request()
+
+                var response = chain.proceed(request)
+
+                if (response.code == 401) {
+                    runBlocking {
+                        val refreshToken = RetrofitPool.refreshToken
+
+                        if (refreshToken != null) {
+                            val refreshResponse : BaseResponseNullable<RefreshTokenDto> = ApiPool.getRefreshToken.getToken()
+
+                            if (refreshResponse.data!=null) {
+                                setAccessToken(refreshResponse.data.accessToken)
+                                setAccessToken(refreshResponse.data.accessToken)
+
+                                val refreshRequest = refreshToken?.let { refreshToken ->
+                                    chain.request().newBuilder()
+                                        .addHeader("Authorization", "Bearer ${accessToken}")
+                                        .build()
+                                } ?: chain.request()
+                                response.close()
+                                response = chain.proceed(refreshRequest)
+                            }
+                            else {
+                                Log.e("refreshResponse.data : 서버 통신", "refreshResponse.data == null")
+                            }
+                        }
+                        else {
+                            Log.e("refreshToken", "refreshToken == null")
+                        }
+                    }
+                    response
+                } else {
+                    response
+                }
+            }.build()
 
         Retrofit.Builder()
-            .baseUrl(BASE_URL)
             .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+            .baseUrl(BASE_URL)
             .client(okHttpClient)
             .build()
     }
+
 }
 
 object API {

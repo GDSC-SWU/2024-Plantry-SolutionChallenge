@@ -57,4 +57,28 @@
 
     <string name="home_pantry_empty_fill_ingrefients">"There's no food in your pantry.\n Please fill the pantry with <font color="#828282">Your Ingredients!"</font></string>
     <string name="home_pantry_empty_add_food">Going to Add Foods</string>
+
+    <string name="add_food_recipt">Receipt</string>
+    <string name="add_food_direct">Direct Input</string>
+    <string name="add_foods_popup_title">Add Foods</string>
+    <string name="add_food_pantry_select">Your Plantry</string>
+    <string name="add_food_pantry_food_name_title">Product</string>
+    <string name="add_food_pantry_day_title">Day</string>
+    <string name="add_food_popup_yy_mm_dd">YY.MM.DD</string>
+    <string name="add_food_pantry_storage_title">Storage</string>
+    <string name="add_food_pantry_count">Product Count</string>
+    <string name="popup_add_food_half_unit">Half Unit</string>
+    <string name="popup_add_food_error_message3">Please write it in the order of year, month, and day.</string>
+    <string name="add_food_date_ask">What’s ‘Use-by Date’ and ‘Sell-by Date’?</string>
+    <string name="add_food_date_description">"'Use-by Date' means the final time \n limit for consuming a food that is safe \n to consume.\n\n 'Sell-by Date’ means Deadline for \n product to be distributed/sold on the \n market."</string>
+    <string name="server_client_id_web">"29775346424-ckfbab33cikkr863gat1itq57s2a3e5q.apps.googleusercontent.com"</string>
+    <string name="profile_title">Profile</string>
+    <string name="profile_user_name">Profile Name</string>
+    <string name="profile_user_email">googlekorea@google.com</string>
+    <string name="profile_delete_food">Delete Food</string>
+    <string name="profile_this_week">This week</string>
+    <string name="profile_ingestion">Ingestion</string>
+    <string name="profile_disposal">Disposal</string>
+    <string name="profile_share">Share</string>
+    <string name="profile_mistake">Mistake</string>
 </resources>

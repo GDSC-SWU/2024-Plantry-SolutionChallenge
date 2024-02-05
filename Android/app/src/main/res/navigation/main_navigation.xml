@@ -21,18 +21,6 @@
             app:destination="@id/navigation_home" />
     </fragment>
     <fragment
-        android:id="@+id/navigation_community"
-        android:name="com.plantry.presentation.community.FragmentCommunity"
-        android:label="CommunityFragment" />
-    <fragment
-        android:id="@+id/navigation_add_food"
-        android:name="com.plantry.presentation.addfood.FragmentAddFood"
-        android:label="AddFoodFragment" />
-    <fragment
-        android:id="@+id/navigation_store"
-        android:name="com.plantry.presentation.store.FragmentStore"
-        android:label="StoreFragment" />
-    <fragment
         android:id="@+id/navigation_profile"
         android:name="com.plantry.presentation.profile.FragmentProfile"
         android:label="ProfileFragment" />

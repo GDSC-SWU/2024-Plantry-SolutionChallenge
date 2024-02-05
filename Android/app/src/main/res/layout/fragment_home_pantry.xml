@@ -68,6 +68,7 @@
             app:layout_constraintTop_toTopOf="@id/et_home_pantry_search" />
 
         <ImageView
+            android:id="@+id/iv_home_pantry_plus_food"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
