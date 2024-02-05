@@ -279,4 +279,54 @@ class PantryShareControllerTest {
 
         redisUtil.delete(newUser.getId() + "_refresh");
     }
+
+    @Test
+    @DisplayName("Get pantry member <200>")
+    void getPantryMember() throws Exception {
+        // given
+        addMockProduct();
+        addMockNotifications();
+        Long pantryId = pantry.getId();
+        User newUser = userRepository.save(User.builder()
+                .email("newUser@test.com")
+                .nickname("user1")
+                .build());
+        User newUser2 = userRepository.save(User.builder()
+                .email("newUser2@test.com")
+                .nickname("user2")
+                .build());
+        JwtVo vo = jwtUtil.generateTokens(newUser2);
+        redisUtil.opsForValueSet(newUser2.getId() + "_refresh", vo.getRefreshToken(), 24 * 7);
+        userPantryRepository.save(UserPantry.builder()
+                .user(newUser)
+                .pantryId(pantryId)
+                .title(PANTRY_TITLE)
+                .color("A2E5B3")
+                .isOwner(false)
+                .build());
+        userPantryRepository.save(UserPantry.builder()
+                .user(newUser2)
+                .pantryId(pantryId)
+                .title(PANTRY_TITLE)
+                .color("A2E5B3")
+                .isOwner(false)
+                .build());
+
+        // when
+        ResultActions resultActions = mockMvc.perform(get(PANTRY_SHARE_API_URL + "/member")
+                .header("Authorization", "Bearer " + vo.getAccessToken())
+                .param("pantry", String.valueOf(pantryId)));
+
+        // then
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.isUserOwner").value(false))
+                .andExpect(jsonPath("$.data.list.length()").value(3))
+                .andExpect(jsonPath("$.data.list[0].nickname").value(user.getNickname()))
+                .andExpect(jsonPath("$.data.list[1].nickname").value(newUser2.getNickname()))
+                .andExpect(jsonPath("$.data.list[2].nickname").value(newUser.getNickname()))
+                .andDo(print());
+
+        redisUtil.delete(newUser.getId() + "_refresh");
+    }
 }
