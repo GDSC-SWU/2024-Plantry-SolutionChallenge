@@ -1,7 +1,11 @@
 package com.gdscplantry.plantry.domain.Pantry.service;
 
+import com.gdscplantry.plantry.domain.Notification.service.RelatedNotificationService;
+import com.gdscplantry.plantry.domain.Pantry.domain.Pantry;
 import com.gdscplantry.plantry.domain.Pantry.domain.PantryRepository;
+import com.gdscplantry.plantry.domain.Pantry.domain.UserPantry;
 import com.gdscplantry.plantry.domain.Pantry.domain.UserPantryRepository;
+import com.gdscplantry.plantry.domain.Pantry.dto.pantry.PantryResDto;
 import com.gdscplantry.plantry.domain.Pantry.dto.share.CodeResDto;
 import com.gdscplantry.plantry.domain.Pantry.error.PantryErrorCode;
 import com.gdscplantry.plantry.domain.Pantry.vo.PantryWithCodeVo;
@@ -20,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PantryShareService {
     private final UserPantryRepository userPantryRepository;
     private final PantryRepository pantryRepository;
+    private final RelatedNotificationService relatedNotificationService;
 
     @Transactional(readOnly = true)
     public CodeResDto getCode(User user, Long pantryId) {
@@ -50,5 +55,30 @@ public class PantryShareService {
         vo.getPantry().updateCode(code);
 
         return new CodeResDto(pantryId, code);
+    }
+
+    @Transactional
+    public PantryResDto postCode(User user, String code) {
+        // Find pantry data
+        Pantry pantry = pantryRepository.findByCode(code)
+                .orElseThrow(() -> new AppException(PantryErrorCode.INVALID_SHARE_CODE));
+
+        // Find owner's pantry
+        UserPantry userPantry = userPantryRepository.findByPantryIdAndIsOwner(pantry.getId(), true)
+                .orElseThrow(() -> new AppException(PantryErrorCode.OWNER_NOT_FOUND));
+
+        // Add user pantry
+        UserPantry newUserPantry = userPantryRepository.save(UserPantry.builder()
+                .user(user)
+                .pantryId(pantry.getId())
+                .title(userPantry.getTitle())
+                .color(userPantry.getColor())
+                .isOwner(false)
+                .build());
+
+        // Add notifications
+        relatedNotificationService.sharePantry(userPantry.getUser(), user, pantry.getId());
+
+        return new PantryResDto(newUserPantry);
     }
 }
