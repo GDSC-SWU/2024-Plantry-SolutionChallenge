@@ -12,5 +12,176 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/ab_profile_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white1">
+
+                <TextView
+                    android:id="@+id/tv_profile_toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/profile_title"
+                    android:textAppearance="@style/TextAppearance.Plantry.Heding1" />
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ImageView
+            android:id="@+id/iv_profile_profile_img"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_profile_user_basic_img"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ab_profile_appbar" />
+
+        <TextView
+            android:id="@+id/tv_profile_user_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:maxLength="12"
+            android:paddingVertical="2dp"
+            android:textAppearance="@style/TextAppearance.Plantry.Body5"
+            app:layout_constraintBottom_toTopOf="@id/tv_profile_user_email"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_profile_profile_img"
+            app:layout_constraintTop_toTopOf="@id/iv_profile_profile_img"
+            tools:text="@string/profile_user_name" />
+
+        <TextView
+            android:id="@+id/tv_profile_user_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="2dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_profile_profile_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_profile_user_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_profile_user_name"
+            tools:text="@string/profile_user_email" />
+
+        <ImageView
+            android:id="@+id/iv_profile_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_profile_right_arrow"
+            app:layout_constraintBottom_toBottomOf="@id/iv_profile_profile_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_profile_profile_img" />
+
+        <View
+            android:id="@+id/v_profile_delete_food_background"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/shape_fill_white1_8_rec"
+            android:backgroundTint="@color/white2"
+            app:layout_constraintBottom_toBottomOf="@id/pc_profile_delete_food_chart"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_profile_user_email" />
+
+        <TextView
+            android:id="@+id/tv_profile_delete_food"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="28dp"
+            android:drawableEnd="@drawable/ic_profile_question"
+            android:drawablePadding="8dp"
+            android:text="@string/profile_delete_food"
+            android:textAppearance="@style/TextAppearance.Plantry.Body5"
+            app:layout_constraintStart_toStartOf="@id/v_profile_delete_food_background"
+            app:layout_constraintTop_toTopOf="@id/v_profile_delete_food_background" />
+
+        <TextView
+            android:id="@+id/tv_profile_this_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/profile_this_week"
+            android:textAppearance="@style/TextAppearance.Plantry.Caption"
+            android:textColor="@color/gray2"
+            app:layout_constraintStart_toStartOf="@id/tv_profile_delete_food"
+            app:layout_constraintTop_toBottomOf="@id/tv_profile_delete_food" />
+
+        <View
+            android:id="@+id/v_profile_delete_food_line"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/line1"
+            app:layout_constraintTop_toBottomOf="@id/tv_profile_this_week" />
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pc_profile_delete_food_chart"
+            android:layout_width="197dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintDimensionRatio="1"
+            app:layout_constraintStart_toStartOf="@id/v_profile_delete_food_background"
+            app:layout_constraintTop_toBottomOf="@id/v_profile_delete_food_line" />
+
+        <TextView
+            android:id="@+id/tv_profile_ingestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="52dp"
+            android:layout_marginEnd="36dp"
+            android:drawableStart="@drawable/ic_profile_delete_ingestion"
+            android:drawablePadding="9dp"
+            android:text="@string/profile_ingestion"
+            android:textAppearance="@style/TextAppearance.Plantry.Caption"
+            app:layout_constraintBottom_toTopOf="@id/tv_profile_disposal"
+            app:layout_constraintEnd_toEndOf="@id/v_profile_delete_food_background"
+            app:layout_constraintTop_toTopOf="@id/pc_profile_delete_food_chart" />
+
+        <TextView
+            android:id="@+id/tv_profile_disposal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_profile_delete_disposal"
+            android:drawablePadding="9dp"
+            android:text="@string/profile_disposal"
+            android:textAppearance="@style/TextAppearance.Plantry.Caption"
+            app:layout_constraintBottom_toTopOf="@id/tv_profile_share"
+            app:layout_constraintStart_toStartOf="@id/tv_profile_ingestion"
+            app:layout_constraintTop_toBottomOf="@id/tv_profile_ingestion" />
+
+        <TextView
+            android:id="@+id/tv_profile_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_profile_delete_share"
+            android:drawablePadding="9dp"
+            android:text="@string/profile_share"
+            android:textAppearance="@style/TextAppearance.Plantry.Caption"
+            app:layout_constraintBottom_toTopOf="@id/tv_profile_miatake"
+            app:layout_constraintStart_toStartOf="@id/tv_profile_disposal"
+            app:layout_constraintTop_toBottomOf="@id/tv_profile_disposal" />
+
+        <TextView
+            android:id="@+id/tv_profile_miatake"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="52dp"
+            android:drawableStart="@drawable/ic_profile_delete_mistake"
+            android:drawablePadding="9dp"
+            android:text="@string/profile_mistake"
+            android:textAppearance="@style/TextAppearance.Plantry.Caption"
+            app:layout_constraintBottom_toBottomOf="@id/pc_profile_delete_food_chart"
+            app:layout_constraintStart_toStartOf="@id/tv_profile_share"
+            app:layout_constraintTop_toBottomOf="@id/tv_profile_share" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

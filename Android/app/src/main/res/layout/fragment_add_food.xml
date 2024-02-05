@@ -10,7 +10,49 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent">
+
+        <TextView
+            android:id="@+id/tv_add_food_recipt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_fill_gray4_16_rec"
+            android:backgroundTint="@color/white1"
+            android:drawableTop="@drawable/ic_add_food_receipt"
+            android:drawablePadding="4dp"
+            android:paddingHorizontal="53dp"
+            android:paddingVertical="21dp"
+            android:text="@string/add_food_recipt"
+            android:textAppearance="@style/TextAppearance.Plantry.Body5"
+            app:layout_constraintEnd_toStartOf="@id/tv_add_food_direct"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_add_food_direct" />
+
+        <TextView
+            android:id="@+id/tv_add_food_direct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="48dp"
+            android:background="@drawable/shape_fill_gray4_16_rec"
+            android:backgroundTint="@color/white1"
+            android:drawableTop="@drawable/ic_add_food_edit"
+            android:drawablePadding="4dp"
+            android:paddingHorizontal="38.5dp"
+            android:paddingVertical="21dp"
+            android:text="@string/add_food_direct"
+            android:textAppearance="@style/TextAppearance.Plantry.Body5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@id/tv_add_food_recipt" />
+
+        <ImageView
+            android:id="@+id/iv_add_food_result_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

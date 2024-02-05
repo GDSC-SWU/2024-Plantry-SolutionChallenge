@@ -9,18 +9,18 @@
     </style>
 
     <style name="TextAppearance.Plantry.Heding1">
-        <item name="fontFamily">@font/font_roboto_bold</item>
+        <item name="fontFamily">@font/font_roboto_medium</item>
         <item name="android:textSize">24sp</item>
     </style>
 
     <style name="TextAppearance.Plantry.Heding2">
-        <item name="fontFamily">@font/font_roboto_bold</item>
+        <item name="fontFamily">@font/font_roboto_medium</item>
         <item name="android:textSize">22sp</item>
     </style>
 
     <style name="TextAppearance.Plantry.Heding3">
         <item name="fontFamily">@font/font_roboto_medium</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">22sp</item>
         <item name="lineHeight">24dp</item>
     </style>
 
@@ -76,5 +76,14 @@
     <style name="TextAppearance.Plantry.Navigation2">
         <item name="fontFamily">@font/roboto_medium</item>
         <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextAppearance.Plantry.Navigation3">
+        <item name="fontFamily">@font/font_roboto_bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="TextAppearance.Plantry.Navigation4">
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">14sp</item>
     </style>
 </resources>
