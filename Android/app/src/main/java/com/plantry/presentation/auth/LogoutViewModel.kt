@@ -13,27 +13,20 @@ import com.plantry.data.ApiPool
 import com.plantry.data.RetrofitPool
 import kotlinx.coroutines.launch
 
-class LogoutViewModel constructor(
-    private val applicationContext: Context
-): ViewModel() {
-
+class LogoutViewModel: ViewModel() {
     private val viewModel  = RefreshTokenViewModel()
-
 
     private val _logout: MutableLiveData<UiState<String>> = MutableLiveData()
     val logout: LiveData<UiState<String>> = _logout
 
-    fun deleteGoogleLogout(idToken: String) = viewModelScope.launch {
+    fun deleteGoogleLogout() = viewModelScope.launch {
         runCatching {
-            ApiPool.deleteLogOut.deleteLogout(idToken)
+            ApiPool.deleteLogOut.deleteLogout()
         }.fold(
             {
                 _logout.value = UiState.Success(it.message)
             },
             {
-                // if(it.message.toString() == "HTTP 401"){
-                    viewModel.getRefreshToken(RetrofitPool.refreshToken.toString())
-                // }
             }
         )
     }

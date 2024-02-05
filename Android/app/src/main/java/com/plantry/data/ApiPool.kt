@@ -7,6 +7,11 @@ import com.plantry.data.API.API_TAG
 import com.plantry.data.api.LogoutApiService
 import com.plantry.data.api.RefreshTokenApiService
 import com.plantry.data.api.SignInApiService
+import com.plantry.data.dto.BaseResponse
+import com.plantry.data.dto.BaseResponseNullable
+import com.plantry.data.dto.response.RefreshTokenDto
+import com.plantry.data.dto.response.ResponseSignInDto
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -24,9 +29,9 @@ object ApiPool {
 
 
 object RetrofitPool {
-    var accessToken: String? = null
-    var refreshToken: String? = null
-    var userId: Int? = null
+    private var accessToken: String? = null
+    private var refreshToken: String? = null
+    private var userId: Int? = null
 
     fun setAccessToken(token: String?) {
         accessToken = token
@@ -56,9 +61,49 @@ object RetrofitPool {
 
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
-        val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
-            .build()
+        val okHttpClient =
+            OkHttpClient.Builder().addInterceptor(loggingInterceptor).addInterceptor { chain ->
+                // AccessToken이 있는 경우, 헤더에 추가합니다.
+                val request = accessToken?.let { token ->
+                    chain.request().newBuilder()
+                        .addHeader("Authorization", "Bearer $token")
+                        .build()
+                } ?: chain.request()
+
+                var response = chain.proceed(request)
+
+                if (response.code == 401) {
+                    runBlocking {
+                        val refreshToken = RetrofitPool.refreshToken
+
+                        if (refreshToken != null) {
+                            val refreshResponse : BaseResponseNullable<RefreshTokenDto> = ApiPool.getRefreshToken.getToken()
+
+                            if (refreshResponse.data!=null) {
+                                setAccessToken(refreshResponse.data.accessToken)
+                                setAccessToken(refreshResponse.data.accessToken)
+
+                                val refreshRequest = refreshToken?.let { refreshToken ->
+                                    chain.request().newBuilder()
+                                        .addHeader("Authorization", "Bearer ${accessToken}")
+                                        .build()
+                                } ?: chain.request()
+                                response.close()
+                                response = chain.proceed(refreshRequest)
+                            }
+                            else {
+                                Log.e("refreshResponse.data : 서버 통신", "refreshResponse.data == null")
+                            }
+                        }
+                        else {
+                            Log.e("refreshToken", "refreshToken == null")
+                        }
+                    }
+                    response
+                } else {
+                    response
+                }
+            }.build()
 
         Retrofit.Builder()
             .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))

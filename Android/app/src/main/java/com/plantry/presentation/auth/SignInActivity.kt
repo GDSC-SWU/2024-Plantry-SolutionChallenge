@@ -23,10 +23,8 @@ import com.plantry.databinding.ActivitySigninBinding
 
 
 class SignInActivity : BindingActivity<ActivitySigninBinding>(R.layout.activity_signin) {
-
-
     private lateinit var googleSignResultLauncher: ActivityResultLauncher<Intent>
-    private val viewModel  = SignInViewModel(this)
+    private val viewModel by viewModels<SignInViewModel>()
 
     override fun initView() {
         getGoogleClient()
@@ -44,7 +42,7 @@ class SignInActivity : BindingActivity<ActivitySigninBinding>(R.layout.activity_
         super.onStart()
         val account = GoogleSignIn.getLastSignedInAccount(this)
         if (account != null) {
-            // navigateTo<MainActivity>()
+           // navigateTo<MainActivity>()
         }
 
     }
