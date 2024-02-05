@@ -8,6 +8,7 @@
 
     <color name="system_gray">#BFBFBF</color>
     <color name="shadow">#0D222222</color>
+    <color name="shadow2">#40222222</color>
     <color name="popup_background">#80222222</color>
 
     <color name="white1">#FFFFFF</color>

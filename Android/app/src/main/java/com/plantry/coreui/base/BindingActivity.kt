@@ -29,4 +29,5 @@ abstract class BindingActivity<T : ViewDataBinding>(
         hideKeyboard(currentFocus ?: View(this))
         return super.dispatchTouchEvent(ev)
     }
+
 }

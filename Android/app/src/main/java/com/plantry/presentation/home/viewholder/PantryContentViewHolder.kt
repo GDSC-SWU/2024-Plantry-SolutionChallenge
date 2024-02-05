@@ -4,7 +4,7 @@ import android.graphics.Color
 import androidx.recyclerview.widget.RecyclerView
 import com.plantry.MainActivity
 import com.plantry.R
-import com.plantry.data.dto.ResponseHomePantryDto
+import com.plantry.data.dto.response.ResponseHomePantryDto
 import com.plantry.databinding.ItemHomePantryContentBinding
 import com.plantry.presentation.home.bottomsheet.HomeAlarmBottomSheet
 import com.plantry.presentation.home.ui.FragmentHome
@@ -13,16 +13,18 @@ import kotlin.math.roundToInt
 
 class PantryContentViewHolder(private val binding: ItemHomePantryContentBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(pantry_content: ResponseHomePantryDto.Data.Result.Food) {
+    fun bind(pantry_content: ResponseHomePantryDto.Result.Food) {
         binding.tvHomePantryItemContentImg.setText(pantry_content.icon)
         binding.tvHomePantryItemContentFoodName.setText(pantry_content.name)
-        setCount(pantry_content.count)
+        // setCount(pantry_content.count)
+        binding.tvHomePantryItemContentCount.text = pantry_content.count.toString()
         setDDay(pantry_content.days)
         setDateSort(pantry_content.isUseBydate)
-        setAlarmIcon(true)
+        setAlarmIcon(pantry_content.isNotified)
         clickAlarm()
     }
 
+    /* double 변경 요청 필요
     private fun setCount(count: Double?) {
         if (count != null) {
             if (count < count.roundToInt()) {
@@ -32,6 +34,7 @@ class PantryContentViewHolder(private val binding: ItemHomePantryContentBinding)
             }
         }
     }
+     */
 
     private fun setDDay(day: Int?) {
         if (day != null) {
@@ -56,19 +59,23 @@ class PantryContentViewHolder(private val binding: ItemHomePantryContentBinding)
     }
 
     private fun clickAlarm() {
-        val homePantryFragment = FragmentHomePantry()
         binding.ivHomePantryItemContentAlarm.setOnClickListener {
             val alarmBottomSheet = HomeAlarmBottomSheet()
-            alarmBottomSheet.show(homePantryFragment.childFragmentManager, FragmentHome.BOTTOM_SHEET)
+            /*alarmBottomSheet.show(
+                context.supportFragmentManager,
+                FragmentHome.BOTTOM_SHEET
+            )
+             */
         }
     }
 
-    private fun setAlarmIcon(isAlarmOn: Boolean) {
-        if(isAlarmOn){ // 데이터 구조 변화에 따라 변경 예정
+    private fun setAlarmIcon(isAlarmOn: Boolean?) {
+        if (isAlarmOn == true) { // 데이터 구조 변화에 따라 변경 예정
             binding.ivHomePantryItemContentAlarm.setBackgroundResource(R.drawable.ic_home_pantry_alarm_on)
-        }
-        else{
+        } else if (isAlarmOn == false) {
             binding.ivHomePantryItemContentAlarm.setBackgroundResource(R.drawable.ic_home_pantry_alarm_off)
+        } else {
+
         }
     }
 }
