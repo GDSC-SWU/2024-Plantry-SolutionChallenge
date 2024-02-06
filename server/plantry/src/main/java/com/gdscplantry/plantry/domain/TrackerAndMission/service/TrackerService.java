@@ -20,7 +20,7 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class TrackerAndMissionService {
+public class TrackerService {
     private final ConsumedProductRepository consumedProductRepository;
 
     private final String[] TYPES = {ProductDeleteTypeEnum.Ingestion.getTitle(), ProductDeleteTypeEnum.Disposal.getTitle(),

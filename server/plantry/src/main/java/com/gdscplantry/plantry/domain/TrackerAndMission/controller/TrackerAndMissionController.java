@@ -1,7 +1,7 @@
 package com.gdscplantry.plantry.domain.TrackerAndMission.controller;
 
 import com.gdscplantry.plantry.domain.TrackerAndMission.dto.TrackerResDto;
-import com.gdscplantry.plantry.domain.TrackerAndMission.service.TrackerAndMissionService;
+import com.gdscplantry.plantry.domain.TrackerAndMission.service.TrackerService;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.global.common.DataResponseDto;
 import com.gdscplantry.plantry.global.common.ResponseDto;
@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/mypage")
 public class TrackerAndMissionController {
-    private final TrackerAndMissionService trackerAndMissionService;
+    private final TrackerService trackerService;
 
     @GetMapping("/track")
     public ResponseEntity<ResponseDto> getTrackerResult(@RequestAttribute User user) {
-        TrackerResDto trackerResDto = trackerAndMissionService.getTrackerResult(user);
+        TrackerResDto trackerResDto = trackerService.getTrackerResult(user);
 
         return ResponseEntity.ok(DataResponseDto.of(trackerResDto, 200));
     }
