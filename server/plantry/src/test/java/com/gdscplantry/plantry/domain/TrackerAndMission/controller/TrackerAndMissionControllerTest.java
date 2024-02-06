@@ -1,0 +1,170 @@
+package com.gdscplantry.plantry.domain.TrackerAndMission.controller;
+
+import com.gdscplantry.plantry.domain.Pantry.domain.*;
+import com.gdscplantry.plantry.domain.TrackerAndMission.domain.tracker.ConsumedProduct;
+import com.gdscplantry.plantry.domain.TrackerAndMission.domain.tracker.ConsumedProductRepository;
+import com.gdscplantry.plantry.domain.User.domain.User;
+import com.gdscplantry.plantry.domain.User.domain.UserRepository;
+import com.gdscplantry.plantry.domain.model.JwtVo;
+import com.gdscplantry.plantry.domain.model.ProductDeleteTypeEnum;
+import com.gdscplantry.plantry.domain.model.StorageEnum;
+import com.gdscplantry.plantry.global.util.JwtUtil;
+import com.gdscplantry.plantry.global.util.RandomUtil;
+import com.gdscplantry.plantry.global.util.RedisUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.ArrayList;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@SpringBootTest
+@AutoConfigureMockMvc
+@Transactional
+@Slf4j
+class TrackerAndMissionControllerTest {
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @Autowired
+    private RedisUtil redisUtil;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private PantryRepository pantryRepository;
+
+    @Autowired
+    private UserPantryRepository userPantryRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
+    private ConsumedProductRepository consumedProductRepository;
+
+    final String MY_PAGE_API_URL = "/api/v1/mypage";
+    final String EMAIL = "test@test.com";
+    final String NICKNAME = "test_name";
+    final String PANTRY_TITLE = "My pantry";
+    final String[] PRODUCT_NAMES = {"Orange", "Apple", "Melon", "Pasta", "Milk"};
+    final BigDecimal[] COUNTS = {BigDecimal.ONE, BigDecimal.valueOf(0.5), BigDecimal.ONE, BigDecimal.valueOf(1.5), BigDecimal.valueOf(2)};
+    User user;
+    String accessToken;
+    Pantry pantry;
+    UserPantry userPantry;
+    ArrayList<Product> products;
+
+    @BeforeEach
+    void addMockData() {
+        addMockUser();
+        addMockPantry();
+        addMockProducts();
+    }
+
+    @AfterEach
+    void removeRedisData() {
+        // Remove refreshToken from redis
+        redisUtil.delete(user.getId() + "_refresh");
+    }
+
+    void addMockUser() {
+        // Save user
+        user = userRepository.save(User.builder()
+                .email(EMAIL)
+                .nickname(NICKNAME)
+                .build());
+
+        // Generate JWT
+        JwtVo jwtVo = jwtUtil.generateTokens(user);
+
+        // Get access token
+        accessToken = jwtVo.getAccessToken();
+
+        // Save refreshToken to redis
+        redisUtil.opsForValueSet(user.getId() + "_refresh", jwtVo.getRefreshToken(), 24 * 7);
+    }
+
+    void addMockPantry() {
+        pantry = pantryRepository.save(new Pantry(RandomUtil.getUuid(), RandomUtil.getRandomNickname()));
+        userPantry = userPantryRepository.save(UserPantry.builder()
+                .user(user)
+                .pantryId(pantry.getId())
+                .title(PANTRY_TITLE)
+                .color("A2E5B3")
+                .isOwner(true)
+                .build());
+    }
+
+    void addMockProducts() {
+        products = new ArrayList<>();
+        for (int i = 0; i < PRODUCT_NAMES.length; i++)
+            products.add(Product.builder()
+                    .pantryId(pantry.getId())
+                    .icon("🍊")
+                    .name(PRODUCT_NAMES[i])
+                    .storage(StorageEnum.Cold)
+                    .count(COUNTS[i])
+                    .isUseByDate(true)
+                    .date(LocalDate.of(2024, 2, 9))
+                    .build());
+        products = (ArrayList<Product>) productRepository.saveAll(products);
+    }
+
+    void addMockProductDeletion() {
+        final int[] TYPES = {1, 2, 3, 4, 1};
+        ArrayList<ConsumedProduct> consumedProducts = new ArrayList<>();
+
+        for (int i = 0; i < 5; i++)
+            consumedProducts.add(ConsumedProduct.builder()
+                    .user(user)
+                    .count(COUNTS[i])
+                    .type(ProductDeleteTypeEnum.findByKey(TYPES[i]))
+                    .product(products.get(i).getName())
+                    .foodDataId(products.get(i).getFoodDataId())
+                    .addedAt(products.get(i).getCreatedAt())
+                    .build());
+
+        consumedProductRepository.saveAll(consumedProducts);
+    }
+
+    @Test
+    @DisplayName("Get tracker result <200>")
+    void getTrackerResult() throws Exception {
+        // given
+        addMockProductDeletion();
+        double[] expected = {50, 8.33, 16.67, 25};
+
+        // when
+        ResultActions resultActions = mockMvc.perform(get(MY_PAGE_API_URL + "/track")
+                .header("Authorization", "Bearer " + accessToken));
+
+        // then
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.result").exists())
+                .andExpect(jsonPath("$.data.result.Ingestion").value(expected[0]))
+                .andExpect(jsonPath("$.data.result.Disposal").value(expected[1]))
+                .andExpect(jsonPath("$.data.result.Sharing").value(expected[2]))
+                .andExpect(jsonPath("$.data.result.Mistake").value(expected[3]))
+                .andDo(print());
+    }
+}
