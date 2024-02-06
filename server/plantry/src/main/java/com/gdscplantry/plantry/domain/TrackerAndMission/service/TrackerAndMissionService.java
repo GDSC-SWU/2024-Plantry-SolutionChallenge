@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -28,9 +29,9 @@ public class TrackerAndMissionService {
     @Transactional(readOnly = true)
     public TrackerResDto getTrackerResult(User user) {
         // Find monday's date on this week
-        LocalDateTime now = LocalDateTime.now();
-        DayOfWeek dayOfWeek = now.getDayOfWeek();
-        LocalDateTime monday = dayOfWeek == DayOfWeek.MONDAY ? now : now.minusDays(dayOfWeek.getValue() - DayOfWeek.MONDAY.getValue());
+        LocalDateTime today = LocalDateTime.now().with(LocalTime.of(0, 0));
+        DayOfWeek dayOfWeek = today.getDayOfWeek();
+        LocalDateTime monday = dayOfWeek == DayOfWeek.MONDAY ? today : today.minusDays(dayOfWeek.getValue() - DayOfWeek.MONDAY.getValue());
 
         // Find data
         ArrayList<ConsumptionDataVo> data = consumedProductRepository.findAllByUserAndCreatedAtWithJPQL(user, monday);
