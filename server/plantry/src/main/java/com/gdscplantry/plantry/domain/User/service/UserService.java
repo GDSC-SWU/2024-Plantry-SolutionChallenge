@@ -1,10 +1,10 @@
 package com.gdscplantry.plantry.domain.User.service;
 
 import com.gdscplantry.plantry.domain.Notification.domain.NotificationRepository;
-import com.gdscplantry.plantry.domain.Pantry.domain.ConsumedProductRepository;
 import com.gdscplantry.plantry.domain.Pantry.domain.UserPantry;
 import com.gdscplantry.plantry.domain.Pantry.domain.UserPantryRepository;
 import com.gdscplantry.plantry.domain.Pantry.service.PantryService;
+import com.gdscplantry.plantry.domain.TrackerAndMission.domain.tracker.ConsumedProductRepository;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.domain.User.domain.UserRepository;
 import com.gdscplantry.plantry.domain.User.dto.GoogleLoginResDto;
