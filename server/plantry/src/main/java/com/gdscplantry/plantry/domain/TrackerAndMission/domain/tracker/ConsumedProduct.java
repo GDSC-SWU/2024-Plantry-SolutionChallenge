@@ -1,4 +1,4 @@
-package com.gdscplantry.plantry.domain.Pantry.domain;
+package com.gdscplantry.plantry.domain.TrackerAndMission.domain.tracker;
 
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.domain.model.ProductDeleteTypeEnum;
