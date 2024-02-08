@@ -19,5 +19,4 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
             "where (a.user = :user or a.id IS NULL) and m.createdAt >= :before and m.createdAt < :after " +
             "order by m.id ")
     ArrayList<UserMissionVo> findAllByUserAndCreatedAtWithJPQL(User user, LocalDateTime before, LocalDateTime after);
-
 }

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 public enum TrackerAndMissionErrorCode implements ErrorCode {
+    MISSION_NOT_FOUND(HttpStatus.NOT_FOUND, "Mission not found. (Invalid mission id)"),
     MISSION_SIZE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error - Mission data read failed."),
     ;
 
