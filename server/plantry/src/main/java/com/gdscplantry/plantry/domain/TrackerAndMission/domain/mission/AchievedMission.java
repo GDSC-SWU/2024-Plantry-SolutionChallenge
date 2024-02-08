@@ -23,11 +23,16 @@ public class AchievedMission {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Mission mission;
 
     @CreatedDate
     private LocalDateTime createdAt;
+
+    public AchievedMission(User user, Mission mission) {
+        this.user = user;
+        this.mission = mission;
+    }
 
     @Override
     public boolean equals(Object obj) {
