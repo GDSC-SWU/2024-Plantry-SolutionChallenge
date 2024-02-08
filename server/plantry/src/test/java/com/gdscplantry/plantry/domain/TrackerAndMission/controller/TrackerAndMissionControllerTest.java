@@ -1,6 +1,10 @@
 package com.gdscplantry.plantry.domain.TrackerAndMission.controller;
 
 import com.gdscplantry.plantry.domain.Pantry.domain.*;
+import com.gdscplantry.plantry.domain.TrackerAndMission.domain.mission.Mission;
+import com.gdscplantry.plantry.domain.TrackerAndMission.domain.mission.MissionData;
+import com.gdscplantry.plantry.domain.TrackerAndMission.domain.mission.MissionDataRepository;
+import com.gdscplantry.plantry.domain.TrackerAndMission.domain.mission.MissionRepository;
 import com.gdscplantry.plantry.domain.TrackerAndMission.domain.tracker.ConsumedProduct;
 import com.gdscplantry.plantry.domain.TrackerAndMission.domain.tracker.ConsumedProductRepository;
 import com.gdscplantry.plantry.domain.User.domain.User;
@@ -26,6 +30,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -60,6 +66,12 @@ class TrackerAndMissionControllerTest {
 
     @Autowired
     private ConsumedProductRepository consumedProductRepository;
+
+    @Autowired
+    private MissionDataRepository missionDataRepository;
+
+    @Autowired
+    private MissionRepository missionRepository;
 
     final String MY_PAGE_API_URL = "/api/v1/mypage";
     final String EMAIL = "test@test.com";
@@ -165,6 +177,30 @@ class TrackerAndMissionControllerTest {
                 .andExpect(jsonPath("$.data.result.Disposal").value(expected[1]))
                 .andExpect(jsonPath("$.data.result.Sharing").value(expected[2]))
                 .andExpect(jsonPath("$.data.result.Mistake").value(expected[3]))
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("Get mission list <200>")
+    void getMissionList() throws Exception {
+        // given
+        List<MissionData> data = missionDataRepository.findAllById(new ArrayList<>(Arrays.asList(1L, 2L, 8L)));
+        List<Mission> expected = new ArrayList<>();
+        for (MissionData missionData : data) expected.add(new Mission(missionData));
+        missionRepository.saveAll(expected);
+
+        // when
+        ResultActions resultActions = mockMvc.perform(get(MY_PAGE_API_URL + "/mission")
+                .header("Authorization", "Bearer " + accessToken));
+
+        // then
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.result.length()").value(3))
+                .andExpect(jsonPath("$.data.result[0].missionId").value(expected.get(0).getId()))
+                .andExpect(jsonPath("$.data.result[1].missionId").value(expected.get(1).getId()))
+                .andExpect(jsonPath("$.data.result[2].missionId").value(expected.get(2).getId()))
+                .andExpect(jsonPath("$.data.result[2].content").value(data.get(2).getTitle()))
                 .andDo(print());
     }
 }
