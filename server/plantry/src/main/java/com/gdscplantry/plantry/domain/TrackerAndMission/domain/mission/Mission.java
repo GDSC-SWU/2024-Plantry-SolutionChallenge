@@ -25,6 +25,10 @@ public class Mission {
     @CreatedDate
     private LocalDateTime createdAt;
 
+    public Mission(MissionData missionData) {
+        this.missionData = missionData;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;

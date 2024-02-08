@@ -7,6 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum MissionTypeEnum {
     SINGLE(0, "Single"),
+    GROUP(1, "Group"),
     ;
 
     private final Integer key;
