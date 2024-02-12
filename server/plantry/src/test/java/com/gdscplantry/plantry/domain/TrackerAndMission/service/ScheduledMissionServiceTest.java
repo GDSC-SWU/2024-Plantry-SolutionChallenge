@@ -46,4 +46,16 @@ class ScheduledMissionServiceTest {
         for (long idx : actual) log.info(idx + " ");
         assertThat(actual.get(0)).as("Mission data update failed.").isEqualTo(10L);
     }
+
+    @Test
+    @DisplayName("Set mission without former data")
+    void setMission_without_former() {
+        // given, when
+        scheduledMissionService.setMission();
+
+        // then
+        ArrayList<Long> actual = missionRepository.findAllOrderByCreatedAtWithJPQL();
+        for (long idx : actual) log.info(idx + " ");
+        assertThat(actual.size()).as("Mission data update failed.").isEqualTo(3);
+    }
 }
