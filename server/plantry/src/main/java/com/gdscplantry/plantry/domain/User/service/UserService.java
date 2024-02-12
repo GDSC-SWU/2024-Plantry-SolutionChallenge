@@ -10,11 +10,15 @@ import com.gdscplantry.plantry.domain.User.domain.UserRepository;
 import com.gdscplantry.plantry.domain.User.dto.GoogleLoginResDto;
 import com.gdscplantry.plantry.domain.User.error.UserErrorCode;
 import com.gdscplantry.plantry.domain.model.JwtVo;
+import com.gdscplantry.plantry.global.error.ErrorCode;
+import com.gdscplantry.plantry.global.error.GlobalErrorCode;
 import com.gdscplantry.plantry.global.error.exception.AppException;
 import com.gdscplantry.plantry.global.util.FcmUtil;
 import com.gdscplantry.plantry.global.util.GoogleOAuthUtil;
 import com.gdscplantry.plantry.global.util.JwtUtil;
 import com.gdscplantry.plantry.global.util.RedisUtil;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -102,7 +106,15 @@ public class UserService {
 
     @Transactional
     public GoogleLoginResDto refreshToken(String refreshToken) {
-        User tokenUser = jwtUtil.validateToken(false, refreshToken);
+        // Validate token
+        User tokenUser;
+        try {
+            tokenUser = jwtUtil.validateToken(false, refreshToken);
+        } catch (JwtException e) {
+            ErrorCode code = e instanceof ExpiredJwtException ? GlobalErrorCode.EXPIRED_JWT : GlobalErrorCode.INVALID_TOKEN;
+
+            throw new AppException(code);
+        }
 
         // Generate JWT
         JwtVo jwtVo = jwtUtil.generateTokens(tokenUser);
