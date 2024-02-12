@@ -30,8 +30,10 @@ public class ScheduledMissionService {
         ArrayList<Long> lastMissions = missionRepository.findAllOrderByCreatedAtWithJPQL();
 
         // Select all missions not chosen in last 2 weeks
-        ArrayList<MissionData> missionData1 = missionDataRepository.findAllByIdWithJPQL(MissionTypeEnum.SINGLE, lastMissions);
-        ArrayList<MissionData> missionData2 = missionDataRepository.findAllByIdWithJPQL(MissionTypeEnum.GROUP, lastMissions);
+        ArrayList<MissionData> missionData1 = lastMissions.size() == 0 ?
+                missionDataRepository.findAllByType(MissionTypeEnum.SINGLE) : missionDataRepository.findAllByIdWithJPQL(MissionTypeEnum.SINGLE, lastMissions);
+        ArrayList<MissionData> missionData2 = lastMissions.size() == 0 ?
+                missionDataRepository.findAllByType(MissionTypeEnum.GROUP) : missionDataRepository.findAllByIdWithJPQL(MissionTypeEnum.GROUP, lastMissions);
 
         // Find 3 random indexes
         ArrayList<Integer> idx = new ArrayList<>();
