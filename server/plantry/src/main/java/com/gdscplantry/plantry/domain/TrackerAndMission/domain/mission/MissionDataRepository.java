@@ -11,4 +11,6 @@ import java.util.ArrayList;
 public interface MissionDataRepository extends JpaRepository<MissionData, Long> {
     @Query(value = "select m from MissionData m where m.type = :type and m.id not in :ids")
     ArrayList<MissionData> findAllByIdWithJPQL(MissionTypeEnum type, ArrayList<Long> ids);
+
+    ArrayList<MissionData> findAllByType(MissionTypeEnum type);
 }
