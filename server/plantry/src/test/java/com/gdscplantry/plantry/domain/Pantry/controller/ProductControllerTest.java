@@ -5,6 +5,8 @@ import com.gdscplantry.plantry.domain.Pantry.domain.*;
 import com.gdscplantry.plantry.domain.Pantry.dto.product.NewProductListReqDto;
 import com.gdscplantry.plantry.domain.Pantry.dto.product.NewProductReqDto;
 import com.gdscplantry.plantry.domain.Pantry.dto.product.UpdateProductReqDto;
+import com.gdscplantry.plantry.domain.TrackerAndMission.domain.tracker.ConsumedProduct;
+import com.gdscplantry.plantry.domain.TrackerAndMission.domain.tracker.ConsumedProductRepository;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.domain.User.domain.UserRepository;
 import com.gdscplantry.plantry.domain.model.JwtVo;

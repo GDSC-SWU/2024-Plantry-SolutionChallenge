@@ -3,6 +3,7 @@ package com.gdscplantry.plantry.domain.Pantry.domain;
 import com.gdscplantry.plantry.domain.Pantry.dto.pantry.UpdatePantryReqDto;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,6 +37,7 @@ public class UserPantry {
 
     private Boolean isMarked;
 
+    @NotNull
     private Boolean isOwner;
 
     @CreatedDate
@@ -45,7 +47,7 @@ public class UserPantry {
     private LocalDateTime updatedAt;
 
     @Builder
-    public UserPantry(User user, Long pantryId, String title, String color, Boolean isOwner) {
+    public UserPantry(User user, Long pantryId, String title, String color, @NotNull Boolean isOwner) {
         this.user = user;
         this.pantryId = pantryId;
         this.title = title;

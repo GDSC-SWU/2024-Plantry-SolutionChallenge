@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
+    ArrayList<Notification> findAllByUser(User user);
+
     void deleteAllByUser(User user);
 
     // Delete all pantry-share notifications with pantry id

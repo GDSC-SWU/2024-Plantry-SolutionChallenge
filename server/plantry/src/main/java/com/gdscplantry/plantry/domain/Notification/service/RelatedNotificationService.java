@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 @Service
@@ -47,15 +48,15 @@ public class RelatedNotificationService {
         for (int key : keys) {
             LocalDate useByDate = isNonUseByDate ? product.getUseByDateData() : null;
             LocalDateTime notifiedAt = NotificationUtil.getNotificationTime(product.getDate(), key, user.getNotificationTime());
-            if (notifiedAt.isAfter(LocalDateTime.now()))
-                notificationArrayList.add(Notification.builder()
-                        .user(user)
-                        .typeKey(key)
-                        .title(NotificationTypeEnum.getTitleStr(product.getName(), key))
-                        .body(NotificationTypeEnum.getBodyStr(pantryTitle, product.getName(), key, product.getDate(), useByDate))
-                        .entityId(product.getId())
-                        .notifiedAt(notifiedAt)
-                        .build());
+            notificationArrayList.add(Notification.builder()
+                    .user(user)
+                    .typeKey(key)
+                    .title(NotificationTypeEnum.getTitleStr(product.getName(), key))
+                    .body(NotificationTypeEnum.getBodyStr(pantryTitle, product.getName(), key, product.getDate(), useByDate))
+                    .entityId(product.getId())
+                    .notifiedAt(notifiedAt)
+                    .isDeleted(notifiedAt.isBefore(LocalDateTime.now()))
+                    .build());
         }
 
         return notificationArrayList;
@@ -109,7 +110,35 @@ public class RelatedNotificationService {
         ArrayList<Notification> notifications = notificationRepository.findAllByUserAndNotifiedAtIsGreaterThanEqual(user, now);
 
         // Update data
-        for (Notification notification : notifications)
-            notification.updateNotifiedAt(notification.getNotifiedAt().withHour(time));
+        for (Notification notification : notifications) {
+            boolean isOff = time == null;
+            notification.updateIsOff(isOff);
+
+            if (!isOff)
+                notification.updateNotifiedAt(notification.getNotifiedAt().withHour(time));
+        }
+    }
+
+    @Transactional
+    public void sharePantry(User owner, User user, Long pantryId) {
+        // Find all notifications
+        ArrayList<ExpNotificationProductVo> ownerNotifications = notificationRepository.findAllByUserAndPantryIdJoinProductWithJPQL(owner, pantryId);
+        ArrayList<Notification> notifications = new ArrayList<>();
+
+        // Add notifications
+        for (ExpNotificationProductVo vo : ownerNotifications) {
+            Notification notification = vo.getNotification();
+            notifications.add(Notification.builder()
+                    .user(user)
+                    .typeKey(notification.getTypeKey())
+                    .title(notification.getTitle())
+                    .body(notification.getBody())
+                    .entityId(notification.getEntityId())
+                    .notifiedAt(LocalDateTime.of(notification.getNotifiedAt().toLocalDate(), LocalTime.of(user.getNotificationTime(), 0)))
+                    .build());
+        }
+
+        // Save data
+        notificationRepository.saveAll(notifications);
     }
 }
