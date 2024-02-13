@@ -23,7 +23,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -51,13 +53,14 @@ public class ProductService {
         return product;
     }
 
-    public Map<Long, List<ProductListItemResDto>> groupProductList(LinkedList<ProductListItemResDto> expiredList, LinkedList<ProductListItemResDto> ddayList, LinkedList<ProductListItemResDto> notExpiredList) {
-        Map<Long, List<ProductListItemResDto>> notExpiredMap = notExpiredList.stream()
-                .collect(Collectors.groupingBy(ProductListItemResDto::getDays));
-        Map<Long, List<ProductListItemResDto>> result = new HashMap<>();
-        result.put(-1L, expiredList);
-        result.put(0L, ddayList);
-        result.putAll(notExpiredMap);
+    public ArrayList<ProductListResultDto> groupProductList(LinkedList<ProductListItemDto> expiredList, LinkedList<ProductListItemDto> ddayList, LinkedList<ProductListItemDto> notExpiredList) {
+        Map<Long, LinkedList<ProductListItemDto>> notExpiredMap = notExpiredList.stream()
+                .collect(Collectors.groupingBy(ProductListItemDto::getDays, Collectors.toCollection(LinkedList::new)));
+        ArrayList<ProductListResultDto> result = new ArrayList<>();
+        result.add(new ProductListResultDto(-1L, expiredList));
+        result.add(new ProductListResultDto(0L, ddayList));
+        for (Long key : notExpiredMap.keySet())
+            result.add(new ProductListResultDto(key, notExpiredMap.get(key)));
 
         return result;
     }
@@ -72,7 +75,8 @@ public class ProductService {
 
         // Find from Food Database
         FoodDataVo foodDataVo = foodDataUtil.findFromFoodDatabase(product.getName(), LocalDate.now());
-        product.updateFoodData(foodDataVo);
+        if (foodDataVo != null)
+            product.updateFoodData(foodDataVo);
 
         // Save data
         productRepository.save(product);
@@ -97,7 +101,8 @@ public class ProductService {
 
             // Find from Food Database
             FoodDataVo foodDataVo = foodDataUtil.findFromFoodDatabase(req.getName(), LocalDate.now());
-            product.updateFoodData(foodDataVo);
+            if (foodDataVo != null)
+                product.updateFoodData(foodDataVo);
 
             // Add data
             products.add(product);
@@ -202,12 +207,12 @@ public class ProductService {
         StorageEnum storageEnum = StorageEnum.findByKey(filter);
 
         // Find product list
-        LinkedList<ProductListItemResDto> expiredList = productRepository.findAllExpiredByPantryIdAndStorageByJPQL(user, pantryId, storageEnum);
-        LinkedList<ProductListItemResDto> ddayList = productRepository.findAllDdayByPantryIdAndStorageByJPQL(user, pantryId, storageEnum);
-        LinkedList<ProductListItemResDto> notExpiredList = productRepository.findAllNotExpiredByPantryIdAndStorageOrderByDateByJPQL(user, pantryId, storageEnum);
+        LinkedList<ProductListItemDto> expiredList = productRepository.findAllExpiredByPantryIdAndStorageByJPQL(user, pantryId, storageEnum);
+        LinkedList<ProductListItemDto> ddayList = productRepository.findAllDdayByPantryIdAndStorageByJPQL(user, pantryId, storageEnum);
+        LinkedList<ProductListItemDto> notExpiredList = productRepository.findAllNotExpiredByPantryIdAndStorageOrderByDateByJPQL(user, pantryId, storageEnum);
 
         // Group lists by day
-        Map<Long, List<ProductListItemResDto>> result = groupProductList(expiredList, ddayList, notExpiredList);
+        ArrayList<ProductListResultDto> result = groupProductList(expiredList, ddayList, notExpiredList);
 
         return new ProductListResDto(filter, result);
     }
@@ -221,12 +226,12 @@ public class ProductService {
         StorageEnum storageEnum = StorageEnum.findByKey(filter);
 
         // Find product list
-        LinkedList<ProductListItemResDto> expiredList = productRepository.findAllExpiredByPantryIdAndStorageAndQueryByJPQL(user, pantryId, storageEnum, query);
-        LinkedList<ProductListItemResDto> ddayList = productRepository.findAllDdayByPantryIdAndStorageAndQueryByJPQL(user, pantryId, storageEnum, query);
-        LinkedList<ProductListItemResDto> notExpiredList = productRepository.findAllNotExpiredByPantryIdAndStorageAndQueryOrderByDateByJPQL(user, pantryId, storageEnum, query);
+        LinkedList<ProductListItemDto> expiredList = productRepository.findAllExpiredByPantryIdAndStorageAndQueryByJPQL(user, pantryId, storageEnum, query);
+        LinkedList<ProductListItemDto> ddayList = productRepository.findAllDdayByPantryIdAndStorageAndQueryByJPQL(user, pantryId, storageEnum, query);
+        LinkedList<ProductListItemDto> notExpiredList = productRepository.findAllNotExpiredByPantryIdAndStorageAndQueryOrderByDateByJPQL(user, pantryId, storageEnum, query);
 
         // Group lists by day
-        Map<Long, List<ProductListItemResDto>> result = groupProductList(expiredList, ddayList, notExpiredList);
+        ArrayList<ProductListResultDto> result = groupProductList(expiredList, ddayList, notExpiredList);
 
         return new ProductListResDto(filter, result);
     }
