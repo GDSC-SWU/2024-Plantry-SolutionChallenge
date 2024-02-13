@@ -99,6 +99,12 @@ class ProductControllerTest {
         addMockPantries();
     }
 
+    @AfterEach
+    void removeRedisData() {
+        // Remove refreshToken from redis
+        redisUtil.delete(user.getId() + "_refresh");
+    }
+
     void addMockPantries() {
         String[] titles = {"pantry1", "pantry2", "pantry3"};
 
@@ -110,14 +116,19 @@ class ProductControllerTest {
                     .pantryId(pantry)
                     .title(titles[i])
                     .color(COLOR)
+                    .isOwner(true)
                     .build());
         }
     }
 
-    @AfterEach
-    void removeRedisData() {
-        // Remove refreshToken from redis
-        redisUtil.delete(user.getId() + "_refresh");
+    void addMockProducts() {
+        LocalDate today = LocalDate.now();
+        for (int i = 0; i < 3; i++)
+            productRepository.save(new NewProductReqDto(pantries[0], "🍑", names[i], false, today.minusDays(5).format(DateTimeFormatter.ISO_DATE), "Cold", String.valueOf(2)).toEntity());
+        for (int i = 0; i < 3; i++)
+            productRepository.save(new NewProductReqDto(pantries[0], "🍑", names[i], false, today.format(DateTimeFormatter.ISO_DATE), "Freeze", String.valueOf(2)).toEntity());
+        for (int i = 0; i < 3; i++)
+            productRepository.save(new NewProductReqDto(pantries[0], "🍑", names[i], false, today.plusDays(5).format(DateTimeFormatter.ISO_DATE), "Cold", String.valueOf(2)).toEntity());
     }
 
     @Test
@@ -333,12 +344,7 @@ class ProductControllerTest {
     @DisplayName("Read product list <200>")
     void readProductList() throws Exception {
         // given
-        for (int i = 0; i < 3; i++)
-            productRepository.save(new NewProductReqDto(pantries[0], "🍑", names[i], false, "2024-01-30", "Cold", String.valueOf(2)).toEntity());
-        for (int i = 0; i < 3; i++)
-            productRepository.save(new NewProductReqDto(pantries[0], "🍑", names[i], false, "2024-01-24", "Cold", String.valueOf(2)).toEntity());
-        for (int i = 0; i < 3; i++)
-            productRepository.save(new NewProductReqDto(pantries[0], "🍑", names[i], false, "2024-02-15", "Cold", String.valueOf(2)).toEntity());
+        addMockProducts();
 
         // when
         ResultActions resultActions = mockMvc.perform(get(PANTRY_API_URL)
@@ -351,7 +357,7 @@ class ProductControllerTest {
         resultActions
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.filter").value("Cold"))
-                .andExpect(jsonPath("$.data.result['-1'].length()").value(6))
+                .andExpect(jsonPath("$.data.result[0].list.length()").value(3))
                 .andDo(print());
     }
 
@@ -360,12 +366,7 @@ class ProductControllerTest {
     @DisplayName("Search product list <200>")
     void searchProductList() throws Exception {
         // given
-        for (int i = 0; i < 3; i++)
-            productRepository.save(new NewProductReqDto(pantries[0], "🍑", names[i], false, "2024-01-30", "Cold", String.valueOf(2)).toEntity());
-        for (int i = 0; i < 3; i++)
-            productRepository.save(new NewProductReqDto(pantries[0], "🍑", names[i], false, "2024-01-24", "Freeze", String.valueOf(2)).toEntity());
-        for (int i = 0; i < 3; i++)
-            productRepository.save(new NewProductReqDto(pantries[0], "🍑", names[i], false, "2024-02-15", "Cold", String.valueOf(2)).toEntity());
+        addMockProducts();
         String query = "p";
 
         // when
@@ -380,7 +381,7 @@ class ProductControllerTest {
         resultActions
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.filter").value("Cold"))
-                .andExpect(jsonPath("$.data.result['4'].length()").value(2))
+                .andExpect(jsonPath("$.data.result.length()").value(3))
                 .andDo(print());
     }
 }
