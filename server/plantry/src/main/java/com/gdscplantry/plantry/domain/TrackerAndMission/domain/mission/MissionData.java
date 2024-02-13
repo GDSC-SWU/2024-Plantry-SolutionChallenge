@@ -1,9 +1,9 @@
-package com.gdscplantry.plantry.domain.Pantry.domain;
+package com.gdscplantry.plantry.domain.TrackerAndMission.domain.mission;
 
+import com.gdscplantry.plantry.domain.model.MissionTypeEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -11,43 +11,35 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Pantry")
+@Table(name = "MissionData")
 @Getter
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@DynamicUpdate
-public class Pantry {
+public class MissionData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String uuid;
+    private String title;
 
-    private String code;
+    @Enumerated(EnumType.STRING)
+    private MissionTypeEnum type;
 
     @CreatedDate
     private LocalDateTime createdAt;
 
-    public Pantry(String uuid, String code) {
-        this.uuid = uuid;
-        this.code = code;
-    }
-
-    public void updateCode(String code) {
-        this.code = code;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (!(obj instanceof Pantry pantry)) return false;
+        if (!(obj instanceof MissionData missionData)) return false;
 
-        return Objects.equals(this.id, pantry.getId()) &&
-                Objects.equals(this.uuid, pantry.getUuid());
+        return Objects.equals(this.id, missionData.getId()) &&
+                Objects.equals(this.title, missionData.getTitle()) &&
+                Objects.equals(this.type, missionData.getType());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, uuid);
+        return Objects.hash(id, title, type);
     }
 }

@@ -41,7 +41,7 @@ public class MyPageController {
 
     @PatchMapping("/notif")
     public ResponseEntity<ResponseDto> updateNotificationTime(@RequestParam @Valid @NotNull(message = "Time value required.")
-                                                              @Min(value = 1, message = "Invalid time. (1-24)") @Max(value = 24, message = "Invalid time. (1-24)")
+                                                              @Min(value = 0, message = "Invalid time. (1-24)") @Max(value = 24, message = "Invalid time. (1-24)")
                                                               Integer time,
                                                               @RequestAttribute User user) {
         NotificationTimeResDto notificationTimeResDto = myPageService.updateNotificationTime(user, time);

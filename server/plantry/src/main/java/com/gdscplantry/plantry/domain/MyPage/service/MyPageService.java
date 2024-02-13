@@ -10,6 +10,7 @@ import com.gdscplantry.plantry.domain.MyPage.vo.TermsItemVo;
 import com.gdscplantry.plantry.domain.Notification.service.RelatedNotificationService;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.domain.User.domain.UserRepository;
+import com.gdscplantry.plantry.global.error.GlobalErrorCode;
 import com.gdscplantry.plantry.global.error.exception.AppException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,8 @@ public class MyPageService {
 
     @Transactional
     public UpdateNicknameResDto updateNickname(User user, String nickname) {
+        user = userRepository.findById(user.getId()).orElseThrow(() -> new AppException(GlobalErrorCode.AUTHORIZATION_FAILED));
+
         // Check if nickname exists
         if (userRepository.existsByNickname(nickname))
             throw new AppException(MyPageErrorCode.NICKNAME_ALREADY_EXISTS);
@@ -44,6 +47,9 @@ public class MyPageService {
 
     @Transactional
     public NotificationTimeResDto updateNotificationTime(User user, Integer time) {
+        user = userRepository.findById(user.getId()).orElseThrow(() -> new AppException(GlobalErrorCode.AUTHORIZATION_FAILED));
+        time = time == 0 ? null : time;
+
         // Update data
         user.updateNotificationTime(time);
 

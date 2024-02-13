@@ -5,6 +5,8 @@ import com.gdscplantry.plantry.domain.User.dto.GoogleLoginResDto;
 import com.gdscplantry.plantry.domain.User.service.UserService;
 import com.gdscplantry.plantry.global.common.DataResponseDto;
 import com.gdscplantry.plantry.global.common.ResponseDto;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +41,8 @@ public class UserController {
     }
 
     @GetMapping("/token")
-    public ResponseEntity<ResponseDto> refreshToken(@RequestHeader("Authorization-Refresh") String refreshToken) {
+    public ResponseEntity<ResponseDto> refreshToken(@RequestHeader("Authorization-Refresh")
+                                                    @Valid @NotBlank(message = "Refresh Token required.") String refreshToken) {
         GoogleLoginResDto resDto = userService.refreshToken(refreshToken);
 
         return ResponseEntity.status(201).body(DataResponseDto.of(resDto, 201));
