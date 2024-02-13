@@ -60,9 +60,6 @@ public class PantryService {
         // Find list from DB
         ArrayList<PantryListItemDto> result = userPantryRepository.findAllByUserWithJPQL(user);
 
-        // Push null
-        result.add(null);
-
         return new PantryListResDto(result);
     }
 
