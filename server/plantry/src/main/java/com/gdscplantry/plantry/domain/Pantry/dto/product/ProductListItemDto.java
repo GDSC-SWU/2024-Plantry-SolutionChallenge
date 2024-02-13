@@ -12,7 +12,7 @@ import java.time.temporal.ChronoUnit;
 @Builder
 @AllArgsConstructor
 @Getter
-public class ProductListItemResDto {
+public class ProductListItemDto {
     private String icon;
     private String name;
     private Boolean isUseByDate;
@@ -20,7 +20,7 @@ public class ProductListItemResDto {
     private BigDecimal count;
     private Boolean isNotified;
 
-    public ProductListItemResDto(String icon, String name, Boolean isUseByDate, LocalDate date, BigDecimal count, Boolean isNotified) {
+    public ProductListItemDto(String icon, String name, Boolean isUseByDate, LocalDate date, BigDecimal count, Boolean isNotified) {
         this.icon = icon == null ? "🍽️" : icon;
         this.name = name;
         this.isUseByDate = isUseByDate;
@@ -29,7 +29,7 @@ public class ProductListItemResDto {
         this.isNotified = isNotified;
     }
 
-    public ProductListItemResDto(Product product, Boolean isNotified) {
+    public ProductListItemDto(Product product, Boolean isNotified) {
         this.icon = product.getIcon() == null ? "🍽️" : product.getIcon();
         this.name = product.getName();
         this.isUseByDate = product.getIsUseByDate();
