@@ -71,7 +71,6 @@ dependencies {
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.navigation:navigation-fragment:2.7.6")
     implementation ("com.google.android.gms:play-services-auth:20.1.0")
-    implementation ("com.google.android.gms:play-services-auth:20.1.0")
 
     // Test Dependency
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -88,11 +87,4 @@ dependencies {
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
     implementation("io.coil-kt:coil:2.3.0")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
-
-    // DataStore
-    implementation ("androidx.datastore:datastore-preferences:1.0.0")
-
-    //Hilt
-    implementation ("com.google.dagger:hilt-android:2.44")
-    kapt ("com.google.dagger:hilt-compiler:2.44")
 }

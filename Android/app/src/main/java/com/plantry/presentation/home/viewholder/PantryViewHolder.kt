@@ -3,7 +3,7 @@ package com.plantry.presentation.home.viewholder
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.plantry.R
-import com.plantry.data.dto.response.ResponseHomeDto
+import com.plantry.data.dto.response.pantry.ResponsePantryDto
 import com.plantry.databinding.ItemHomePantryBinding
 
 class PantryViewHolder(private val binding: ItemHomePantryBinding) :
@@ -12,11 +12,12 @@ class PantryViewHolder(private val binding: ItemHomePantryBinding) :
     private val _item_binding:ItemHomePantryBinding = binding
     val item_binding: ItemHomePantryBinding = _item_binding
 
-    fun bind(pantry: ResponseHomeDto.Result) {
+    fun bind(pantry: ResponsePantryDto.Result) {
         if (pantry.title.isNullOrEmpty()) {
             setVisibilityChange()
         } else {
-            _item_binding.ivHomeItemBackground.setBackgroundResource(checkBackgroundColor(pantry.color))
+            val color = pantry.color.toString()
+            _item_binding.ivHomeItemBackground.setBackgroundResource(checkBackgroundColor(color))
             _item_binding.tvHomeItemPantryName.text = pantry.title
             _item_binding.ivHomeItemHeart.isSelected = pantry.isMarked
         }

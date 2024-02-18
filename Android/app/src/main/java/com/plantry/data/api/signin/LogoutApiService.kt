@@ -1,4 +1,4 @@
-package com.plantry.data.api
+package com.plantry.data.api.signin
 
 import com.plantry.data.dto.NullResponse
 import retrofit2.http.DELETE

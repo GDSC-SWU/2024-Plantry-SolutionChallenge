@@ -1,23 +1,18 @@
 package com.plantry.presentation.home.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.plantry.data.dto.response.ResponseHomeDto
+import com.plantry.coreui.adapter.ItemClick
+import com.plantry.data.dto.response.pantry.ResponsePantryDto
 import com.plantry.databinding.ItemHomePantryBinding
 import com.plantry.presentation.home.viewholder.PantryViewHolder
 
 class PantryAdapter :
-    ListAdapter<ResponseHomeDto.Result, PantryViewHolder>(PantryDiffCallback()) {
+    ListAdapter<ResponsePantryDto.Result, PantryViewHolder>(PantryDiffCallback()) {
 
-    // 아이템 클릭되었는지 확인하기 위한 interface
-    interface PantryItemClick {
-        fun onClick(view: View, position: Int)
-    }
-
-    var itemClick: PantryItemClick? = null
+    var pantryItemClick: ItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PantryViewHolder {
         val binding = ItemHomePantryBinding.inflate(
@@ -30,31 +25,31 @@ class PantryAdapter :
 
     override fun onBindViewHolder(holder: PantryViewHolder, position: Int) {
         holder.bind(getItem(position))
-        if (itemClick != null) {
+        if (pantryItemClick != null) {
             // else 버튼 클릭
             holder.item_binding.ivHomeItemElse.setOnClickListener { view ->
-                itemClick?.onClick(view, position)
+                pantryItemClick?.onClick(view, position)
             }
 
             // item 클릭
             holder.itemView.setOnClickListener { view ->
-                itemClick?.onClick(view, position)
+                pantryItemClick?.onClick(view, position)
             }
 
             // heart 클릭
             holder.item_binding.ivHomeItemHeart.setOnClickListener { view ->
-                itemClick?.onClick(view, position)
+                pantryItemClick?.onClick(view, position)
             }
         }
     }
 }
 
-class PantryDiffCallback : DiffUtil.ItemCallback<ResponseHomeDto.Result>() {
-    override fun areItemsTheSame(oldItem: ResponseHomeDto.Result, newItem: ResponseHomeDto.Result): Boolean {
-        return oldItem.title == newItem.title
+class PantryDiffCallback : DiffUtil.ItemCallback<ResponsePantryDto.Result>() {
+    override fun areItemsTheSame(oldItem: ResponsePantryDto.Result, newItem: ResponsePantryDto.Result): Boolean {
+        return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: ResponseHomeDto.Result, newItem: ResponseHomeDto.Result): Boolean {
+    override fun areContentsTheSame(oldItem: ResponsePantryDto.Result, newItem: ResponsePantryDto.Result): Boolean {
         return oldItem == newItem
     }
 }

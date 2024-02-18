@@ -50,6 +50,7 @@
             android:drawableStart="@drawable/ic_home_pantry_search"
             android:drawablePadding="8dp"
             android:hint="@string/home_pantry_search"
+            android:maxLines="1"
             android:paddingVertical="11dp"
             android:paddingStart="12dp"
             android:textAppearance="@style/TextAppearance.Plantry.Body6"

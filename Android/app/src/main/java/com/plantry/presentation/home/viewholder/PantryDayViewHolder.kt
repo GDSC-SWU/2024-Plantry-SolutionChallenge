@@ -2,20 +2,17 @@ package com.plantry.presentation.home.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
 import com.plantry.R
-import com.plantry.data.dto.response.ResponseHomePantryDto
-import com.plantry.databinding.ItemHomePantryBinding
+import com.plantry.data.dto.response.product.ResponseProductListDto
 import com.plantry.databinding.ItemHomePantryDDayBinding
+import com.plantry.presentation.home.adapter.OnItemClickListener
 import com.plantry.presentation.home.adapter.PantryContentAdapter
 
 class PantryDayViewHolder(private val binding: ItemHomePantryDDayBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    private val _item_binding: ItemHomePantryDDayBinding = binding
-    val item_binding: ItemHomePantryDDayBinding = _item_binding
-
-    fun bind(pantry_day: ResponseHomePantryDto.Result) {
+    fun bind(pantry_day: ResponseProductListDto.Result, itemClickListener: OnItemClickListener) {
         setColorAndDDay(pantry_day.day, pantry_day.list?.size)
-        setContentRcvList(pantry_day.list)
+        setContentRcvList(pantry_day.list, itemClickListener)
     }
 
     private fun setColorAndDDay(day: Int?, count: Int?) {
@@ -37,9 +34,10 @@ class PantryDayViewHolder(private val binding: ItemHomePantryDDayBinding) :
         }
     }
 
-    private fun setContentRcvList(list: List<ResponseHomePantryDto.Result.Food>?) {
-        val adapter = PantryContentAdapter()
+    private fun setContentRcvList(list: List<ResponseProductListDto.Result.Food>?, itemClickListener: OnItemClickListener) {
+        val adapter = PantryContentAdapter(itemClickListener)
         binding.rcvHomePantryItemDDayContentList.adapter = adapter
         adapter.submitList(list)
     }
+
 }

@@ -1,4 +1,4 @@
-package com.plantry.data.dto.response
+package com.plantry.data.dto.response.signin
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
