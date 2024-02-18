@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
@@ -20,6 +21,7 @@ import com.plantry.coreui.fragment.longToast
 import com.plantry.coreui.fragment.toast
 import com.plantry.databinding.FragmentAddFoodBinding
 import com.plantry.presentation.addfood.popup.AddFoodPopUp
+import com.plantry.presentation.home.ui.FragmentHomePantry.Companion.FOR_ADD_FROM_NO_BASE
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -44,6 +46,9 @@ class FragmentAddFood :
                 STYLE_NO_TITLE,
                 R.style.Theme_Plantry_AlertDialog
             )
+            addFoodPopUp.arguments = Bundle().apply {
+                putInt("mode", FOR_ADD_FROM_NO_BASE)
+            }
             addFoodPopUp.show(parentFragmentManager, POP_UP)
         }
     }

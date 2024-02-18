@@ -13,7 +13,9 @@ import androidx.activity.viewModels
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.Scope
 import com.google.android.gms.tasks.Task
 import com.plantry.MainActivity
 import com.plantry.R
@@ -33,6 +35,7 @@ class SignInActivity : BindingActivity<ActivitySigninBinding>(R.layout.activity_
         ) { result ->
             val task: Task<GoogleSignInAccount> =
                 GoogleSignIn.getSignedInAccountFromIntent(result.data)
+            Log.d("aaa", task.toString())
             handleSignInResult(task)
         }
         observe()
@@ -42,7 +45,7 @@ class SignInActivity : BindingActivity<ActivitySigninBinding>(R.layout.activity_
         super.onStart()
         val account = GoogleSignIn.getLastSignedInAccount(this)
         if (account != null) {
-           // navigateTo<MainActivity>()
+          // navigateTo<MainActivity>()
         }
 
     }
@@ -67,6 +70,7 @@ class SignInActivity : BindingActivity<ActivitySigninBinding>(R.layout.activity_
         try {
             val account = completedTask.getResult(ApiException::class.java)
             val googleTokenAuth = account.idToken
+            Log.d("aaa", account.idToken.toString())
 
             if (!googleTokenAuth.isNullOrBlank()) {
                 if (Build.VERSION.SDK_INT >= 34) {
@@ -77,8 +81,7 @@ class SignInActivity : BindingActivity<ActivitySigninBinding>(R.layout.activity_
                         contentResolver,
                         Settings.Secure.ANDROID_ID
                     )
-                    Log.d("Aaa23", googleTokenAuth)
-                    viewModel.getGoogleLogin(googleTokenAuth+1, deviceId.toString())
+                    viewModel.getGoogleLogin(googleTokenAuth, deviceId.toString())
                 }
             }
         } catch (e: ApiException) {

@@ -1,30 +1,30 @@
 package com.plantry.presentation.home.viewholder
 
 import android.graphics.Color
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.plantry.MainActivity
 import com.plantry.R
-import com.plantry.data.dto.response.ResponseHomePantryDto
+import com.plantry.data.dto.response.product.ResponseProductListDto
+import com.plantry.databinding.ItemHomePantryBinding
 import com.plantry.databinding.ItemHomePantryContentBinding
 import com.plantry.presentation.home.bottomsheet.HomeAlarmBottomSheet
-import com.plantry.presentation.home.ui.FragmentHome
-import com.plantry.presentation.home.ui.FragmentHomePantry
 import kotlin.math.roundToInt
 
 class PantryContentViewHolder(private val binding: ItemHomePantryContentBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(pantry_content: ResponseHomePantryDto.Result.Food) {
+    private val _item_binding: ItemHomePantryContentBinding = binding
+    val item_binding: ItemHomePantryContentBinding = _item_binding
+
+    fun bind(pantry_content: ResponseProductListDto.Result.Food) {
         binding.tvHomePantryItemContentImg.setText(pantry_content.icon)
         binding.tvHomePantryItemContentFoodName.setText(pantry_content.name)
-        // setCount(pantry_content.count)
         binding.tvHomePantryItemContentCount.text = pantry_content.count.toString()
+        setCount(pantry_content.count)
         setDDay(pantry_content.days)
         setDateSort(pantry_content.isUseBydate)
         setAlarmIcon(pantry_content.isNotified)
-        clickAlarm()
     }
 
-    /* double 변경 요청 필요
     private fun setCount(count: Double?) {
         if (count != null) {
             if (count < count.roundToInt()) {
@@ -34,7 +34,6 @@ class PantryContentViewHolder(private val binding: ItemHomePantryContentBinding)
             }
         }
     }
-     */
 
     private fun setDDay(day: Int?) {
         if (day != null) {
@@ -55,17 +54,6 @@ class PantryContentViewHolder(private val binding: ItemHomePantryContentBinding)
         } else {
             binding.tvHomePantryItemContentDate.text = "Sell-by Date"
             binding.tvHomePantryItemContentDate.setTextColor(Color.parseColor("#FF9500"))
-        }
-    }
-
-    private fun clickAlarm() {
-        binding.ivHomePantryItemContentAlarm.setOnClickListener {
-            val alarmBottomSheet = HomeAlarmBottomSheet()
-            /*alarmBottomSheet.show(
-                context.supportFragmentManager,
-                FragmentHome.BOTTOM_SHEET
-            )
-             */
         }
     }
 

@@ -4,13 +4,23 @@ import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.plantry.BuildConfig.BASE_URL
 import com.plantry.data.API.API_TAG
-import com.plantry.data.api.LogoutApiService
-import com.plantry.data.api.RefreshTokenApiService
-import com.plantry.data.api.SignInApiService
-import com.plantry.data.dto.BaseResponse
+import com.plantry.data.api.signin.LogoutApiService
+import com.plantry.data.api.pantry.PantryAddApiService
+import com.plantry.data.api.pantry.PantryDeleteApiService
+import com.plantry.data.api.pantry.PantryEditApiService
+import com.plantry.data.api.pantry.PantryListApiService
+import com.plantry.data.api.pantry.PantryStarApiService
+import com.plantry.data.api.product.ProductAddApiService
+import com.plantry.data.api.product.ProductAddMultiApiService
+import com.plantry.data.api.product.ProductDeleteApiService
+import com.plantry.data.api.product.ProductEditApiService
+import com.plantry.data.api.product.ProductEditCountApiService
+import com.plantry.data.api.product.ProductListApiService
+import com.plantry.data.api.product.ProductSearchApiService
+import com.plantry.data.api.signin.RefreshTokenApiService
+import com.plantry.data.api.signin.SignInApiService
 import com.plantry.data.dto.BaseResponseNullable
-import com.plantry.data.dto.response.RefreshTokenDto
-import com.plantry.data.dto.response.ResponseSignInDto
+import com.plantry.data.dto.response.signin.RefreshTokenDto
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -25,6 +35,20 @@ object ApiPool {
     val getSignIn = RetrofitPool.retrofit.create(SignInApiService::class.java)
     val deleteLogOut = RetrofitPool.retrofit.create(LogoutApiService::class.java)
     val getRefreshToken = RetrofitPool.retrofit.create(RefreshTokenApiService::class.java)
+
+    val getPantryList = RetrofitPool.retrofit.create(PantryListApiService::class.java)
+    val postAddPantry = RetrofitPool.retrofit.create(PantryAddApiService::class.java)
+    val deletePantry = RetrofitPool.retrofit.create(PantryDeleteApiService::class.java)
+    val patchEditPantry = RetrofitPool.retrofit.create(PantryEditApiService::class.java)
+    val patchSetStar = RetrofitPool.retrofit.create(PantryStarApiService::class.java)
+
+    val postAddSingleProduct = RetrofitPool.retrofit.create(ProductAddApiService::class.java)
+    val postAddMultiProduct = RetrofitPool.retrofit.create(ProductAddMultiApiService::class.java)
+    val deleteProduct = RetrofitPool.retrofit.create(ProductDeleteApiService::class.java)
+    val patchEditProduct = RetrofitPool.retrofit.create(ProductEditApiService::class.java)
+    val patchEditCountProduct = RetrofitPool.retrofit.create(ProductEditCountApiService::class.java)
+    val getListSearchProduct = RetrofitPool.retrofit.create(ProductListApiService::class.java)
+    val getSearchProduct = RetrofitPool.retrofit.create(ProductSearchApiService::class.java)
 }
 
 

@@ -1,10 +1,8 @@
-package com.plantry.data.api
+package com.plantry.data.api.signin
 
-import com.plantry.data.dto.BaseResponse
 import com.plantry.data.dto.BaseResponseNullable
-import com.plantry.data.dto.response.RefreshTokenDto
+import com.plantry.data.dto.response.signin.RefreshTokenDto
 import retrofit2.http.GET
-import retrofit2.http.Header
 
 interface RefreshTokenApiService : LogoutApiService {
     @GET("/api/v1/user/token")
