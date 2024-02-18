@@ -11,6 +11,36 @@
         <action
             android:id="@+id/action_home_to_home_pantry"
             app:destination="@id/detail_home_pantry" />
+        <action
+            android:id="@+id/action_home_to_else"
+            app:destination="@id/home_else_bottom_sheet" />
+    </fragment>
+    <fragment
+        android:id="@+id/home_else_bottom_sheet"
+        android:name="com.plantry.presentation.home.bottomsheet.HomeElseBottomSheet"
+        android:label="home_else_bottom_sheet">
+        <action
+            android:id="@+id/action_else_to_home"
+            app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_else_to_delete"
+            app:destination="@id/home_delete_popoup" />
+    </fragment>
+    <fragment
+        android:id="@+id/home_alarm_bottom_sheet"
+        android:name="com.plantry.presentation.home.bottomsheet.HomeAlarmBottomSheet"
+        android:label="home_alarm_bottom_sheet">
+        <action
+            android:id="@+id/action_alarm_to_pantry_content"
+            app:destination="@id/detail_home_pantry" />
+    </fragment>
+    <fragment
+        android:id="@+id/home_delete_popoup"
+        android:name="com.plantry.presentation.home.popup.HomeDeletePopUp"
+        android:label="HomeDeletePopUp">
+        <action
+            android:id="@+id/action_delete_to_else"
+            app:destination="@id/home_else_bottom_sheet" />
     </fragment>
     <fragment
         android:id="@+id/detail_home_pantry"
@@ -19,6 +49,9 @@
         <action
             android:id="@+id/action_home_pantry_to_home"
             app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_home_pantry_to_alarm"
+            app:destination="@id/home_alarm_bottom_sheet" />
     </fragment>
     <fragment
         android:id="@+id/navigation_profile"

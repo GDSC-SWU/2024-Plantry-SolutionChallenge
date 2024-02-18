@@ -69,8 +69,10 @@
     <string name="add_food_pantry_count">Product Count</string>
     <string name="popup_add_food_half_unit">Half Unit</string>
     <string name="popup_add_food_error_message3">Please write it in the order of year, month, and day.</string>
+    <string name="popup_add_food_error_message4">You cannot enter less than 0.</string>
+    <string name="popup_add_food_error_message5">You cannot delete more than you have.</string>
     <string name="add_food_date_ask">What’s ‘Use-by Date’ and ‘Sell-by Date’?</string>
-    <string name="add_food_date_description">"'Use-by Date' means the final time \n limit for consuming a food that is safe \n to consume.\n\n 'Sell-by Date’ means Deadline for \n product to be distributed/sold on the \n market."</string>
+    <string name="add_food_date_description">"‘Use-by Date‘ <font color="#ACACAC">means the final time limit for consuming a food that is safe to consume.</font>\n\n ‘Sell-by Date‘ <font color="#ACACAC">means Deadline for product to be distributed/sold on the market.</font>"</string>
     <string name="server_client_id_web">"29775346424-ckfbab33cikkr863gat1itq57s2a3e5q.apps.googleusercontent.com"</string>
     <string name="profile_title">Profile</string>
     <string name="profile_user_name">Profile Name</string>
@@ -81,4 +83,18 @@
     <string name="profile_disposal">Disposal</string>
     <string name="profile_share">Share</string>
     <string name="profile_mistake">Mistake</string>
+    <string name="add_food_delete_option_title">Choose some options</string>
+    <string name="add_food_delete_option_sub_title1">Why do you delete food products?</string>
+    <string name="add_food_delete_option_sub_title2">We can measure <font color="#203A40">Carbon Emissions</font>!"</string>
+    <string name="add_food_delete_option_count_title">Delete</string>
+    <string name="add_food_delete_ingestion">Ingestion</string>
+    <string name="add_food_delete_disposal">Disposal</string>
+    <string name="add_food_delete_share">Sharing</string>
+    <string name="add_food_delete_mistake">Register by Mistake</string>
+    <string name="add_food_select_title_animal_foods">Animal Foods</string>
+    <string name="add_food_item_icon">🍇</string>
+    <string name="add_food_item_food_name">Bovines</string>
+    <string name="add_food_popup_food_name">Product name</string>
+    <string name="home_pantry_item_content_count_zero">0</string>
+    <string name="home_pantry_item_content_count_half">0.5</string>
 </resources>

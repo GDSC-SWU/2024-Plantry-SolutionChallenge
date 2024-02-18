@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-    </data>
+    <data></data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
@@ -29,8 +27,8 @@
             android:id="@+id/sv_add_food_scrollview"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:background="@color/white1"
             android:layout_marginTop="47dp"
+            android:background="@color/white1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_add_food_popup_title">
@@ -50,7 +48,7 @@
 
                 <TextView
                     android:id="@+id/tv_add_food_popup_select_pantry_content"
-                    android:layout_width="match_parent"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="48dp"
@@ -59,18 +57,18 @@
                     android:drawablePadding="30dp"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="12dp"
-                    android:text="@string/home_pantry_name"
+                    android:hint="select pantry"
                     android:textAppearance="@style/TextAppearance.Plantry.Body5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_add_food_popup_select_pantry_title" />
 
                 <include
-                    layout="@layout/popup_add_food_pantry_list"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/layout_popup_add_food_pantry_name_list"
+                    layout="@layout/popup_add_food_date_list"
+                    android:layout_width="200dp"
+                    android:elevation="10dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="@id/tv_add_food_popup_select_pantry_content"
                     app:layout_constraintStart_toStartOf="@id/tv_add_food_popup_select_pantry_content"
                     app:layout_constraintTop_toBottomOf="@id/tv_add_food_popup_select_pantry_content" />
 
@@ -85,16 +83,34 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_add_food_popup_select_pantry_content" />
 
-                <ImageView
-                    android:id="@+id/iv_add_food_popup_food_icon_img"
+                <TextView
+                    android:id="@+id/tv_add_food_popup_food_icon_test_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:background="@drawable/shape_line_line2_8_rec"
+                    android:drawableStart="@drawable/ic_add_food_blank_img"
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="8dp"
-                    android:src="@drawable/ic_add_food_blank_img"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_add_food_popup_food_name_title" />
+
+                <TextView
+                    android:id="@+id/tv_add_food_popup_food_icon_real_img"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/shape_line_line2_8_rec"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp"
+                    android:text="@string/add_food_item_icon"
+                    android:textSize="28sp"
+                    android:padding="0dp"
+                    android:textAlignment="center"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_add_food_popup_food_icon_test_img"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_add_food_popup_food_icon_test_img"
+                    app:layout_constraintStart_toStartOf="@+id/tv_add_food_popup_food_icon_test_img"
                     app:layout_constraintTop_toBottomOf="@id/tv_add_food_popup_food_name_title" />
 
                 <EditText
@@ -104,28 +120,29 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="61dp"
                     android:background="@drawable/shape_line_line2_8_rec"
-                    android:hint="Product name"
+                    android:hint="@string/add_food_popup_food_name"
+                    android:maxLength="12"
                     android:paddingStart="16dp"
                     android:textAppearance="@style/TextAppearance.Plantry.Body5"
                     android:textColorHint="@color/gray3"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_add_food_popup_food_icon_img"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_add_food_popup_food_icon_test_img"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/iv_add_food_popup_food_icon_img"
-                    app:layout_constraintTop_toTopOf="@id/iv_add_food_popup_food_icon_img" />
+                    app:layout_constraintStart_toEndOf="@id/tv_add_food_popup_food_icon_test_img"
+                    app:layout_constraintTop_toTopOf="@id/tv_add_food_popup_food_icon_test_img" />
 
                 <TextView
                     android:id="@+id/tv_add_food_popup_food_error_message"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_home_popup_error"
-                    android:visibility="gone"
                     android:layout_marginTop="24dp"
+                    android:drawableStart="@drawable/ic_home_popup_error"
                     android:drawablePadding="6dp"
                     android:text="@string/home_plus_popup_error_message1"
                     android:textAppearance="@style/TextAppearance.Plantry.Caption"
                     android:textColor="@color/error_color"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/iv_add_food_popup_food_icon_img"
+                    app:layout_constraintStart_toStartOf="@id/tv_add_food_popup_food_icon_test_img"
                     app:layout_constraintTop_toBottomOf="@id/et_add_food_popup_food_name_input" />
 
                 <TextView
@@ -157,11 +174,12 @@
 
 
                 <include
+                    android:id="@+id/layout_popup_add_food_day_list"
                     layout="@layout/popup_add_food_pantry_list"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:visibility="gone"
+                    android:elevation="10dp"
                     app:layout_constraintEnd_toEndOf="@id/tv_add_food_popup_date_check"
                     app:layout_constraintStart_toStartOf="@id/tv_add_food_popup_date_check"
                     app:layout_constraintTop_toBottomOf="@id/tv_add_food_popup_date_check" />
@@ -184,13 +202,13 @@
                     android:id="@+id/tv_add_food_popup_date_error_message"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_home_popup_error"
                     android:layout_marginTop="24dp"
+                    android:drawableStart="@drawable/ic_home_popup_error"
                     android:drawablePadding="6dp"
-                    android:visibility="gone"
                     android:text="@string/popup_add_food_error_message3"
                     android:textAppearance="@style/TextAppearance.Plantry.Caption"
                     android:textColor="@color/error_color"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/tv_add_food_popup_date_check"
                     app:layout_constraintTop_toBottomOf="@id/et_add_food_popup_date_input" />
@@ -296,23 +314,37 @@
                     app:layout_constraintTop_toTopOf="@id/iv_add_food_popup_count_minus" />
 
                 <TextView
+                    android:id="@+id/tv_add_food_popup_count_error_message"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:drawableStart="@drawable/ic_home_popup_error"
+                    android:drawablePadding="6dp"
+                    android:visibility="gone"
+                    android:text="@string/popup_add_food_error_message4"
+                    android:textAppearance="@style/TextAppearance.Plantry.Caption"
+                    android:textColor="@color/error_color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/iv_add_food_popup_count_minus"
+                    app:layout_constraintTop_toBottomOf="@id/iv_add_food_popup_count_minus" />
+
+                <TextView
                     android:id="@+id/tv_add_food_half_check"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
+                    android:layout_marginBottom="20dp"
                     android:drawableStart="@drawable/selector_home_bottom_sheet_alarm_check"
                     android:drawablePadding="6dp"
                     android:text="@string/popup_add_food_half_unit"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="20dp"
                     android:textAppearance="@style/TextAppearance.Plantry.Body5"
                     android:textColor="@color/gray3"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/iv_add_food_popup_count_minus" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_add_food_popup_count_error_message" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
-
 
         <TextView
             android:id="@+id/tv_add_food_popup_cancle"
@@ -324,10 +356,10 @@
             android:paddingVertical="16dp"
             android:text="@string/popup_button_cancle"
             android:textAppearance="@style/TextAppearance.Plantry.Body3"
-            app:layout_constraintTop_toBottomOf="@id/sv_add_food_scrollview"
             app:layout_constraintEnd_toStartOf="@id/tv_add_food_popup_confirm"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sv_add_food_scrollview" />
 
 
         <TextView
@@ -342,10 +374,10 @@
             android:text="@string/popup_button_confirm"
             android:textAppearance="@style/TextAppearance.Plantry.Body3"
             android:textColor="@color/white1"
-            app:layout_constraintTop_toBottomOf="@id/sv_add_food_scrollview"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@id/tv_add_food_popup_cancle" />
+            app:layout_constraintStart_toEndOf="@id/tv_add_food_popup_cancle"
+            app:layout_constraintTop_toBottomOf="@id/sv_add_food_scrollview" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

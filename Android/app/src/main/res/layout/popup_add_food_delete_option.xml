@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -10,8 +10,229 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="30dp"
         android:background="@drawable/shape_fill_white1_28_rec"
         android:padding="40dp">
+
+
+        <TextView
+            android:id="@+id/tv_add_food_delete_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_food_delete_option_title"
+            android:textAppearance="@style/TextAppearance.Plantry.Heding3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_add_food_delete_sub_title1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/add_food_delete_option_sub_title1"
+            android:textAppearance="@style/TextAppearance.Plantry.Body5"
+            android:textColor="@color/gray3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_add_food_delete_title" />
+
+        <TextView
+            android:id="@+id/tv_add_food_delete_sub_title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/add_food_delete_option_sub_title2"
+            android:textAppearance="@style/TextAppearance.Plantry.Body5"
+            android:textColor="@color/gray3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_add_food_delete_sub_title1" />
+
+        <ScrollView
+            android:id="@+id/sv_add_food_delete_scroll"
+            android:layout_width="0dp"
+            android:layout_height="300dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_add_food_delete_sub_title2">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_add_food_delete_count_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="35dp"
+                    android:text="@string/add_food_delete_option_count_title"
+                    android:textAppearance="@style/TextAppearance.Plantry.Body6"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="10dp"/>
+
+
+                <ImageView
+                    android:id="@+id/iv_add_food_popup_delete_count_minus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:src="@drawable/ic_home_pantry_minus"
+                    app:layout_constraintStart_toStartOf="@id/tv_add_food_delete_count_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_add_food_delete_count_title" />
+
+                <TextView
+                    android:id="@+id/tv_add_food_popup_delete_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/home_pantry_item_content_count_half"
+                    android:textAppearance="@style/TextAppearance.Plantry.Caption"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_add_food_popup_delete_count_minus"
+                    app:layout_constraintStart_toEndOf="@id/iv_add_food_popup_delete_count_minus"
+                    app:layout_constraintTop_toTopOf="@id/iv_add_food_popup_delete_count_minus" />
+
+                <ImageView
+                    android:id="@+id/iv_add_food_popup_delete_count_plus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:src="@drawable/ic_home_pantry_plus"
+                    app:layout_constraintStart_toEndOf="@id/tv_add_food_popup_delete_count"
+                    app:layout_constraintTop_toTopOf="@id/iv_add_food_popup_delete_count_minus" />
+
+                <TextView
+                    android:id="@+id/tv_add_food_popup_delete_count_error_message"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:drawableStart="@drawable/ic_home_popup_error"
+                    android:drawablePadding="6dp"
+                    android:visibility="gone"
+                    android:text="@string/popup_add_food_error_message4"
+                    android:textAppearance="@style/TextAppearance.Plantry.Caption"
+                    android:textColor="@color/error_color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/iv_add_food_popup_delete_count_minus"
+                    app:layout_constraintTop_toBottomOf="@id/iv_add_food_popup_delete_count_minus" />
+
+                <TextView
+                    android:id="@+id/tv_add_food_delete_half_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:drawableStart="@drawable/selector_home_bottom_sheet_alarm_check"
+                    android:drawablePadding="6dp"
+                    android:text="@string/popup_add_food_half_unit"
+                    android:textAppearance="@style/TextAppearance.Plantry.Body5"
+                    android:textColor="@color/gray3"
+                    app:layout_constraintStart_toStartOf="@id/tv_add_food_delete_count_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_add_food_popup_delete_count_error_message" />
+
+                <RadioGroup
+                    android:id="@+id/rg_add_food_delete_option"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_add_food_delete_half_check">
+
+                    <RadioButton
+                        android:id="@+id/rb_add_food_delete_ingestion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="36dp"
+                        android:checked="true"
+                        android:background="@drawable/shape_line_line2_8_rec"
+                        android:button="@null"
+                        android:drawableStart="@drawable/selector_food_delete_option_check"
+                        android:drawablePadding="12dp"
+                        android:paddingVertical="15dp"
+                        android:paddingStart="20dp"
+                        android:text="@string/add_food_delete_ingestion"
+                        android:textAppearance="@style/TextAppearance.Plantry.Body3" />
+
+                    <RadioButton
+                        android:id="@+id/rb_add_food_delete_disposal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/shape_line_line2_8_rec"
+                        android:button="@null"
+                        android:drawableStart="@drawable/selector_food_delete_option_check"
+                        android:drawablePadding="12dp"
+                        android:paddingVertical="15dp"
+                        android:paddingStart="20dp"
+                        android:text="@string/add_food_delete_disposal"
+                        android:textAppearance="@style/TextAppearance.Plantry.Body3" />
+
+                    <RadioButton
+                        android:id="@+id/rb_add_food_delete_share"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/shape_line_line2_8_rec"
+                        android:button="@null"
+                        android:drawableStart="@drawable/selector_food_delete_option_check"
+                        android:drawablePadding="12dp"
+                        android:paddingVertical="15dp"
+                        android:paddingStart="20dp"
+                        android:text="@string/add_food_delete_share"
+                        android:textAppearance="@style/TextAppearance.Plantry.Body3" />
+
+                    <RadioButton
+                        android:id="@+id/rb_add_food_delete_mistake"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/shape_line_line2_8_rec"
+                        android:button="@null"
+                        android:drawableStart="@drawable/selector_food_delete_option_check"
+                        android:drawablePadding="12dp"
+                        android:paddingVertical="15dp"
+                        android:paddingStart="20dp"
+                        android:text="@string/add_food_delete_mistake"
+                        android:textAppearance="@style/TextAppearance.Plantry.Body3" />
+                </RadioGroup>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+
+        <TextView
+            android:id="@+id/tv_add_food_delete_popup_cancle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/shape_line_line2_8_rec"
+            android:paddingHorizontal="36dp"
+            android:paddingVertical="16dp"
+            android:text="@string/popup_button_cancle"
+            android:textAppearance="@style/TextAppearance.Plantry.Body3"
+            app:layout_constraintEnd_toStartOf="@id/tv_add_food_delete_popup_confirm"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sv_add_food_delete_scroll" />
+
+        <TextView
+            android:id="@+id/tv_add_food_delete_popup_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/shape_fill_primary_color_8_rec"
+            android:paddingHorizontal="36dp"
+            android:paddingVertical="16dp"
+            android:text="@string/popup_button_confirm"
+            android:textAppearance="@style/TextAppearance.Plantry.Body3"
+            android:textColor="@color/white1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@id/tv_add_food_delete_popup_cancle"
+            app:layout_constraintTop_toBottomOf="@id/sv_add_food_delete_scroll" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

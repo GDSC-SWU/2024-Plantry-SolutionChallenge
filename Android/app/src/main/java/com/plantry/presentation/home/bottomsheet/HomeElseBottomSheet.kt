@@ -1,5 +1,7 @@
 package com.plantry.presentation.home.bottomsheet
 
+import android.os.Bundle
+import androidx.navigation.fragment.findNavController
 import com.plantry.R
 import com.plantry.coreui.base.BindingBottomSheetFragment
 import com.plantry.databinding.BottomsheetHomeElseBinding
@@ -13,6 +15,9 @@ class HomeElseBottomSheet :
         clickEdit()
     }
 
+    private fun throwPantryId() {
+    }
+
     private fun clickDelete() {
         binding.tvHomeBottomSheetDelete.setOnClickListener {
             val pantryDeletePopUp = HomeDeletePopUp()
@@ -20,7 +25,14 @@ class HomeElseBottomSheet :
                 STYLE_NO_TITLE,
                 R.style.Theme_Plantry_AlertDialog
             )
+            val pantry_id = arguments?.getInt("pantry_id")
+            pantryDeletePopUp.arguments = Bundle().apply {
+                if (pantry_id != null) {
+                    putInt("pantry_id", pantry_id)
+                }
+            }
             pantryDeletePopUp.show(parentFragmentManager, POP_UP)
+
         }
     }
 
@@ -31,6 +43,16 @@ class HomeElseBottomSheet :
                 STYLE_NO_TITLE,
                 R.style.Theme_Plantry_AlertDialog
             )
+            val pantryId = arguments?.getInt("pantry_id")
+            val pantryTitle = arguments?.getString("pantry_title")
+            val pantryColor = arguments?.getString("pantry_color")
+            pantryPlusPopUp.arguments = Bundle().apply {
+                if (pantryId != null) {
+                    putInt("pantry_id", pantryId)
+                    putString("pantry_title", pantryTitle)
+                    putString("pantry_color", pantryColor)
+                }
+            }
             pantryPlusPopUp.show(parentFragmentManager, POP_UP)
         }
     }
