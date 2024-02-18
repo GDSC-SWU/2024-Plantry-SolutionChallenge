@@ -8,9 +8,11 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_add_food_popup_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_fill_white1_8_rec"
+        android:visibility="gone"
         android:elevation="10dp"
         android:paddingVertical="4dp">
         <TextView
@@ -33,7 +35,6 @@
             android:id="@+id/tv_add_food_use_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/selector_add_food_popup_pantry_name"
             android:maxLength="12"
             android:paddingHorizontal="12dp"
             android:paddingVertical="10dp"
@@ -46,7 +47,6 @@
             android:id="@+id/tv_add_food_sell_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/selector_add_food_popup_pantry_name"
             android:maxLength="12"
             android:paddingHorizontal="12dp"
             android:paddingVertical="10dp"
