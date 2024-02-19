@@ -2,6 +2,7 @@ package com.plantry.presentation.addfood.popup
 
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.plantry.R
 import com.plantry.coreui.base.BindingDialogFragment
@@ -162,6 +163,7 @@ class AddFoodDeleteOptionPopUp :
                     val pantryFilter: String = arguments?.getString("pantryFilter", "All") ?:"All"
                     val productId: Int = arguments?.getInt("productId", 0) ?: -1
                     viewModelProductList.getListSearchProduct(productId, pantryFilter)
+                    dismiss()
                     dismiss()
                 }
 
