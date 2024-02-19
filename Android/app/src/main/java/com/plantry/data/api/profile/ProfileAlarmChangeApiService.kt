@@ -18,6 +18,6 @@ import retrofit2.http.Query
 interface ProfileAlarmChangeApiService {
     @PATCH("/api/v1/mypage/notif")
     suspend fun patchProfileAlarmChange(
-        @Query ("time") time : Int
+        @Query ("time") time : Int,
     ): BaseResponseNullable<ResponseProfileAlarmChangeDto>
 }
