@@ -44,9 +44,8 @@ public class TrackerService {
 
         // Calculate portion
         for (String type : TYPES) {
-            double value = result.get(type) == null ? 0. : result.get(type);
-            if (sum == 0) result.put(type, 0.);
-            else result.replace(type, Math.round((value / sum) * 10000) / 100.0);
+            if (sum == 0 || result.get(type) == null) result.put(type, 0.);
+            else result.replace(type, Math.round((result.get(type) / sum) * 10000) / 100.0);
         }
 
         return result;
