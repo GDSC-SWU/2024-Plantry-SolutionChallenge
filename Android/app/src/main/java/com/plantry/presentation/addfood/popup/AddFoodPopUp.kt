@@ -54,7 +54,7 @@ class AddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.popup_a
     private val viewModelProuductAdd by viewModels<ProductAddSingleViewModel>()
     private val viewModelProuductEdit by viewModels<ProductEditViewModel>()
     private val viewModelFood by viewModels<FoodViewModel>({ requireActivity() })
-    private val viewModelProuductDelete by viewModels<ProductDeleteViewModel>({ requireActivity() })
+    private val viewModelProuductDelete by viewModels<ProductDeleteViewModel>({ requireParentFragment() })
 
     var changedPantryId: Int = 0
     var storage: String = COLD
@@ -153,14 +153,17 @@ class AddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.popup_a
         when (pantryFilter) {
             COLD -> {
                 binding.rbAddFoodStorageCold.isChecked = true
+                storage = COLD
             }
 
             FREEZE -> {
                 binding.rbAddFoodStorageFreeze.isChecked = true
+                storage = FREEZE
             }
 
             ETC -> {
                 binding.rbAddFoodStorageEtc.isChecked = true
+                storage = ETC
             }
         }
     }
@@ -380,7 +383,7 @@ class AddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.popup_a
                     )
                     putString("pantryFilter", pantryFilter)
                 }
-                productDeletePopUp.show(childFragmentManager, POP_UP_DELETE)
+                productDeletePopUp.show(parentFragmentManager, POP_UP_DELETE)
             }
         } else {
             binding.tvAddFoodPopupCancle.setOnClickListener {

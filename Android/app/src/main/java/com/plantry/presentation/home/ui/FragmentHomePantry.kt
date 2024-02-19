@@ -159,7 +159,6 @@ class FragmentHomePantry :
                                 pantryId, pantryFilter, searchKeyWord
                             )
                             binding.etHomePantrySearch.setText(searchKeyWord)
-
                         }
                     }
                 }

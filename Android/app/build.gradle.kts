@@ -87,4 +87,5 @@ dependencies {
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
     implementation("io.coil-kt:coil:2.3.0")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation ("me.relex:circleindicator:2.1.6")
 }

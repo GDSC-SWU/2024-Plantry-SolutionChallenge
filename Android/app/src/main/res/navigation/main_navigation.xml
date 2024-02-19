@@ -55,6 +55,47 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.plantry.presentation.profile.FragmentProfile"
-        android:label="ProfileFragment" />
+        android:name="com.plantry.presentation.profile.ui.FragmentProfile"
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profile_to_about_us"
+            app:destination="@id/profile_about_us"/>
+        <action
+            android:id="@+id/action_profile_to_edit"
+            app:destination="@id/profile_edit_name"/>
+        <action
+            android:id="@+id/action_profile_to_delete"
+            app:destination="@id/profile_delete_id"/>
+        <action
+            android:id="@+id/action_profile_to_alarm"
+            app:destination="@id/profile_alarm_check"/>
+        <action
+            android:id="@+id/action_profile_to_terms"
+            app:destination="@id/profile_terms"/>
+    </fragment>
+    <fragment
+        android:id="@+id/profile_about_us"
+        android:name="com.plantry.presentation.profile.ui.FragmentProfileAboutUs"
+        android:label="ProfileAboutUsFragment">
+    </fragment>
+    <fragment
+        android:id="@+id/profile_edit_name"
+        android:name="com.plantry.presentation.profile.ui.FragmentProfileEdit"
+        android:label="ProfileEditFragment">
+        <action
+            android:id="@+id/action_profile_edit_name_to_delete"
+            app:destination="@id/profile_delete_id"/>
+    </fragment>
+    <fragment
+        android:id="@+id/profile_alarm_check"
+        android:name="com.plantry.presentation.profile.ui.FragmentProfileNotification"
+        android:label="ProfileNotificationFragment"/>
+    <fragment
+        android:id="@+id/profile_delete_id"
+        android:name="com.plantry.presentation.profile.ui.FragmentProfileDelete"
+        android:label="ProfileDeleteIdFragment"/>
+    <fragment
+        android:id="@+id/profile_terms"
+        android:name="com.plantry.presentation.profile.ui.FragmentProfileTerms"
+        android:label="ProfileTermsFragment"/>
 </navigation>
