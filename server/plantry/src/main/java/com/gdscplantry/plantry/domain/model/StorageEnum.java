@@ -8,6 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum StorageEnum {
+    All("All"),
     Cold("Cold"),
     Freeze("Freeze"),
     Etc("Etc"),
@@ -17,6 +18,7 @@ public enum StorageEnum {
 
     public static StorageEnum findByKey(String key) {
         return switch (key) {
+            case "All" -> All;
             case "Cold" -> Cold;
             case "Freeze" -> Freeze;
             case "Etc" -> Etc;
