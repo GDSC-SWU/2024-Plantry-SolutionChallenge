@@ -1,7 +1,6 @@
 package com.gdscplantry.plantry.domain.TrackerAndMission.service;
 
 import com.gdscplantry.plantry.domain.TrackerAndMission.domain.tracker.ConsumedProductRepository;
-import com.gdscplantry.plantry.domain.TrackerAndMission.dto.TrackerResDto;
 import com.gdscplantry.plantry.domain.TrackerAndMission.vo.ConsumptionDataVo;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.domain.model.ProductDeleteTypeEnum;
@@ -27,7 +26,7 @@ public class TrackerService {
             ProductDeleteTypeEnum.Sharing.getTitle(), ProductDeleteTypeEnum.Mistake.getTitle()};
 
     @Transactional(readOnly = true)
-    public TrackerResDto getTrackerResult(User user) {
+    public Map<String, Double> getTrackerResult(User user) {
         // Find monday's date on this week
         LocalDateTime today = LocalDateTime.now().with(LocalTime.of(0, 0));
         DayOfWeek dayOfWeek = today.getDayOfWeek();
@@ -43,13 +42,11 @@ public class TrackerService {
             result.put(vo.getType().getTitle(), value);
         }
 
-        if (sum == 0)
-            return new TrackerResDto(result);
-
         // Calculate portion
         for (String type : TYPES)
-            result.replace(type, Math.round((result.get(type) / sum) * 10000) / 100.0);
-
-        return new TrackerResDto(result);
+            if (sum == 0) result.put(type, 0.);
+            else result.replace(type, Math.round((result.get(type) / sum) * 10000) / 100.0);
+        
+        return result;
     }
 }
