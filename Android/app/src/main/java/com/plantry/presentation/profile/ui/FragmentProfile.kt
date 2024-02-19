@@ -104,6 +104,7 @@ class FragmentProfile : BindingFragment<FragmentProfileBinding>(R.layout.fragmen
         }
         findNavController().navigate(R.id.action_profile_to_edit, arguments)
     }
+
     private fun clickChartItem() {
         binding.pcProfileDeleteFoodChart.setOnChartValueSelectedListener(object :
             OnChartValueSelectedListener {
@@ -228,8 +229,7 @@ class FragmentProfile : BindingFragment<FragmentProfileBinding>(R.layout.fragmen
                     val disposal = it.data.Disposal.toString().toFloat()
                     val sharing = it.data.Share.toString().toFloat()
                     val mistake = it.data.Mistake.toString().toFloat()
-
-                    binding.tvProfileDeleteSort.text = DISPOSAL
+                     binding.tvProfileDeleteSort.text = DISPOSAL
 
                     if (!(ingestion == 0F &&
                         disposal == 0F &&
