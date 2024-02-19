@@ -13,6 +13,7 @@ import java.time.temporal.ChronoUnit;
 @AllArgsConstructor
 @Getter
 public class ProductListItemDto {
+    private Long productId;
     private String icon;
     private String name;
     private Boolean isUseByDate;
@@ -20,16 +21,8 @@ public class ProductListItemDto {
     private BigDecimal count;
     private Boolean isNotified;
 
-    public ProductListItemDto(String icon, String name, Boolean isUseByDate, LocalDate date, BigDecimal count, Boolean isNotified) {
-        this.icon = icon == null ? "🍽️" : icon;
-        this.name = name;
-        this.isUseByDate = isUseByDate;
-        this.days = LocalDate.now().until(date, ChronoUnit.DAYS);
-        this.count = count;
-        this.isNotified = isNotified;
-    }
-
     public ProductListItemDto(Product product, Boolean isNotified) {
+        this.productId = product.getId();
         this.icon = product.getIcon() == null ? "🍽️" : product.getIcon();
         this.name = product.getName();
         this.isUseByDate = product.getIsUseByDate();
