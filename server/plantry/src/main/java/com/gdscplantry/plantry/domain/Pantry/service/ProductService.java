@@ -152,9 +152,7 @@ public class ProductService {
         int compared = result.compareTo(BigDecimal.ZERO);
 
         // Update product data
-        if (compared < 0)
-            throw new AppException(PantryErrorCode.INVALID_COUNT);
-        else if (compared == 0) {
+        if (compared == 0) {
             // Delete product
             productRepository.delete(product);
 
@@ -197,13 +195,12 @@ public class ProductService {
 
         // Update product data (delete if result count is 0)
         BigDecimal result = product.getCount().subtract(count);
-        if (result.equals(BigDecimal.ZERO)) {
+        if (result.equals(BigDecimal.valueOf(0.0))) {
             // Delete product
             productRepository.delete(product);
 
             // Delete product notifications
             notificationRepository.deleteAllByEntityIdAndTypeKeyLessThan(productId, 10);
-
         } else
             product.updateCount(result);
 
