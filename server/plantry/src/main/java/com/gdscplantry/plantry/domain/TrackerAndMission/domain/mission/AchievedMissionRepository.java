@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface AchievedMissionRepository extends JpaRepository<AchievedMission, Long> {
     Optional<AchievedMission> findByMissionAndUser(Mission mission, User user);
+
+    void deleteAllByUser(User user);
 }

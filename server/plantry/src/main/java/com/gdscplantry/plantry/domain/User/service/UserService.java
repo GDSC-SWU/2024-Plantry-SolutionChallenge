@@ -4,6 +4,7 @@ import com.gdscplantry.plantry.domain.Notification.domain.NotificationRepository
 import com.gdscplantry.plantry.domain.Pantry.domain.UserPantry;
 import com.gdscplantry.plantry.domain.Pantry.domain.UserPantryRepository;
 import com.gdscplantry.plantry.domain.Pantry.service.PantryService;
+import com.gdscplantry.plantry.domain.TrackerAndMission.domain.mission.AchievedMissionRepository;
 import com.gdscplantry.plantry.domain.TrackerAndMission.domain.tracker.ConsumedProductRepository;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.domain.User.domain.UserRepository;
@@ -41,6 +42,7 @@ public class UserService {
     private final UserPantryRepository userPantryRepository;
     private final ConsumedProductRepository consumedProductRepository;
     private final NotificationRepository notificationRepository;
+    private final AchievedMissionRepository achievedMissionRepository;
 
     @Transactional
     public GoogleLoginResDto googleLogin(String idToken, String deviceToken) {
@@ -97,10 +99,13 @@ public class UserService {
         // 3. Consumed Products
         consumedProductRepository.deleteAllByUser(user);
 
-        // 4. Login data
+        // 4. Achieved Missions
+        achievedMissionRepository.deleteAllByUser(user);
+
+        // 5. Login data
         redisUtil.delete(user.getId() + "_refresh");
 
-        // 5. User data
+        // 6. User data
         userRepository.delete(user);
     }
 
