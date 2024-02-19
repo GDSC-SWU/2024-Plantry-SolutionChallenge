@@ -9,7 +9,6 @@ import com.plantry.data.dto.response.profile.ResponseProfileInfoDto
 import com.plantry.data.dto.response.profile.ResponseProfileMissionListDto
 import com.plantry.data.dto.response.profile.ResponseProfileMisssionDto
 import com.plantry.data.dto.response.profile.ResponseProfileNameChangeDto
-import com.plantry.data.dto.response.profile.ResponseProfileTrakerDto
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -21,6 +20,6 @@ import retrofit2.http.Query
 interface ProfileMisssionSuccessApiService {
     @PATCH("/api/v1/mypage/mission")
     suspend fun patchMissionSuccess(
-        @Query ("id") id :String
+        @Query ("id") id :Int
     ): BaseResponseNullable<ResponseProfileMisssionDto>
 }
