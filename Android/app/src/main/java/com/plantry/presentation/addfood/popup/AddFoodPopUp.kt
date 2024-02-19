@@ -54,7 +54,7 @@ class AddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.popup_a
     private val viewModelProuductAdd by viewModels<ProductAddSingleViewModel>()
     private val viewModelProuductEdit by viewModels<ProductEditViewModel>()
     private val viewModelFood by viewModels<FoodViewModel>({ requireActivity() })
-    private val viewModelProuductDelete by viewModels<ProductDeleteViewModel>({ requireActivity() })
+    private val viewModelProuductDelete by viewModels<ProductDeleteViewModel>({ requireParentFragment() })
 
     var changedPantryId: Int = 0
     var storage: String = COLD
