@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/ab_profile_edit_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white1">
+
+                <ImageView
+                    android:id="@+id/iv_profile_edit_toolbar_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_home_pantry_back" />
+
+                <TextView
+                    android:id="@+id/tv_profile_about_us_toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="8dp"
+                    android:text="@string/profile_edit_title"
+                    android:textAppearance="@style/TextAppearance.Plantry.Heding1" />
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ScrollView
+            android:id="@+id/sv_profile_edit_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ab_profile_edit_appbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="28dp">
+
+                <ImageView
+                    android:id="@+id/iv_profile_edit_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="60dp"
+                    android:src="@drawable/ic_edit_profile_charcater"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_profile_nickname_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="72dp"
+                    android:text="@string/profile_edit_name"
+                    android:textAppearance="@style/TextAppearance.Plantry.Body6"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_profile_edit_img" />
+
+                <EditText
+                    android:id="@+id/et_profile_nickname_content"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/shape_line_line2_8_rec"
+                    android:paddingVertical="12dp"
+                    android:paddingStart="16dp"
+                    tools:text="@string/profile_edit_name"
+                    android:textAppearance="@style/TextAppearance.Plantry.Body5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_profile_nickname_title" />
+
+                <TextView
+                    android:id="@+id/tv_profile_email_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/profile_edit_email"
+                    android:textAppearance="@style/TextAppearance.Plantry.Body6"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_profile_nickname_content" />
+
+                <TextView
+                    android:id="@+id/tv_profile_email_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/shape_fill_white2_8_rec"
+                    android:paddingVertical="12dp"
+                    android:paddingStart="16dp"
+                    tools:text="@string/profile_edit_name"
+                    android:textAppearance="@style/TextAppearance.Plantry.Body5"
+                    android:textColor="@color/gray2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_profile_email_title" />
+
+                <TextView
+                    android:id="@+id/tv_profile_edit_log_out"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/profile_log_out_content"
+                    android:textAppearance="@style/TextAppearance.Plantry.Body6"
+                    android:textColor="@color/gray2"
+                    app:layout_constraintEnd_toStartOf="@id/v_profile_edit_view"
+                    app:layout_constraintTop_toTopOf="@id/v_profile_edit_view" />
+
+                <View
+                    android:id="@+id/v_profile_edit_view"
+                    android:layout_width="1dp"
+                    android:layout_height="0dp"
+                    android:background="@color/gray2"
+                    android:layout_marginTop="176dp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_profile_edit_deleteId"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_profile_email_content" />
+
+                <TextView
+                    android:id="@+id/tv_profile_edit_deleteId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/profile_delete_id_title"
+                    android:textAppearance="@style/TextAppearance.Plantry.Body6"
+                    android:textColor="@color/gray2"
+                    app:layout_constraintStart_toEndOf="@id/v_profile_edit_view"
+                    app:layout_constraintTop_toTopOf="@id/v_profile_edit_view" />
+
+                <TextView
+                    android:id="@+id/tv_profile_edit_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="100dp"
+                    android:background="@drawable/shape_fill_primary_color_8_rec"
+                    android:paddingVertical="16dp"
+                    android:text="@string/popup_button_confirm"
+                    app:layout_constraintTop_toBottomOf="@id/v_profile_edit_view"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.Plantry.Body3"
+                    android:textColor="@color/white1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

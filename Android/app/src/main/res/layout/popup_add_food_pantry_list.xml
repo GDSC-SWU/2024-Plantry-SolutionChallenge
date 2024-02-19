@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/shape_fill_white1_8_rec"
         android:visibility="gone"
-        android:elevation="10dp"
+        android:elevation="3dp"
         android:paddingVertical="4dp">
         <TextView
             android:id="@+id/tv_add_food_popup_date_check"

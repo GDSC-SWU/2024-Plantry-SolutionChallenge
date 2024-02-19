@@ -2,22 +2,20 @@ package com.plantry.presentation.addfood.popup
 
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import com.google.android.material.shadow.ShadowRenderer
 import com.plantry.R
 import com.plantry.coreui.base.BindingDialogFragment
 import com.plantry.coreui.view.UiState
-import com.plantry.databinding.PopupAddFoodBinding
 import com.plantry.databinding.PopupAddFoodDeleteOptionBinding
-import com.plantry.presentation.addfood.adapter.PantryNameListAdapter
 import com.plantry.presentation.home.viewmodel.product.ProductDeleteViewModel
 import com.plantry.presentation.home.viewmodel.product.ProductListSearchViewModel
 import java.text.NumberFormat
 
 class AddFoodDeleteOptionPopUp :
     BindingDialogFragment<PopupAddFoodDeleteOptionBinding>(R.layout.popup_add_food_delete_option) {
-    private val viewModelProuductDelete by viewModels<ProductDeleteViewModel>({ requireActivity() })
+    private val viewModelProuductDelete by viewModels<ProductDeleteViewModel>({ requireParentFragment() })
+    private val viewModelProductList by viewModels<ProductListSearchViewModel>({ requireParentFragment() })
 
     var halfUnitCheck: Boolean = false
     var option: Int = 1
@@ -162,6 +160,10 @@ class AddFoodDeleteOptionPopUp :
         viewModelProuductDelete.productDelete.observe(this) {
             when (it) {
                 is UiState.Success -> {
+                    val pantryFilter: String = arguments?.getString("pantryFilter", "All") ?:"All"
+                    val productId: Int = arguments?.getInt("productId", 0) ?: -1
+                    viewModelProductList.getListSearchProduct(productId, pantryFilter)
+                    dismiss()
                     dismiss()
                 }
 

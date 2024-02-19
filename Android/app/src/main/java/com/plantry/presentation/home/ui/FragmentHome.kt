@@ -14,7 +14,6 @@ import com.plantry.data.dto.response.pantry.ResponsePantryDto
 import com.plantry.databinding.FragmentHomeBinding
 import com.plantry.presentation.home.adapter.PantryAdapter
 import com.plantry.presentation.home.bottomsheet.HomeElseBottomSheet
-import com.plantry.presentation.home.popup.HomeDeletePopUp
 import com.plantry.presentation.home.popup.HomePlusPopUp
 import com.plantry.presentation.home.viewmodel.pantry.PantryListViewModel
 import com.plantry.presentation.home.viewmodel.pantry.PantryStarViewModel

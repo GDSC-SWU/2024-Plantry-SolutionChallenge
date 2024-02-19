@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data></data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_delete_popup_pantry_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="23dp"
+        android:background="@drawable/shape_fill_white1_8_rec"
+        android:elevation="3dp"
+        android:visibility="gone"
+        android:paddingVertical="8dp">
+
+        <RadioGroup
+            android:id="@+id/rg_delete_option_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/rb_profile_delete_reason_content1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background = "@drawable/selector_add_food_popup_pantry_name"
+                android:button="@null"
+                android:checked="true"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="10dp"
+                android:text="@string/profile_delete_reason_1"
+                android:textAppearance="@style/TextAppearance.Plantry.Body6" />
+
+
+            <RadioButton
+                android:id="@+id/rb_profile_delete_reason_content2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_add_food_popup_pantry_name"
+                android:button="@null"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="10dp"
+                android:text="@string/profile_delete_reason_2"
+                android:textAppearance="@style/TextAppearance.Plantry.Body6" />
+
+            <RadioButton
+                android:id="@+id/rb_profile_delete_reason_content3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_add_food_popup_pantry_name"
+                android:button="@null"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="10dp"
+                android:text="@string/profile_delete_reason_3"
+                android:textAppearance="@style/TextAppearance.Plantry.Body6" />
+
+            <RadioButton
+                android:id="@+id/rb_profile_delete_reason_content4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_add_food_popup_pantry_name"
+                android:button="@null"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="10dp"
+                android:text="@string/profile_delete_reason_4"
+                android:textAppearance="@style/TextAppearance.Plantry.Body6" />
+
+            <RadioButton
+                android:id="@+id/rb_profile_delete_reason_content5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_add_food_popup_pantry_name"
+                android:button="@null"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="10dp"
+                android:text="@string/profile_delete_reason_5"
+                android:textAppearance="@style/TextAppearance.Plantry.Body6" />
+
+            <RadioButton
+                android:id="@+id/rb_profile_delete_reason_content6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_add_food_popup_pantry_name"
+                android:button="@null"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="10dp"
+                android:text="@string/profile_delete_reason_6"
+                android:textAppearance="@style/TextAppearance.Plantry.Body6" />
+
+        </RadioGroup>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

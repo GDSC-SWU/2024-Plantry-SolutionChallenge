@@ -4,7 +4,7 @@ import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.plantry.BuildConfig.BASE_URL
 import com.plantry.data.API.API_TAG
-import com.plantry.data.api.signin.LogoutApiService
+import com.plantry.data.api.signin.SignoutApiService
 import com.plantry.data.api.pantry.PantryAddApiService
 import com.plantry.data.api.pantry.PantryDeleteApiService
 import com.plantry.data.api.pantry.PantryEditApiService
@@ -17,6 +17,14 @@ import com.plantry.data.api.product.ProductEditApiService
 import com.plantry.data.api.product.ProductEditCountApiService
 import com.plantry.data.api.product.ProductListApiService
 import com.plantry.data.api.product.ProductSearchApiService
+import com.plantry.data.api.profile.ProfileAlarmChangeApiService
+import com.plantry.data.api.profile.ProfileInfoApiService
+import com.plantry.data.api.profile.ProfileMisssionApiService
+import com.plantry.data.api.profile.ProfileMisssionSuccessApiService
+import com.plantry.data.api.profile.ProfileNameChangeApiService
+import com.plantry.data.api.profile.ProfileTermsApiService
+import com.plantry.data.api.profile.ProfileTrackerApiService
+import com.plantry.data.api.signin.LogoutApiService
 import com.plantry.data.api.signin.RefreshTokenApiService
 import com.plantry.data.api.signin.SignInApiService
 import com.plantry.data.dto.BaseResponseNullable
@@ -33,8 +41,10 @@ import retrofit2.Retrofit
 
 object ApiPool {
     val getSignIn = RetrofitPool.retrofit.create(SignInApiService::class.java)
-    val deleteLogOut = RetrofitPool.retrofit.create(LogoutApiService::class.java)
+    val deleteSignOut = RetrofitPool.retrofit.create(SignoutApiService::class.java)
     val getRefreshToken = RetrofitPool.retrofit.create(RefreshTokenApiService::class.java)
+    val deleteLogOut = RetrofitPool.retrofit.create(LogoutApiService::class.java)
+
 
     val getPantryList = RetrofitPool.retrofit.create(PantryListApiService::class.java)
     val postAddPantry = RetrofitPool.retrofit.create(PantryAddApiService::class.java)
@@ -49,6 +59,14 @@ object ApiPool {
     val patchEditCountProduct = RetrofitPool.retrofit.create(ProductEditCountApiService::class.java)
     val getListSearchProduct = RetrofitPool.retrofit.create(ProductListApiService::class.java)
     val getSearchProduct = RetrofitPool.retrofit.create(ProductSearchApiService::class.java)
+
+    val patchAlarmProfile = RetrofitPool.retrofit.create(ProfileAlarmChangeApiService::class.java)
+    val getInfoProfile = RetrofitPool.retrofit.create(ProfileInfoApiService::class.java)
+    val getMissionListProfile = RetrofitPool.retrofit.create(ProfileMisssionApiService::class.java)
+    val patchMissionSuccessProfile = RetrofitPool.retrofit.create(ProfileMisssionSuccessApiService::class.java)
+    val patchNameChangeProfile = RetrofitPool.retrofit.create(ProfileNameChangeApiService::class.java)
+    val getTermProfile = RetrofitPool.retrofit.create(ProfileTermsApiService::class.java)
+    val getTrakerProfile = RetrofitPool.retrofit.create(ProfileTrackerApiService::class.java)
 }
 
 
@@ -96,7 +114,7 @@ object RetrofitPool {
 
                 var response = chain.proceed(request)
 
-                if (response.code == 401) {
+                if (response.code == 401 || response.code == 403) {
                     runBlocking {
                         val refreshToken = RetrofitPool.refreshToken
 
