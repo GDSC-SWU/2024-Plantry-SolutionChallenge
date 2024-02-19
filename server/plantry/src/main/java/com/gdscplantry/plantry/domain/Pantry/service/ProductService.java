@@ -148,8 +148,20 @@ public class ProductService {
         if (count % 0.5 != 0 || count <= 0)
             throw new AppException(PantryErrorCode.INVALID_COUNT);
 
+        BigDecimal result = product.getCount().subtract(BigDecimal.valueOf(count));
+        int compared = result.compareTo(BigDecimal.ZERO);
+
         // Update product data
-        product.updateCount(BigDecimal.valueOf(count));
+        if (compared < 0)
+            throw new AppException(PantryErrorCode.INVALID_COUNT);
+        else if (compared == 0) {
+            // Delete product
+            productRepository.delete(product);
+
+            // Delete product notifications
+            notificationRepository.deleteAllByEntityIdAndTypeKeyLessThan(productId, 10);
+        } else
+            product.updateCount(BigDecimal.valueOf(count));
 
         // Check Notifications
         boolean isNotified = notificationRepository.existsAllByUserAndEntityIdAndIsOffAndTypeKeyLessThan(user, productId, false, 20);
