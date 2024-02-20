@@ -50,6 +50,7 @@ class FragmentProfile : BindingFragment<FragmentProfileBinding>(R.layout.fragmen
 
    var userImgPath: String = ""
     override fun initView() {
+        resetScrollPosition()
         setChartData(firstChartData)
         observeMissionList()
         observeMissionSuccess()
@@ -65,6 +66,10 @@ class FragmentProfile : BindingFragment<FragmentProfileBinding>(R.layout.fragmen
         clickTerms()
         clickDeleteId()
         clickAlramCheck()
+    }
+
+    private fun resetScrollPosition() {
+        binding.svProfileScroll.smoothScrollTo(0, 0)
     }
 
     private fun setChartData(entries: List<PieEntry>) {

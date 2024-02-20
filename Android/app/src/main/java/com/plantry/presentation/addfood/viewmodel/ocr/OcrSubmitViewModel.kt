@@ -23,14 +23,7 @@ class OcrSubmitViewModel : ViewModel() {
             ApiPool.postOcrSubmit.postOcrSubmit(file)
         }.fold({
             _ocrResult.value = UiState.Success(
-                it ?: ResponseOcrSubmit(
-                    listOf(
-                        ResponseOcrSubmit.Product(
-                            food_name = "",
-                            quantity = 1
-                        )
-                    )
-                )
+                it
             )
         }, {
             Log.d("Aaa13", it.message.toString())

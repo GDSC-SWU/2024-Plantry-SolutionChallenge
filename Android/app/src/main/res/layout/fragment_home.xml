@@ -33,6 +33,7 @@
                     android:textColor="@color/white1" />
 
                 <ImageView
+                    android:id="@+id/iv_home_notification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"

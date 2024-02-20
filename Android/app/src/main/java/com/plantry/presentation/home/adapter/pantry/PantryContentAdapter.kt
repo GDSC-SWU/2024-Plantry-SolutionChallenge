@@ -1,13 +1,12 @@
-package com.plantry.presentation.home.adapter
+package com.plantry.presentation.home.adapter.pantry
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.plantry.data.dto.response.product.ResponseProductListDto
 import com.plantry.databinding.ItemHomePantryContentBinding
-import com.plantry.presentation.home.viewholder.PantryContentViewHolder
+import com.plantry.presentation.home.viewholder.pantry.PantryContentViewHolder
 
 class PantryContentAdapter (private val itemClickListener: OnItemClickListener) :
     ListAdapter<ResponseProductListDto.Result.Food, PantryContentViewHolder>(

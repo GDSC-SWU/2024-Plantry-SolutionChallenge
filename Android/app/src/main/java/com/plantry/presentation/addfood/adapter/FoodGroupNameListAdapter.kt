@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import com.plantry.data.dto.response.product.ResponseProductIconListDto
 import com.plantry.databinding.ItemAddFoodTitleBinding
 import com.plantry.presentation.addfood.viewholder.AddFoodGroupNameViewHolder
-import com.plantry.presentation.home.adapter.OnItemClickListener
 
 class FoodGroupNameListAdapter(private val itemClickListener: OnFoodItemClickListener) :
     ListAdapter<ResponseProductIconListDto, AddFoodGroupNameViewHolder>(ProductGroupNameDiffCallback()) {

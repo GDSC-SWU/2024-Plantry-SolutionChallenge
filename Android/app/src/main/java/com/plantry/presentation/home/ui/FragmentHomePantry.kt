@@ -15,9 +15,9 @@ import com.plantry.coreui.base.BindingFragment
 import com.plantry.coreui.view.UiState
 import com.plantry.data.dto.response.product.ResponseProductListDto
 import com.plantry.databinding.FragmentHomePantryBinding
-import com.plantry.presentation.addfood.popup.AddFoodPopUp
-import com.plantry.presentation.home.adapter.OnItemClickListener
-import com.plantry.presentation.home.adapter.PantryDayAdapter
+import com.plantry.presentation.addfood.popup.addfood.AddFoodPopUp
+import com.plantry.presentation.home.adapter.pantry.OnItemClickListener
+import com.plantry.presentation.home.adapter.pantry.PantryDayAdapter
 import com.plantry.presentation.home.bottomsheet.HomeAlarmBottomSheet
 import com.plantry.presentation.home.viewmodel.product.ProductDeleteViewModel
 import com.plantry.presentation.home.viewmodel.product.ProductEditCountViewModel
@@ -31,7 +31,7 @@ class FragmentHomePantry :
     private val viewModelList by viewModels<ProductListSearchViewModel>({ requireParentFragment() })
     private val viewModelSearch by viewModels<ProductSearchViewModel>()
     private val viewModelEditCount by viewModels<ProductEditCountViewModel>()
-    private val viewModelProuductDelete by viewModels<ProductDeleteViewModel>({ requireParentFragment() })
+    private val viewModelProuductDelete by viewModels<ProductDeleteViewModel>({ requireActivity() })
 
     override var bnvVisibility = View.GONE
     lateinit var searchKeyWord: String
@@ -79,7 +79,6 @@ class FragmentHomePantry :
         val pantryId = arguments?.getInt("pantry_id")
         val pantryName = arguments?.getString("pantry_name")
         val addFoodPopUp = AddFoodPopUp()
-        Log.d("bbb", "addfoodpopup1")
         addFoodPopUp.setStyle(
             BottomSheetDialogFragment.STYLE_NO_TITLE, R.style.Theme_Plantry_AlertDialog
         )
@@ -140,7 +139,6 @@ class FragmentHomePantry :
     }
 
     override fun onPlusClick(item: ResponseProductListDto.Result.Food) {
-        Log.d("aaa333333", item.toString())
         val editCount = item.count?.plus(1.0)
         if (item.productId != null && editCount != null) {
             viewModelEditCount.patchEditCountProduct(item.productId, editCount)

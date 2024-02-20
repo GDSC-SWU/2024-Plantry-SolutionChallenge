@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_home_to_else"
             app:destination="@id/home_else_bottom_sheet" />
+        <action
+            android:id="@+id/action_home_to_home_notification"
+            app:destination="@id/home_notification"/>
     </fragment>
     <fragment
         android:id="@+id/home_else_bottom_sheet"
@@ -52,6 +55,14 @@
         <action
             android:id="@+id/action_home_pantry_to_alarm"
             app:destination="@id/home_alarm_bottom_sheet" />
+    </fragment>
+    <fragment
+        android:id="@+id/home_notification"
+        android:name="com.plantry.presentation.home.ui.FragmentHomeNotification"
+        android:label="HomeNotificationFragment">
+        <action
+            android:id="@+id/action_notification_to_home"
+            app:destination="@id/navigation_home"/>
     </fragment>
     <fragment
         android:id="@+id/navigation_profile"

@@ -15,6 +15,10 @@ class NotificationAllListViewModel : ViewModel() {
     private val _notificationAllList: MutableLiveData<UiState<ResponseNortificationAllListDto>> = MutableLiveData()
     val notificationAllList: LiveData<UiState<ResponseNortificationAllListDto>> = _notificationAllList
 
+    init {
+        getNotificationLAllList()
+    }
+
     fun getNotificationLAllList() = viewModelScope.launch {
         runCatching {
             ApiPool.getNotificationLAllList.getNotificationLAllList()

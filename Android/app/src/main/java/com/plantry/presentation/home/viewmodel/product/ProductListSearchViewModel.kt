@@ -43,7 +43,7 @@ class ProductListSearchViewModel : ViewModel() {
             _productListSearch.value =
                 UiState.Success(it.data ?:exampleData)
         }, {
-            Log.d("Aaa13", it.message.toString())
+            Log.d("Aaa22", it.message.toString())
         })
     }
 

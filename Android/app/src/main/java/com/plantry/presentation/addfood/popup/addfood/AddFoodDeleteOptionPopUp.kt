@@ -1,8 +1,7 @@
-package com.plantry.presentation.addfood.popup
+package com.plantry.presentation.addfood.popup.addfood
 
 import android.util.Log
 import android.view.View
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.plantry.R
 import com.plantry.coreui.base.BindingDialogFragment
@@ -15,7 +14,7 @@ import java.text.NumberFormat
 
 class AddFoodDeleteOptionPopUp :
     BindingDialogFragment<PopupAddFoodDeleteOptionBinding>(R.layout.popup_add_food_delete_option) {
-    private val viewModelProuductDelete by viewModels<ProductDeleteViewModel>({ requireParentFragment() })
+    private val viewModelProuductDelete by viewModels<ProductDeleteViewModel>({ requireActivity() })
     private val viewModelProductList by viewModels<ProductListSearchViewModel>({ requireParentFragment() })
 
     var halfUnitCheck: Boolean = false

@@ -12,7 +12,7 @@ import com.plantry.coreui.base.BindingFragment
 import com.plantry.coreui.view.UiState
 import com.plantry.data.dto.response.pantry.ResponsePantryDto
 import com.plantry.databinding.FragmentHomeBinding
-import com.plantry.presentation.home.adapter.PantryAdapter
+import com.plantry.presentation.home.adapter.pantry.PantryAdapter
 import com.plantry.presentation.home.bottomsheet.HomeElseBottomSheet
 import com.plantry.presentation.home.popup.HomePlusPopUp
 import com.plantry.presentation.home.viewmodel.pantry.PantryListViewModel
@@ -23,11 +23,23 @@ class FragmentHome : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     private val viewModel_list by viewModels<PantryListViewModel>({ requireParentFragment() })
     private val viewModel_star by viewModels<PantryStarViewModel>()
     override fun initView() {
+        resetScrollPosition()
         viewModel_list.getPantryList()
         observe_list()
         observe_star()
+        clickNotification()
     }
 
+
+    private fun clickNotification() {
+        binding.ivHomeNotification.setOnClickListener {
+            findNavController().navigate(R.id.action_home_to_home_notification)
+        }
+    }
+
+    private fun resetScrollPosition() {
+        binding.svHomeScrollview.smoothScrollTo(0, 0)
+    }
 
     private fun clickItem(adapter: PantryAdapter, list: List<ResponsePantryDto.Result>) {
         adapter.pantryItemClick = object : ItemClick {
@@ -86,6 +98,7 @@ class FragmentHome : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             }
         }
     }
+
     private fun observe_star() {
         viewModel_star.pantryStar.observe(this) {
             when (it) {
@@ -97,6 +110,7 @@ class FragmentHome : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             }
         }
     }
+
     companion object {
         const val BOTTOM_SHEET = "home_else_bottom_sheet"
         const val POP_UP = "home_plus_pop_up"

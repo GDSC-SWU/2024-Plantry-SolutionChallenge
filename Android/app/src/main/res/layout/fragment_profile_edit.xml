@@ -31,7 +31,7 @@
                     android:background="@drawable/ic_home_pantry_back" />
 
                 <TextView
-                    android:id="@+id/tv_profile_about_us_toolbar_title"
+                    android:id="@+id/tv_profile_edit_toolbar_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="8dp"

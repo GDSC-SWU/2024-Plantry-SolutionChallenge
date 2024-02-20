@@ -1,4 +1,4 @@
-package com.plantry.presentation.auth
+package com.plantry.presentation.auth.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
