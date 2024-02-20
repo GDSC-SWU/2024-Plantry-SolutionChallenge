@@ -88,4 +88,8 @@ dependencies {
     implementation("io.coil-kt:coil:2.3.0")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation ("me.relex:circleindicator:2.1.6")
+
+    // firebase
+    implementation ("com.google.firebase:firebase-bom:32.7.2")
+    implementation ("com.google.firebase:firebase-messaging:23.4.1")
 }
