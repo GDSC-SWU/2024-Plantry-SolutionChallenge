@@ -28,7 +28,8 @@ class ProductSearchViewModel : ViewModel() {
                         icon = "🍉",
                         isNotified = true,
                         isUseBydate = false,
-                        name = "Example Product"
+                        name = "Example Product",
+                        storage = null
                     )
                 )
             )

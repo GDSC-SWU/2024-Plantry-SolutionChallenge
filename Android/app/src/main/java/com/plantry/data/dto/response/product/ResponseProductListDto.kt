@@ -23,6 +23,7 @@ data class ResponseProductListDto(
             @SerialName("isNotified") val isNotified: Boolean?,
             @SerialName("isUseByDate") val isUseBydate: Boolean?,
             @SerialName("name") val name: String?,
+            @SerialName("storage") val storage: String?
         )
     }
 }
