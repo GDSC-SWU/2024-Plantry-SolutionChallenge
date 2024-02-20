@@ -42,10 +42,10 @@ class FragmentProfile : BindingFragment<FragmentProfileBinding>(R.layout.fragmen
     var nowSelectedItem = 0
     val firstChartData =
         listOf(
-            PieEntry(25.0F),
-            PieEntry(25.0F),
-            PieEntry(25.0F),
-            PieEntry(25.0F),
+            PieEntry(0F),
+            PieEntry(0F),
+            PieEntry(0F),
+            PieEntry(0F),
         )
 
    var userImgPath: String = ""
@@ -247,7 +247,7 @@ class FragmentProfile : BindingFragment<FragmentProfileBinding>(R.layout.fragmen
                         )
                     }
                     else{
-                        binding.tvProfilePercent.text ="${25.0} %"
+                        binding.tvProfilePercent.text ="${0.0} %"
                     }
 
 
