@@ -45,6 +45,11 @@ public class MyPageService {
         return new UpdateNicknameResDto(nickname);
     }
 
+    @Transactional(readOnly = true)
+    public NotificationTimeResDto getNotificationTime(User user) {
+        return new NotificationTimeResDto(user.getNotificationTime());
+    }
+
     @Transactional
     public NotificationTimeResDto updateNotificationTime(User user, Integer time) {
         user = userRepository.findById(user.getId()).orElseThrow(() -> new AppException(GlobalErrorCode.AUTHORIZATION_FAILED));
