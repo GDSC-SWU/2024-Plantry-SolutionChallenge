@@ -19,6 +19,7 @@ import com.plantry.presentation.addfood.popup.AddFoodPopUp
 import com.plantry.presentation.home.adapter.OnItemClickListener
 import com.plantry.presentation.home.adapter.PantryDayAdapter
 import com.plantry.presentation.home.bottomsheet.HomeAlarmBottomSheet
+import com.plantry.presentation.home.viewmodel.product.ProductDeleteViewModel
 import com.plantry.presentation.home.viewmodel.product.ProductEditCountViewModel
 import com.plantry.presentation.home.viewmodel.product.ProductListSearchViewModel
 import com.plantry.presentation.home.viewmodel.product.ProductSearchViewModel
@@ -30,8 +31,11 @@ class FragmentHomePantry :
     private val viewModelList by viewModels<ProductListSearchViewModel>({ requireParentFragment() })
     private val viewModelSearch by viewModels<ProductSearchViewModel>()
     private val viewModelEditCount by viewModels<ProductEditCountViewModel>()
+    private val viewModelProuductDelete by viewModels<ProductDeleteViewModel>({ requireParentFragment() })
+
     override var bnvVisibility = View.GONE
     lateinit var searchKeyWord: String
+
 
     override fun initView() {
         setFilter()
@@ -45,6 +49,7 @@ class FragmentHomePantry :
         checkDateValidate()
         stopSearch()
         observeEditCount()
+        observeDelete()
     }
 
     private fun setPantryName() {
@@ -74,6 +79,7 @@ class FragmentHomePantry :
         val pantryId = arguments?.getInt("pantry_id")
         val pantryName = arguments?.getString("pantry_name")
         val addFoodPopUp = AddFoodPopUp()
+        Log.d("bbb", "addfoodpopup1")
         addFoodPopUp.setStyle(
             BottomSheetDialogFragment.STYLE_NO_TITLE, R.style.Theme_Plantry_AlertDialog
         )
@@ -92,6 +98,7 @@ class FragmentHomePantry :
         val pantryId = arguments?.getInt("pantry_id")
         val pantryName = arguments?.getString("pantry_name")
         val addFoodPopUp = AddFoodPopUp()
+        Log.d("bbb", "addfoodpopup2")
         addFoodPopUp.setStyle(
             DialogFragment.STYLE_NO_TITLE,
             R.style.Theme_Plantry_AlertDialog
@@ -115,15 +122,25 @@ class FragmentHomePantry :
             putString("pantry_filter", getFilter(binding.tlHomePantryTab.selectedTabPosition))
         }
         addFoodPopUp.arguments = bundle
-        addFoodPopUp.show(childFragmentManager, ADD_POP_UP)
+        addFoodPopUp.show(parentFragmentManager, ADD_POP_UP)
     }
 
     override fun onAlarmClick(item: ResponseProductListDto.Result.Food) {
+        val pantryId = arguments?.getInt("pantry_id")
+        val pantryFilter = getFilter(binding.tlHomePantryTab.selectedTabPosition)
         val alarmBottomSheet = HomeAlarmBottomSheet()
+        alarmBottomSheet.arguments = Bundle().apply {
+            if (pantryId != null && item.productId != null) {
+                putInt("pantryId", pantryId)
+                putString("pantryFilter", pantryFilter)
+                putInt("productId", item.productId)
+            }
+        }
         alarmBottomSheet.show(parentFragmentManager, BOTTOM_SHEET)
     }
 
     override fun onPlusClick(item: ResponseProductListDto.Result.Food) {
+        Log.d("aaa333333", item.toString())
         val editCount = item.count?.plus(1.0)
         if (item.productId != null && editCount != null) {
             viewModelEditCount.patchEditCountProduct(item.productId, editCount)
@@ -287,6 +304,23 @@ class FragmentHomePantry :
         }
     }
 
+    private fun observeDelete() {
+        viewModelProuductDelete.productDelete.observe(this) {
+            val pantryId = arguments?.getInt("pantry_id")
+            when (it) {
+                is UiState.Success -> {
+                    if (pantryId != null) {
+                        viewModelList.getListSearchProduct(
+                            pantryId,
+                            getFilter(binding.tlHomePantryTab.selectedTabPosition)
+                        )
+                    }
+                }
+
+                else -> Unit
+            }
+        }
+    }
     private fun observeList() {
         viewModelList.productListSearch.observe(this) {
             when (it) {

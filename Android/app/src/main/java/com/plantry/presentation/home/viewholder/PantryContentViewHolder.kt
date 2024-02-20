@@ -1,13 +1,10 @@
 package com.plantry.presentation.home.viewholder
 
 import android.graphics.Color
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.plantry.R
 import com.plantry.data.dto.response.product.ResponseProductListDto
-import com.plantry.databinding.ItemHomePantryBinding
 import com.plantry.databinding.ItemHomePantryContentBinding
-import com.plantry.presentation.home.bottomsheet.HomeAlarmBottomSheet
 import kotlin.math.roundToInt
 
 class PantryContentViewHolder(private val binding: ItemHomePantryContentBinding) :

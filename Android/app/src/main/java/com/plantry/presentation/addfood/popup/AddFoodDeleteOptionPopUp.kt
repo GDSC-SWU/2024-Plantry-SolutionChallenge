@@ -22,6 +22,7 @@ class AddFoodDeleteOptionPopUp :
     var itemCountEnd: Double = 0.5
 
     override fun initView() {
+        Log.d("bbb", "optionpopup")
         clickCancleButton()
         checkedOption()
         clickDeleteButton()
@@ -29,7 +30,6 @@ class AddFoodDeleteOptionPopUp :
         minusCount(halfUnitCheck)
         observe()
         clickHalfUnit()
-        clickCanleButton()
     }
 
     private fun clickCancleButton() {
@@ -141,13 +141,6 @@ class AddFoodDeleteOptionPopUp :
             Log.d("Aaa", itemCountEnd.toString())
         }
     }
-
-    private fun clickCanleButton() {
-        binding.tvAddFoodDeletePopupCancle.setOnClickListener {
-            dismiss()
-        }
-    }
-
     private fun tryNotShowDouble() {
         val nowCount = binding.tvAddFoodPopupDeleteCount.text.toString().toDouble()
         val numberFormat = NumberFormat.getInstance()
@@ -161,10 +154,11 @@ class AddFoodDeleteOptionPopUp :
             when (it) {
                 is UiState.Success -> {
                     val pantryFilter: String = arguments?.getString("pantryFilter", "All") ?:"All"
-                    val productId: Int = arguments?.getInt("productId", 0) ?: -1
-                    viewModelProductList.getListSearchProduct(productId, pantryFilter)
+                    val pantryId: Int = arguments?.getInt("pantryId", 0) ?: -1
+                    viewModelProductList.getListSearchProduct(pantry = pantryId, pantryFilter)
                     dismiss()
-                    dismiss()
+                    viewModelProuductDelete.setProductDeleteEmpty()
+
                 }
 
                 else -> Unit
