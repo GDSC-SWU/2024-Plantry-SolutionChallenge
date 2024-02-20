@@ -19,6 +19,7 @@ public class ProductListItemDto {
     private Boolean isUseByDate;
     private Long days;
     private BigDecimal count;
+    private String storage;
     private Boolean isNotified;
 
     public ProductListItemDto(Product product, Boolean isNotified) {
@@ -28,6 +29,7 @@ public class ProductListItemDto {
         this.isUseByDate = product.getIsUseByDate();
         this.days = LocalDate.now().until(product.getDate(), ChronoUnit.DAYS);
         this.count = product.getCount();
+        this.storage = product.getStorage().getKey();
         this.isNotified = isNotified;
     }
 }
