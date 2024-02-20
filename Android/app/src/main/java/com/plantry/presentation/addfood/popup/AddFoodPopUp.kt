@@ -53,22 +53,26 @@ class AddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.popup_a
     override fun initView() {
         iconObserver()
         checkMode()
-        clickCancleButton()
-        clickPantryName()
-        clickDatePopup()
-        clickPantryDate()
         observeList()
         observeEdit()
         observeDelete()
         observeProductAdd()
-        clickIconSelected()
-        getStorageSelected()
+
         selecteHalfUnit()
         plusCount(halfUnitCheck)
         minusCount(halfUnitCheck)
         checkDateValidate()
+
+        clickPantryName()
+        clickDatePopup()
+        clickPantryDate()
+        clickIconSelected()
+        getStorageSelected()
+
         clickConfirmButton()
+        clickCancleButton()
     }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun checkMode() {
@@ -356,9 +360,9 @@ class AddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.popup_a
 
     private fun clickCancleButton() {
         val productId: Int = arguments?.getInt("productId", 0) ?: 0
+        val pantryId = arguments?.getInt("pantry_id") ?: 0
         if (binding.tvAddFoodPopupCancle.text.toString().equals("Delete")) {
             binding.tvAddFoodPopupCancle.setOnClickListener {
-                val pantryFilter = arguments?.getString("pantry_filter")
                 val productDeletePopUp = AddFoodDeleteOptionPopUp()
                 productDeletePopUp.setStyle(
                     STYLE_NO_TITLE,
@@ -366,16 +370,17 @@ class AddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.popup_a
                 )
                 productDeletePopUp.arguments = Bundle().apply {
                     putInt("productId", productId)
+                    putInt("pantryId", pantryId)
                     putDouble(
                         "count",
                         binding.tvHomePantryItemContentCount.text.toString().toDouble()
                     )
-                    putString("pantryFilter", pantryFilter)
                 }
                 productDeletePopUp.show(parentFragmentManager, POP_UP_DELETE)
             }
         } else {
             binding.tvAddFoodPopupCancle.setOnClickListener {
+                Log.d("bbb", "dismiss1")
                 dialog?.dismiss()
             }
         }
@@ -445,8 +450,6 @@ class AddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.popup_a
                     storage = storage
                 )
 
-                Log.d("aaa", requestAddProduct.toString())
-                Log.d("aaa", pantryId.toString())
                 val productId: Int = arguments?.getInt("productId", 0) ?: 0
 
                 if (productId > 0) {
@@ -464,6 +467,7 @@ class AddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.popup_a
 
     override fun dismiss() {
         super.dismiss()
+        Log.d("bbb", "addfoodpopupdissmiss")
         viewModelFood.setFaliureIcon()
         viewModelFood.setFaliureName()
     }
@@ -546,6 +550,17 @@ class AddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.popup_a
         )
     }
 
+    private fun observeDelete() {
+        viewModelProuductDelete.productDelete.observe(this) {
+            when (it) {
+                is UiState.Success -> {
+                    dismiss()
+                }
+
+                else -> Unit
+            }
+        }
+    }
     private fun isValidDateFormat(input: String): String {
         val dateFormatPattern = Pattern.compile("^\\d{2}\\.\\d{2}\\.\\d{2}\$")
         val matcher = dateFormatPattern.matcher(input)
@@ -565,23 +580,6 @@ class AddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.popup_a
         }
     }
 
-    private fun observeDelete() {
-        viewModelProuductDelete.productDelete.observe(this) {
-            val pantryId = arguments?.getInt("pantry_id")
-            val pantryFilter = arguments?.getString("pantry_filter")
-            when (it) {
-                is UiState.Success -> {
-                    Log.d("aaa", it.data.toString() + "딜리트")
-                    if (pantryId != null && pantryFilter != null) {
-                        viewModelProductList.getListSearchProduct(pantryId, pantryFilter)
-                    }
-                    dismiss()
-                }
-
-                else -> Unit
-            }
-        }
-    }
 
     companion object {
         const val POP_UP_DAY = "add_food_popup_to_day_detail_popup"
