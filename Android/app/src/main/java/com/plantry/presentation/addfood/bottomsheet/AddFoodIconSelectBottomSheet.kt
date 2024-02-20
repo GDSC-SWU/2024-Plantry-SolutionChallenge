@@ -8,7 +8,7 @@ import com.plantry.databinding.BottomsheetAddFoodIconSelectBinding
 import com.plantry.presentation.addfood.adapter.FoodGroupNameListAdapter
 import com.plantry.presentation.addfood.adapter.OnFoodItemClickListener
 import com.plantry.presentation.addfood.rawdata.FoodIconList
-import com.plantry.presentation.addfood.viewmodel.FoodViewModel
+import com.plantry.presentation.addfood.viewmodel.product.FoodViewModel
 
 class AddFoodIconSelectBottomSheet :
     BindingBottomSheetFragment<BottomsheetAddFoodIconSelectBinding>(

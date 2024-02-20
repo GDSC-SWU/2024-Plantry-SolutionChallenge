@@ -1,4 +1,4 @@
-package com.plantry.presentation.addfood.viewmodel
+package com.plantry.presentation.addfood.viewmodel.product
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
