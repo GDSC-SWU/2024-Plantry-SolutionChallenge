@@ -1,4 +1,4 @@
-package com.plantry.presentation.home.adapter
+package com.plantry.presentation.home.adapter.pantry
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,8 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.plantry.data.dto.response.product.ResponseProductListDto
 import com.plantry.databinding.ItemHomePantryDDayBinding
-import com.plantry.presentation.home.ui.FragmentHomePantry
-import com.plantry.presentation.home.viewholder.PantryDayViewHolder
+import com.plantry.presentation.home.viewholder.pantry.PantryDayViewHolder
 
 class PantryDayAdapter(private val itemClickListener: OnItemClickListener) :
     ListAdapter<ResponseProductListDto.Result, PantryDayViewHolder>(PantryDayDiffCallback()) {

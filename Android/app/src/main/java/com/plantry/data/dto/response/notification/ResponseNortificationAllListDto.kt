@@ -14,7 +14,7 @@ data class ResponseNortificationAllListDto(
         val body: String?,
         @SerialName("id")
         val id: Int?,
-        @SerialName("iisCheckedd")
+        @SerialName("isChecked")
         val isChecked: Boolean?,
         @SerialName("notifiedAt")
         val notifiedAt: String?,

@@ -1,4 +1,4 @@
-package com.plantry.presentation.home.adapter
+package com.plantry.presentation.home.adapter.pantry
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.plantry.coreui.adapter.ItemClick
 import com.plantry.data.dto.response.pantry.ResponsePantryDto
 import com.plantry.databinding.ItemHomePantryBinding
-import com.plantry.presentation.home.viewholder.PantryViewHolder
+import com.plantry.presentation.home.viewholder.pantry.PantryViewHolder
 
 class PantryAdapter :
     ListAdapter<ResponsePantryDto.Result, PantryViewHolder>(PantryDiffCallback()) {

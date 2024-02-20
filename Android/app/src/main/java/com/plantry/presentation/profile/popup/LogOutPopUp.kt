@@ -7,8 +7,8 @@ import com.plantry.R
 import com.plantry.coreui.base.BindingDialogFragment
 import com.plantry.coreui.view.UiState
 import com.plantry.databinding.PopupProfileLogoutBinding
-import com.plantry.presentation.auth.LogoutViewModel
-import com.plantry.presentation.auth.SignInActivity
+import com.plantry.presentation.auth.viewmodel.LogoutViewModel
+import com.plantry.presentation.auth.ui.SignInActivity
 
 class LogOutPopUp  : BindingDialogFragment<PopupProfileLogoutBinding>(R.layout.popup_profile_logout) {
 

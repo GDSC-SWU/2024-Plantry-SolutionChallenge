@@ -7,8 +7,8 @@ import com.plantry.R
 import com.plantry.coreui.base.BindingDialogFragment
 import com.plantry.coreui.view.UiState
 import com.plantry.databinding.PopupProfileDeleteBinding
-import com.plantry.presentation.auth.SignInActivity
-import com.plantry.presentation.auth.SignoutViewModel
+import com.plantry.presentation.auth.ui.SignInActivity
+import com.plantry.presentation.auth.viewmodel.SignoutViewModel
 
 class DeleteIdPopUp :
     BindingDialogFragment<PopupProfileDeleteBinding>(R.layout.popup_profile_delete) {

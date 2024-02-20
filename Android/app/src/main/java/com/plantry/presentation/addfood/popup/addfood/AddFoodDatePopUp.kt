@@ -1,4 +1,4 @@
-package com.plantry.presentation.addfood.popup
+package com.plantry.presentation.addfood.popup.addfood
 
 import com.plantry.R
 import com.plantry.coreui.base.BindingDialogFragment

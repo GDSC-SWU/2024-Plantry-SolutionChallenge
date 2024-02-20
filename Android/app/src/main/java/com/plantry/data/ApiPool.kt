@@ -23,6 +23,7 @@ import com.plantry.data.api.product.ProductEditCountApiService
 import com.plantry.data.api.product.ProductListApiService
 import com.plantry.data.api.product.ProductSearchApiService
 import com.plantry.data.api.profile.ProfileAlarmChangeApiService
+import com.plantry.data.api.profile.ProfileAlarmGetApiService
 import com.plantry.data.api.profile.ProfileInfoApiService
 import com.plantry.data.api.profile.ProfileMisssionApiService
 import com.plantry.data.api.profile.ProfileMisssionSuccessApiService
@@ -70,6 +71,7 @@ object ApiPool {
     val getSearchProduct = RetrofitPool.retrofit.create(ProductSearchApiService::class.java)
 
     val patchAlarmProfile = RetrofitPool.retrofit.create(ProfileAlarmChangeApiService::class.java)
+    val getProfileAlarm = RetrofitPool.retrofit.create(ProfileAlarmGetApiService::class.java)
     val getInfoProfile = RetrofitPool.retrofit.create(ProfileInfoApiService::class.java)
     val getMissionListProfile = RetrofitPool.retrofit.create(ProfileMisssionApiService::class.java)
     val patchMissionSuccessProfile = RetrofitPool.retrofit.create(ProfileMisssionSuccessApiService::class.java)
@@ -88,6 +90,7 @@ object ApiPool {
     val patchShareCodeResearch = RetrofitPool.retrofit.create(ShareCodeReSearchApiService::class.java)
     val getShareCodeSearch = RetrofitPool.retrofit.create(ShareCodeSearchApiService::class.java)
     val postShareCodeSubmit = RetrofitPool.retrofit.create(ShareCodeSubmitApiService::class.java)
+
 
 
 }

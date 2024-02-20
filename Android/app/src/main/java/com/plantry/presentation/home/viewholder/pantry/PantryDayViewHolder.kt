@@ -1,11 +1,11 @@
-package com.plantry.presentation.home.viewholder
+package com.plantry.presentation.home.viewholder.pantry
 
 import androidx.recyclerview.widget.RecyclerView
 import com.plantry.R
 import com.plantry.data.dto.response.product.ResponseProductListDto
 import com.plantry.databinding.ItemHomePantryDDayBinding
-import com.plantry.presentation.home.adapter.OnItemClickListener
-import com.plantry.presentation.home.adapter.PantryContentAdapter
+import com.plantry.presentation.home.adapter.pantry.OnItemClickListener
+import com.plantry.presentation.home.adapter.pantry.PantryContentAdapter
 
 class PantryDayViewHolder(private val binding: ItemHomePantryDDayBinding) :
     RecyclerView.ViewHolder(binding.root) {

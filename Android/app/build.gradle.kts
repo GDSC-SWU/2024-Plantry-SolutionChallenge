@@ -2,6 +2,7 @@ import java.util.Properties
 
 plugins {
     id("com.android.application")
+    id ("com.google.gms.google-services")
     kotlin("android")
     kotlin("kapt")
     kotlin("plugin.serialization") version "1.7.20"
@@ -92,4 +93,5 @@ dependencies {
     // firebase
     implementation ("com.google.firebase:firebase-bom:32.7.2")
     implementation ("com.google.firebase:firebase-messaging:23.4.1")
+    implementation ("com.google.firebase:firebase-analytics-ktx:21.1.1")
 }

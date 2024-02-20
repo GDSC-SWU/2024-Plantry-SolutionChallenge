@@ -1,4 +1,4 @@
-package com.plantry.presentation.home.viewholder
+package com.plantry.presentation.home.viewholder.pantry
 
 import android.graphics.Color
 import androidx.recyclerview.widget.RecyclerView

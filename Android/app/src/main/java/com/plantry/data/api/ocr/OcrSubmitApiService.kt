@@ -12,6 +12,6 @@ interface OcrSubmitApiService {
     @Multipart
     @POST("/api/v1/parse-receipt")
     suspend fun postOcrSubmit(
-        @Part ("image") file: MultipartBody.Part,
+        @Part file: MultipartBody.Part,
     ): ResponseOcrSubmit
 }

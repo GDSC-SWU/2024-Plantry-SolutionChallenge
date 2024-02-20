@@ -1,8 +1,6 @@
-package com.plantry.presentation.auth
+package com.plantry.presentation.auth.viewmodel
 
-import android.content.Context
 import android.util.Log
-import androidx.activity.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
