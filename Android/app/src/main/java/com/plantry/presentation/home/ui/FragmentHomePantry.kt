@@ -98,7 +98,6 @@ class FragmentHomePantry :
         val pantryId = arguments?.getInt("pantry_id")
         val pantryName = arguments?.getString("pantry_name")
         val addFoodPopUp = AddFoodPopUp()
-        Log.d("bbb", "addfoodpopup2")
         addFoodPopUp.setStyle(
             DialogFragment.STYLE_NO_TITLE,
             R.style.Theme_Plantry_AlertDialog
@@ -114,6 +113,7 @@ class FragmentHomePantry :
             } else {
                 putInt("isUseBydate", 2)
             }
+            putString("product_storage", item.storage)
             putString("pantry_name", pantryName)
             putString("products_name", item.name)
             if (pantryId != null) {

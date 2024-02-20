@@ -20,6 +20,7 @@ import com.plantry.presentation.addfood.adapter.PantryNameListAdapter
 import com.plantry.presentation.addfood.bottomsheet.AddFoodIconSelectBottomSheet
 import com.plantry.presentation.addfood.viewmodel.product.FoodViewModel
 import com.plantry.presentation.addfood.viewmodel.product.ProductAddSingleViewModel
+import com.plantry.presentation.home.ui.FragmentHomePantry.Companion.ALL
 import com.plantry.presentation.home.ui.FragmentHomePantry.Companion.COLD
 import com.plantry.presentation.home.ui.FragmentHomePantry.Companion.ETC
 import com.plantry.presentation.home.ui.FragmentHomePantry.Companion.FOR_ADD_FROM_BASE
@@ -140,10 +141,20 @@ class AddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.popup_a
     private fun setPantryNameAndPantryFilter() {
         val pantryName = arguments?.getString("pantry_name")
         val pantryFilter = arguments?.getString("pantry_filter")
+        val productStorage = arguments?.getString("product_storage")
         if (!(pantryName.isNullOrEmpty())) {
             binding.tvAddFoodPopupSelectPantryContent.text = pantryName
         }
-        when (pantryFilter) {
+        if(productStorage.isNullOrEmpty()){
+            setFilter(pantryFilter ?: ALL)
+        }
+        else{
+            setFilter(productStorage)
+        }
+    }
+
+    private fun setFilter(filter:String){
+        when (filter) {
             COLD -> {
                 binding.rbAddFoodStorageCold.isChecked = true
                 storage = COLD
@@ -199,7 +210,7 @@ class AddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.popup_a
         val currentDate: LocalDate = LocalDate.now()
 
         // 해당 날짜 계산
-        val targetDate: LocalDate = currentDate.plusDays((days).toLong() + 1)
+        val targetDate: LocalDate = currentDate.plusDays((days).toLong())
 
         // 날짜를 yy.MM.dd 형식으로 포맷팅
         val dateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yy.MM.dd")
@@ -361,6 +372,8 @@ class AddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.popup_a
     private fun clickCancleButton() {
         val productId: Int = arguments?.getInt("productId", 0) ?: 0
         val pantryId = arguments?.getInt("pantry_id") ?: 0
+        val pantryFilter = arguments?.getString("pantry_filter")
+        val productStorage = arguments?.getString("product_storage")
         if (binding.tvAddFoodPopupCancle.text.toString().equals("Delete")) {
             binding.tvAddFoodPopupCancle.setOnClickListener {
                 val productDeletePopUp = AddFoodDeleteOptionPopUp()
@@ -375,6 +388,8 @@ class AddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.popup_a
                         "count",
                         binding.tvHomePantryItemContentCount.text.toString().toDouble()
                     )
+                    putString("pantryFilter", pantryFilter)
+                    putString("productStorage", productStorage)
                 }
                 productDeletePopUp.show(parentFragmentManager, POP_UP_DELETE)
             }

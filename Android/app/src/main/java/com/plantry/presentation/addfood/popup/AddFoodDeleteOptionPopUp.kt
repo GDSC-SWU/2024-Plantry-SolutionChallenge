@@ -8,6 +8,7 @@ import com.plantry.R
 import com.plantry.coreui.base.BindingDialogFragment
 import com.plantry.coreui.view.UiState
 import com.plantry.databinding.PopupAddFoodDeleteOptionBinding
+import com.plantry.presentation.home.ui.FragmentHomePantry.Companion.ALL
 import com.plantry.presentation.home.viewmodel.product.ProductDeleteViewModel
 import com.plantry.presentation.home.viewmodel.product.ProductListSearchViewModel
 import java.text.NumberFormat
@@ -153,7 +154,7 @@ class AddFoodDeleteOptionPopUp :
         viewModelProuductDelete.productDelete.observe(this) {
             when (it) {
                 is UiState.Success -> {
-                    val pantryFilter: String = arguments?.getString("pantryFilter", "All") ?:"All"
+                    val pantryFilter: String = arguments?.getString("pantryFilter", ALL) ?:ALL
                     val pantryId: Int = arguments?.getInt("pantryId", 0) ?: -1
                     viewModelProductList.getListSearchProduct(pantry = pantryId, pantryFilter)
                     dismiss()
