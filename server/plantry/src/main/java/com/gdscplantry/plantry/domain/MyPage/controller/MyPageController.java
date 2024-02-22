@@ -1,9 +1,6 @@
 package com.gdscplantry.plantry.domain.MyPage.controller;
 
-import com.gdscplantry.plantry.domain.MyPage.dto.NotificationTimeResDto;
-import com.gdscplantry.plantry.domain.MyPage.dto.TermsResDto;
-import com.gdscplantry.plantry.domain.MyPage.dto.UpdateNicknameResDto;
-import com.gdscplantry.plantry.domain.MyPage.dto.UserProfileResDto;
+import com.gdscplantry.plantry.domain.MyPage.dto.*;
 import com.gdscplantry.plantry.domain.MyPage.service.MyPageService;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.global.common.DataResponseDto;
@@ -54,6 +51,13 @@ public class MyPageController {
         NotificationTimeResDto notificationTimeResDto = myPageService.updateNotificationTime(user, time);
 
         return ResponseEntity.status(201).body(DataResponseDto.of(notificationTimeResDto, 201));
+    }
+
+    @PatchMapping("/notif/permission")
+    public ResponseEntity<ResponseDto> updateNotificationPermission(@RequestAttribute User user) {
+        UpdateNotificationPermissionResDto updateNotificationPermissionResDto = myPageService.updateNotificationPermission(user);
+
+        return ResponseEntity.status(201).body(DataResponseDto.of(updateNotificationPermissionResDto, 201));
     }
 
     @GetMapping("/terms")
