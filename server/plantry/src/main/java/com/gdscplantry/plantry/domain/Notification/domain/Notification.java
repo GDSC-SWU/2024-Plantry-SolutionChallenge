@@ -41,6 +41,8 @@ public class Notification {
 
     private Boolean isDeleted;
 
+    private Boolean isPermitted;
+
     private LocalDateTime notifiedAt;
 
     @CreatedDate
@@ -59,6 +61,7 @@ public class Notification {
         this.isChecked = false;
         this.isOff = false;
         this.isDeleted = isDeleted == null ? notifiedAt.isBefore(LocalDateTime.now()) : isDeleted;
+        this.isPermitted = user.getIsNotificationPermitted();
         this.notifiedAt = notifiedAt;
     }
 
@@ -83,6 +86,10 @@ public class Notification {
 
     public void updateIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    public void updateIsPermitted(boolean isPermitted) {
+        this.isPermitted = isPermitted;
     }
 
     public void updateNotifiedAt(LocalDateTime notifiedAt) {
