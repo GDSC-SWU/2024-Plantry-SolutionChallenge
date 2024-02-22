@@ -1,6 +1,7 @@
-package com.plantry.presentation.home.ui
+package com.plantry.presentation.home.ui.home
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.DialogFragment.STYLE_NO_TITLE
@@ -15,21 +16,40 @@ import com.plantry.databinding.FragmentHomeBinding
 import com.plantry.presentation.home.adapter.pantry.PantryAdapter
 import com.plantry.presentation.home.bottomsheet.HomeElseBottomSheet
 import com.plantry.presentation.home.popup.HomePlusPopUp
+import com.plantry.presentation.home.viewmodel.pantry.PantryAddViewModel
 import com.plantry.presentation.home.viewmodel.pantry.PantryListViewModel
 import com.plantry.presentation.home.viewmodel.pantry.PantryStarViewModel
+import com.plantry.presentation.share.popup.ShareJoinPopUp
+import com.plantry.presentation.share.viewmodel.ShareCodeSubmitViewModel
 
 class FragmentHome : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
-    private val viewModel_list by viewModels<PantryListViewModel>({ requireParentFragment() })
-    private val viewModel_star by viewModels<PantryStarViewModel>()
+    private val viewModelList by viewModels<PantryListViewModel>({ requireParentFragment() })
+    private val viewModelStar by viewModels<PantryStarViewModel>()
+    private val viewModelSubmit by viewModels<ShareCodeSubmitViewModel>({ requireParentFragment() })
+    private val viewModelAdd by viewModels<PantryAddViewModel>({ requireParentFragment() })
+
     override fun initView() {
         resetScrollPosition()
-        viewModel_list.getPantryList()
+        viewModelList.getPantryList()
         observe_list()
         observe_star()
         clickNotification()
+        observeSubmitResult()
+        observe_add()
+        clickAddPantryByCode()
     }
 
+    private fun clickAddPantryByCode() {
+        binding.ivHomeShareInvitation.setOnClickListener {
+            val shareJoinPopUp = ShareJoinPopUp()
+            shareJoinPopUp.setStyle(
+                STYLE_NO_TITLE,
+                R.style.Theme_Plantry_AlertDialog
+            )
+            shareJoinPopUp.show(parentFragmentManager, POP_UP)
+        }
+    }
 
     private fun clickNotification() {
         binding.ivHomeNotification.setOnClickListener {
@@ -74,7 +94,7 @@ class FragmentHome : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
 
                     R.id.iv_home_item_heart -> {
                         view.isSelected = !view.isSelected
-                        viewModel_star.patchSetStar(list[position].id)
+                        viewModelStar.patchSetStar(list[position].id)
                     }
                 }
             }
@@ -82,7 +102,7 @@ class FragmentHome : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     }
 
     private fun observe_list() {
-        viewModel_list.pantryList.observe(this) {
+        viewModelList.pantryList.observe(this) {
             when (it) {
                 is UiState.Success -> {
                     val adapter = PantryAdapter()
@@ -99,16 +119,50 @@ class FragmentHome : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         }
     }
 
-    private fun observe_star() {
-        viewModel_star.pantryStar.observe(this) {
+    private fun observe_add() {
+        viewModelAdd.pantryItem.observe(this) {
             when (it) {
                 is UiState.Success -> {
-                    viewModel_list.getPantryList()
+                    viewSuccessAdd()
+                }
+
+                else -> Unit
+            }
+
+        }
+    }
+
+    private fun observe_star() {
+        viewModelStar.pantryStar.observe(this) {
+            when (it) {
+                is UiState.Success -> {
+                    viewModelList.getPantryList()
                 }
 
                 else -> Unit
             }
         }
+    }
+
+
+    private fun observeSubmitResult() {
+        viewModelSubmit.shareCodeSubmit.observe(this) {
+            when (it) {
+                is UiState.Success -> {
+                    viewSuccessAdd()
+                }
+
+                else -> Unit
+            }
+        }
+    }
+
+    private fun viewSuccessAdd(){
+        binding.tvAddPantrySuccess.visibility = View.VISIBLE
+        Handler().postDelayed({
+            binding.tvAddPantrySuccess.visibility = View.GONE
+            viewModelList.getPantryList()
+        }, 1000)
     }
 
     companion object {

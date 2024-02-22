@@ -1,4 +1,4 @@
-package com.plantry.presentation.home.ui
+package com.plantry.presentation.home.ui.home
 
 import android.os.Bundle
 import android.text.Editable
@@ -50,6 +50,8 @@ class FragmentHomePantry :
         stopSearch()
         observeEditCount()
         observeDelete()
+        clickShare()
+
     }
 
     private fun setPantryName() {
@@ -194,6 +196,20 @@ class FragmentHomePantry :
         }
     }
 
+    private fun clickShare(){
+        binding.ivHomePantryShare.setOnClickListener {
+            val pantryId = arguments?.getInt("pantry_id")
+            val arguments = Bundle().apply {
+                if (pantryId != null) {
+                    putInt("pantry_id", pantryId)
+                    putString("pantry_name", binding.tvHomePantryName.text.toString())
+                }
+            }
+            findNavController().navigate(R.id.action_home_pantry_to_share_code, arguments)
+
+        }
+    }
+
     private fun getFilter(selectedPosition: Int): String {
         when (selectedPosition) {
             0 -> return ALL
@@ -319,6 +335,7 @@ class FragmentHomePantry :
             }
         }
     }
+
     private fun observeList() {
         viewModelList.productListSearch.observe(this) {
             when (it) {
