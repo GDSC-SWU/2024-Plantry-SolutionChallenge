@@ -37,6 +37,14 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.Plantry.Heding2"
                     tools:text="@string/home_pantry_name" />
+
+                <ImageView
+                    android:id="@+id/iv_home_pantry_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_home_share_pantry_part" />
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 

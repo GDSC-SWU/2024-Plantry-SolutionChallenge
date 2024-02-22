@@ -13,7 +13,7 @@ import com.plantry.presentation.home.viewmodel.pantry.PantryListViewModel
 
 class HomePlusPopUp :
     BindingDialogFragment<PopupHomePlusBinding>(R.layout.popup_home_plus) {
-    private val viewModel_add by viewModels<PantryAddViewModel>()
+    private val viewModel_add by viewModels<PantryAddViewModel>({ requireParentFragment() })
     private val viewModel_edit by viewModels<PantryEditViewModel>()
     private val viewModel_list by viewModels<PantryListViewModel>({ requireParentFragment() })
     var checkedColor = "FFA5A0"
@@ -135,8 +135,6 @@ class HomePlusPopUp :
             when (it) {
                 is UiState.Success -> {
                     dialog?.dismiss()
-                    viewModel_list.getPantryList()
-                    Log.d("Aaa13", it.data.toString())
                 }
 
                 else -> Unit
