@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_profile_profile_img"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_margin="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_profile_user_basic_img" />
+
+        <TextView
+            android:id="@+id/tv_share_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:maxLength="12"
+            android:paddingVertical="2dp"
+            android:textAppearance="@style/TextAppearance.Plantry.Body5"
+            app:layout_constraintBottom_toTopOf="@id/tv_share_user_owner"
+            app:layout_constraintStart_toEndOf="@id/iv_profile_profile_img"
+            app:layout_constraintTop_toTopOf="@id/iv_profile_profile_img"
+            tools:text="@string/profile_user_name" />
+
+        <TextView
+            android:id="@+id/tv_share_user_owner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="2dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_profile_profile_img"
+            app:layout_constraintStart_toStartOf="@id/tv_share_user_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_share_user_name"
+            android:text="@string/share_code_member_owmer" />
+
+        <ImageView
+            android:id="@+id/iv_share_code_member_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_home_pantry_close"
+            app:layout_constraintBottom_toBottomOf="@id/iv_profile_profile_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_profile_profile_img" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
