@@ -30,6 +30,9 @@ android {
             buildConfigField("String", "BASE_URL", Properties().apply {
                 load(project.rootProject.file("local.properties").inputStream())
             }["base.url"].toString())
+            buildConfigField("String", "AI_BASE_URL", Properties().apply {
+                load(project.rootProject.file("local.properties").inputStream())
+            }["ai_base.url"].toString())
         }
         release {
             isMinifyEnabled = false
@@ -40,6 +43,9 @@ android {
             buildConfigField("String", "BASE_URL", Properties().apply {
                 load(project.rootProject.file("local.properties").inputStream())
             }["base.url"].toString())
+            buildConfigField("String", "AI_BASE_URL", Properties().apply {
+                load(project.rootProject.file("local.properties").inputStream())
+            }["ai_base.url"].toString())
         }
     }
     compileOptions {
@@ -89,6 +95,7 @@ dependencies {
     implementation("io.coil-kt:coil:2.3.0")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation ("me.relex:circleindicator:2.1.6")
+    implementation ("com.airbnb.android:lottie:3.7.0")
 
     // firebase
     implementation ("com.google.firebase:firebase-bom:32.7.2")

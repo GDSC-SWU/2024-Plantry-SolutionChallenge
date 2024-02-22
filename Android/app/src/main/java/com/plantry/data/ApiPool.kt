@@ -8,7 +8,6 @@ import com.plantry.data.api.notification.NotificationAllListApiService
 import com.plantry.data.api.notification.NotificationConfirmApiService
 import com.plantry.data.api.notification.NotificationEditApiService
 import com.plantry.data.api.notification.NotificationListApiService
-import com.plantry.data.api.ocr.OcrSubmitApiService
 import com.plantry.data.api.signin.SignoutApiService
 import com.plantry.data.api.pantry.PantryAddApiService
 import com.plantry.data.api.pantry.PantryDeleteApiService
@@ -83,8 +82,6 @@ object ApiPool {
     val patchNotificationConfirm = RetrofitPool.retrofit.create(NotificationConfirmApiService::class.java)
     val patchNotificationEdit = RetrofitPool.retrofit.create(NotificationEditApiService::class.java)
     val getNotificationList = RetrofitPool.retrofit.create(NotificationListApiService::class.java)
-
-    val postOcrSubmit = RetrofitPool.retrofit.create(OcrSubmitApiService::class.java)
 
     val getShareCodeMember = RetrofitPool.retrofit.create(ShareCodeMemberApiService::class.java)
     val patchShareCodeResearch = RetrofitPool.retrofit.create(ShareCodeReSearchApiService::class.java)
