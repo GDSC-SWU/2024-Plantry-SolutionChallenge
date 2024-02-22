@@ -106,13 +106,14 @@ public class ProductService {
 
             // Add data
             products.add(product);
-
-            // Add default Notifications
-            notifications.addAll(relatedNotificationService.addDefaultExpNotification(user, product));
         }
 
         // Save product data
         productRepository.saveAll(products);
+
+        // Add default Notifications
+        for (Product product : products)
+            notifications.addAll(relatedNotificationService.addDefaultExpNotification(user, product));
 
         // Save notification data
         notificationRepository.saveAll(notifications);
