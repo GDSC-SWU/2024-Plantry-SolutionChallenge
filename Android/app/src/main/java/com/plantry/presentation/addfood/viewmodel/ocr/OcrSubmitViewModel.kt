@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.plantry.coreui.view.UiState
+import com.plantry.data.AIApiPool
 import com.plantry.data.ApiPool
 import com.plantry.data.dto.response.notification.ResponseNoficationProductListDto
 import com.plantry.data.dto.response.ocr.ResponseOcrSubmit
@@ -20,7 +21,7 @@ class OcrSubmitViewModel : ViewModel() {
 
     fun postOcrSubmit(file: MultipartBody.Part) = viewModelScope.launch {
         runCatching {
-            ApiPool.postOcrSubmit.postOcrSubmit(file)
+            AIApiPool.postOcrSubmit.postOcrSubmit(file)
         }.fold({
             _ocrResult.value = UiState.Success(
                 it
@@ -28,5 +29,10 @@ class OcrSubmitViewModel : ViewModel() {
         }, {
             Log.d("Aaa13", it.message.toString())
         })
+    }
+
+
+    fun setFaliureResult(){
+        _ocrResult.value = UiState.Failure("")
     }
 }

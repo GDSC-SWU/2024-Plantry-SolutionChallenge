@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
@@ -11,14 +12,12 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
-import android.view.View
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import androidx.navigation.fragment.findNavController
 import com.plantry.R
 import com.plantry.coreui.base.BindingBottomSheetFragment
 import com.plantry.coreui.fragment.longToast
@@ -27,14 +26,12 @@ import com.plantry.coreui.view.UiState
 import com.plantry.databinding.FragmentAddFoodBinding
 import com.plantry.presentation.addfood.popup.addfood.AddFoodPopUp
 import com.plantry.presentation.addfood.viewmodel.ocr.OcrSubmitViewModel
-import com.plantry.presentation.addfood.viewmodel.product.ProductAddMultiViewModel
-import com.plantry.presentation.home.ui.FragmentHomePantry.Companion.FOR_ADD_FROM_NO_BASE
+import com.plantry.presentation.home.ui.home.FragmentHomePantry.Companion.FOR_ADD_FROM_NO_BASE
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody
+import java.io.ByteArrayOutputStream
 import java.io.File
-import java.text.SimpleDateFormat
-import java.util.Date
 
 
 class FragmentAddFood :
@@ -49,32 +46,6 @@ class FragmentAddFood :
     override fun initView() {
         clickDirectInput()
         clickRecipt()
-        observeOcr()
-    }
-
-    fun observeOcr() {
-        viewModelOcrSubmit.ocrResult.observe(this) {
-            when (it) {
-                is UiState.Success -> {
-                    if(it.data.data?.size != 0 && it.data.data != null){
-                        val addFoodPopup = FragmentAddFood()
-                        addFoodPopup.setStyle(
-                            STYLE_NO_TITLE,
-                            R.style.Theme_Plantry_AlertDialog
-                        )
-                        addFoodPopup.arguments = Bundle().apply {
-                            putInt("itemCount", it.data.data.size)
-                        }
-                        addFoodPopup.show(parentFragmentManager, "")
-                    }
-                    else{
-                        toast("There are no recognized products.")
-                    }
-                }
-
-                else -> Unit
-            }
-        }
     }
 
     private fun clickDirectInput() {
@@ -109,17 +80,15 @@ class FragmentAddFood :
         }
 
     private fun launchCameraIntent() {
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File? =
             requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val imageFile = File.createTempFile(
-            "JPEG_${timeStamp}_",
-            ".jpg",
+            "JPEG_img_",
+            ".jpeg",
             storageDir
         )
 
         filepath = imageFile.absolutePath
-
 
         val photoURI: Uri = FileProvider.getUriForFile(
             requireContext(),
@@ -137,19 +106,29 @@ class FragmentAddFood :
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            val option = BitmapFactory.Options()
-            val bitmap = BitmapFactory.decodeFile(filepath, option)
-            bitmap?.let {
-                val imageFile = File(filepath)
-                val imageRequestBody =
-                    imageFile.asRequestBody("image/*".toMediaTypeOrNull())
-                val imagePart =
-                    MultipartBody.Part.createFormData("image", imageFile.name, imageRequestBody)
-                viewModelOcrSubmit.postOcrSubmit(imagePart)
-            }
-        }
-    }
+            val imageBitmap = BitmapFactory.decodeFile(filepath)
+            val byteArrayOutputStream = ByteArrayOutputStream()
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+            val imageBytes = byteArrayOutputStream.toByteArray()
 
+            val requestFile =
+                RequestBody.create("image/jpeg".toMediaTypeOrNull(), imageBytes)
+
+            val imagePart =
+                MultipartBody.Part.createFormData("image", "image.jpeg", requestFile)
+
+            if (imageBitmap != null) {
+                viewModelOcrSubmit.postOcrSubmit(imagePart)
+                findNavController().navigate(R.id.action_add_food_to_ocr_loading)
+                dismiss()
+            } else {
+                toast("Failed to get image.")
+            }
+        } else {
+            toast("The camera has cancelled importing images.")
+        }
+
+    }
 
     fun checkPermission(permissions: Array<String>): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

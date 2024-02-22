@@ -1,18 +1,14 @@
 package com.plantry.presentation.addfood.popup.ocr
 
-import android.os.Build
-import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import com.plantry.R
 import com.plantry.coreui.adapter.ItemClick
 import com.plantry.coreui.base.BindingDialogFragment
 import com.plantry.coreui.fragment.longToast
-import com.plantry.coreui.fragment.toast
 import com.plantry.coreui.view.UiState
 import com.plantry.data.dto.request.product.RequestProductAddSingle
 import com.plantry.data.dto.response.ocr.ResponseOcrSubmit
@@ -21,28 +17,17 @@ import com.plantry.databinding.PopupAddFoodBinding
 import com.plantry.presentation.addfood.adapter.PantryNameListAdapter
 import com.plantry.presentation.addfood.bottomsheet.AddFoodIconSelectBottomSheet
 import com.plantry.presentation.addfood.popup.addfood.AddFoodDatePopUp
-import com.plantry.presentation.addfood.popup.addfood.AddFoodDeleteOptionPopUp
-import com.plantry.presentation.addfood.ui.FragmentAddFood
+import com.plantry.presentation.addfood.popup.addfood.AddFoodPopUp
 import com.plantry.presentation.addfood.viewmodel.ocr.OcrSubmitViewModel
 import com.plantry.presentation.addfood.viewmodel.product.FoodViewModel
-import com.plantry.presentation.addfood.viewmodel.product.ProductAddMultiViewModel
 import com.plantry.presentation.addfood.viewmodel.product.ProductAddSingleViewModel
-import com.plantry.presentation.home.ui.FragmentHomePantry.Companion.ALL
-import com.plantry.presentation.home.ui.FragmentHomePantry.Companion.COLD
-import com.plantry.presentation.home.ui.FragmentHomePantry.Companion.ETC
-import com.plantry.presentation.home.ui.FragmentHomePantry.Companion.FOR_ADD_FROM_BASE
-import com.plantry.presentation.home.ui.FragmentHomePantry.Companion.FOR_ADD_FROM_NO_BASE
-import com.plantry.presentation.home.ui.FragmentHomePantry.Companion.FOR_EDIT
-import com.plantry.presentation.home.ui.FragmentHomePantry.Companion.FREEZE
+import com.plantry.presentation.home.ui.home.FragmentHomePantry.Companion.COLD
+import com.plantry.presentation.home.ui.home.FragmentHomePantry.Companion.ETC
+import com.plantry.presentation.home.ui.home.FragmentHomePantry.Companion.FREEZE
 import com.plantry.presentation.home.viewmodel.pantry.PantryListViewModel
-import com.plantry.presentation.home.viewmodel.product.ProductDeleteViewModel
-import com.plantry.presentation.home.viewmodel.product.ProductEditViewModel
-import com.plantry.presentation.home.viewmodel.product.ProductListSearchViewModel
 import java.text.NumberFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.regex.Pattern
 
 class MultiAddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.popup_add_food) {
@@ -58,8 +43,8 @@ class MultiAddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.po
     var ocrResult: List<ResponseOcrSubmit.Product?>? = null
 
     override fun initView() {
-
         // multi 에서 나온 작업
+        setItemNum()
         setConfirmButtonText()
         observeOcr()
         observeProductAdd()
@@ -75,79 +60,102 @@ class MultiAddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.po
         selecteHalfUnit()
         clickCancleButton()
         observeList()
+        checkDateValidate()
+        plusCount(halfUnitCheck)
+        minusCount(halfUnitCheck)
 
     }
 
+    private fun setItemNum() {
+        binding.tvAddFoodPopupCountTitle.visibility = View.VISIBLE
+        binding.tvAddFoodPopupCountTitle.text =
+            "${ItemCount}/${arguments?.getInt("itemCount").toString()} Food"
+    }
 
     private fun setConfirmButtonText() {
-        if (ItemCount != null && ItemCount != 0) {
-            binding.tvAddFoodPopupConfirm.text = NEXT
-        } else if (ItemCount == arguments?.getInt("itemCount")) {
-            binding.tvAddFoodPopupConfirm.text = CONFIRM
+        Log.d("aaa_connect1", ItemCount.toString())
+        Log.d("aaa_connect1", (ItemCount - 1).toString())
+        val itemTotalCount = arguments?.getInt("itemCount")
+        Log.d("aaa_connect1", itemTotalCount.toString())
+        if ((ItemCount) != itemTotalCount) {
+            binding.tvAddFoodPopupConfirm.visibility = View.INVISIBLE
+            binding.tvAddFoodPopupNext.visibility = View.VISIBLE
+            Log.d("aaa_connect1", binding.tvAddFoodPopupConfirm.visibility.toString())
+        } else {
+            binding.tvAddFoodPopupConfirm.visibility = View.VISIBLE
+            binding.tvAddFoodPopupNext.visibility = View.GONE
+            Log.d("aaa_connect2", binding.tvAddFoodPopupConfirm.visibility.toString())
         }
     }
 
 
     private fun clickConfirmButton() {
         binding.tvAddFoodPopupConfirm.setOnClickListener {
+            sendFoodInfo()
+        }
+        binding.tvAddFoodPopupNext.setOnClickListener {
+            sendFoodInfo()
+        }
+    }
 
-            val pantryName = binding.tvAddFoodPopupSelectPantryContent.text.toString()
-            val productIcon = binding.tvAddFoodPopupFoodIconRealImg.text.toString()
-            val productName = binding.etAddFoodPopupFoodNameInput.text.toString()
-            val isUseByDate = when (binding.tvAddFoodPopupDateCheck.text.toString()) {
-                "Use-by Date" -> {
-                    true
-                }
-
-                "Sell-by Date" -> {
-                    false
-                }
-
-                else -> {
-                    true
-                }
+    private fun sendFoodInfo() {
+        val pantryName = binding.tvAddFoodPopupSelectPantryContent.text.toString()
+        val productIcon = binding.tvAddFoodPopupFoodIconRealImg.text.toString()
+        val productName = binding.etAddFoodPopupFoodNameInput.text.toString()
+        val isUseByDate = when (binding.tvAddFoodPopupDateCheck.text.toString()) {
+            "Use-by Date" -> {
+                true
             }
-            val sdfInput = SimpleDateFormat("yy.MM.dd")
-            val sdfOutput = SimpleDateFormat("yyyy-MM-dd")
 
-            val dateString = "20" + binding.etAddFoodPopupDateInput.text.toString()
-            var productDate = ""
-            try {
-                val date = sdfInput.parse(dateString)
-                productDate = sdfOutput.format(date)
-            } catch (e: ParseException) {
-                e.printStackTrace()
+            "Sell-by Date" -> {
+                false
             }
-            val productCount = binding.tvHomePantryItemContentCount.text.toString()
 
-            if (pantryName.isNullOrEmpty()) {
-                longToast("please select pantry!")
-            } else if (productIcon.isNullOrEmpty()) {
-                longToast("please select product icon!")
-            } else if (productName.isNullOrEmpty()) {
-                longToast("Please enter the name of the product!")
-            } else if (productDate.isNullOrEmpty()) {
-                binding.tvAddFoodPopupDateErrorMessage.visibility = View.VISIBLE
-                binding.tvAddFoodPopupDateErrorMessage.text = DATE_EMPTY
-            } else if (binding.tvAddFoodPopupDateErrorMessage.visibility == View.VISIBLE ||
-                binding.tvAddFoodPopupCountErrorMessage.visibility == View.VISIBLE ||
-                binding.tvAddFoodPopupFoodErrorMessage.visibility == View.VISIBLE
-            ) {
-                longToast("please check error Message!")
-            } else {
-                val requestAddProduct = RequestProductAddSingle(
-                    count = productCount.toDouble(),
-                    date = productDate,
-                    icon = productIcon,
-                    isUseByDate = isUseByDate,
-                    name = productName,
-                    pantry = changedPantryId,
-                    storage = storage
-                )
-
-                viewModelProuductAdd.postAddSingleProduct(requestAddProduct)
-
+            else -> {
+                true
             }
+        }
+        val sdfInput = SimpleDateFormat("yy.MM.dd")
+        val sdfOutput = SimpleDateFormat("yyyy-MM-dd")
+
+        val dateString = "20" + binding.etAddFoodPopupDateInput.text.toString()
+        var productDate = ""
+        try {
+            val date = sdfInput.parse(dateString)
+            productDate = sdfOutput.format(date)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        val productCount = binding.tvHomePantryItemContentCount.text.toString()
+
+        if (pantryName.isNullOrEmpty()) {
+            longToast("please select pantry!")
+        } else if (productIcon.isNullOrEmpty()) {
+            longToast("please select product icon!")
+        } else if (productName.isNullOrEmpty()) {
+            longToast("Please enter the name of the product!")
+        } else if (productDate.isNullOrEmpty()) {
+            binding.tvAddFoodPopupDateErrorMessage.visibility = View.VISIBLE
+            binding.tvAddFoodPopupDateErrorMessage.text = DATE_EMPTY
+        } else if (binding.tvAddFoodPopupDateErrorMessage.visibility == View.VISIBLE ||
+            binding.tvAddFoodPopupCountErrorMessage.visibility == View.VISIBLE ||
+            binding.tvAddFoodPopupFoodErrorMessage.visibility == View.VISIBLE
+        ) {
+            longToast("please check error Message!")
+        } else {
+            val requestAddProduct = RequestProductAddSingle(
+                count = productCount.toDouble(),
+                date = productDate,
+                icon = productIcon,
+                isUseByDate = isUseByDate,
+                name = productName,
+                pantry = changedPantryId,
+                storage = storage
+            )
+            Log.d("aaa1", requestAddProduct.toString())
+
+            viewModelProuductAdd.postAddSingleProduct(requestAddProduct)
+            Log.d("Aaa", " mlti")
         }
     }
 
@@ -157,9 +165,15 @@ class MultiAddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.po
                 is UiState.Success -> {
                     changedPantryId = 0
                     ItemCount += 1
-                    if (binding.tvAddFoodPopupConfirm.text.equals(CONFIRM)) {
+
+                    setConfirmButtonText()
+                    Log.d("aaa_connect", binding.tvAddFoodPopupConfirm.visibility.toString())
+                    if (binding.tvAddFoodPopupConfirm.visibility == View.VISIBLE) {
+                        viewModelOcrSubmit.setFaliureResult()
+                        Log.d("aaa_c", viewModelOcrSubmit.ocrResult.toString())
                         dismiss()
                     } else {
+                        Log.d("aaa_connect", ItemCount.toString())
                         setFieldEmpty(ItemCount - 1)
                     }
                 }
@@ -174,6 +188,9 @@ class MultiAddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.po
             when (it) {
                 is UiState.Success -> {
                     ocrResult = it.data.data
+                    Log.d("Aaa", "ocr first itme")
+                    Log.d("Aaa", ocrResult.toString())
+                    setFieldEmpty(0)
                 }
 
                 else -> Unit
@@ -182,15 +199,26 @@ class MultiAddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.po
     }
 
     private fun setFieldEmpty(position: Int) {
-        binding.tvAddFoodPopupSelectPantryContent.text = ocrResult?.get(position)?.food_name ?: ""
-        binding.tvHomePantryItemContentCount.text =  (ocrResult?.get(position)?.quantity ?: 1).toString()
-        viewModelFood.setFaliureIcon()
-        viewModelFood.setFaliureName()
-        binding.tvAddFoodPopupSelectPantryContent.text = ""
-        binding.rbAddFoodStorageCold.isChecked = true
-        storage = COLD
-        binding.tvAddFoodHalfCheck.isSelected = false
-        halfUnitCheck = false
+        val totalCount = arguments?.getInt("itemCount")
+
+        if (position != totalCount) {
+            binding.tvAddFoodPopupCountTitle.text = "${position + 1}/${totalCount} Food"
+            binding.etAddFoodPopupFoodNameInput.setText(ocrResult?.get(position)?.food_name ?: "")
+            binding.tvHomePantryItemContentCount.text = (ocrResult?.get(position)?.quantity ?: 1).toString()
+            viewModelFood.setFaliureIcon()
+            binding.tvAddFoodPopupFoodIconRealImg.visibility = View.GONE
+            binding.tvAddFoodPopupFoodIconTestImg.visibility = View.VISIBLE
+            binding.etAddFoodPopupDateInput.setText(null)
+            binding.tvAddFoodPopupSelectPantryContent.text = ""
+            binding.rbAddFoodStorageCold.isChecked = true
+            storage = COLD
+            binding.tvAddFoodHalfCheck.isSelected = false
+            halfUnitCheck = false
+            binding.svAddFoodScrollview.smoothScrollTo(0, 0)
+        }
+
+        Log.d("aaa", binding.etAddFoodPopupFoodNameInput.text.toString())
+
 
     }
 
@@ -221,15 +249,6 @@ class MultiAddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.po
                     binding.tvAddFoodPopupFoodIconTestImg.visibility = View.INVISIBLE
                     binding.tvAddFoodPopupFoodIconRealImg.visibility = View.VISIBLE
                     binding.tvAddFoodPopupFoodIconRealImg.text = it.data
-                }
-
-                else -> Unit
-            }
-        }
-        viewModelFood.nameLiveData.observe(this) {
-            when (it) {
-                is UiState.Success -> {
-                    binding.etAddFoodPopupFoodNameInput.setText(it.data)
                 }
 
                 else -> Unit
@@ -473,7 +492,5 @@ class MultiAddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.po
         const val DATE_UN_CHEKED =
             "Please write it in the order of \n" + "year, month, and day."
         const val DATE_EMPTY = "Please enter the date."
-        const val CONFIRM = "Confirm"
-        const val NEXT = "Next"
     }
 }

@@ -7,7 +7,7 @@ import com.plantry.R
 import com.plantry.coreui.base.BindingDialogFragment
 import com.plantry.coreui.view.UiState
 import com.plantry.databinding.PopupAddFoodDeleteOptionBinding
-import com.plantry.presentation.home.ui.FragmentHomePantry.Companion.ALL
+import com.plantry.presentation.home.ui.home.FragmentHomePantry.Companion.ALL
 import com.plantry.presentation.home.viewmodel.product.ProductDeleteViewModel
 import com.plantry.presentation.home.viewmodel.product.ProductListSearchViewModel
 import java.text.NumberFormat
