@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class UpdateNotificationPermissionResDto {
+public class NotificationPermissionResDto {
     private Boolean isPermitted;
 }
