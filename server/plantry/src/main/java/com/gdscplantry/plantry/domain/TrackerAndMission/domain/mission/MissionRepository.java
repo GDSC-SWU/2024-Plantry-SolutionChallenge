@@ -14,7 +14,7 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
     @Query(value = "select m.missionData.id from Mission m order by m.createdAt desc, m.missionData.type asc limit 6")
     ArrayList<Long> findAllOrderByCreatedAtWithJPQL();
 
-    @Query(value = "select new com.gdscplantry.plantry.domain.TrackerAndMission.vo.UserMissionVo(m.id, m.missionData.title, case when a.id is null then false else true end ) " +
+    @Query(value = "select new com.gdscplantry.plantry.domain.TrackerAndMission.vo.UserMissionVo(m.id, m.missionData.title, case when a is null then false else true end ) " +
             "from Mission m left join AchievedMission a on m = a.mission and a.user = :user " +
             "where m.createdAt >= :before and m.createdAt < :after " +
             "order by m.id ")
