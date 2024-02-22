@@ -16,10 +16,11 @@ class ShareCodeSubmitViewModel : ViewModel() {
     private val _shareCodeSubmit: MutableLiveData<UiState<ResponseShareCodeSubmitDto>> = MutableLiveData()
     val shareCodeSubmit: LiveData<UiState<ResponseShareCodeSubmitDto>> = _shareCodeSubmit
 
-    fun postShareCodeSubmit(code: Int) = viewModelScope.launch {
+    fun postShareCodeSubmit(code: String) = viewModelScope.launch {
         runCatching {
             ApiPool.postShareCodeSubmit.postShareCodeSubmit(code)
         }.fold({
+            Log.d("Aaa133", it.message.toString())
             _shareCodeSubmit.value = UiState.Success(it.data ?:
             ResponseShareCodeSubmitDto(
                 color = null,
@@ -28,6 +29,7 @@ class ShareCodeSubmitViewModel : ViewModel() {
             ))
         }, {
             Log.d("Aaa13", it.message.toString())
+            _shareCodeSubmit.value = UiState.Failure("${it.message}")
         })
     }
 }

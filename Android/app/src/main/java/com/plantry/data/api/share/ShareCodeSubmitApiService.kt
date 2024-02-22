@@ -10,6 +10,6 @@ import retrofit2.http.Query
 interface ShareCodeSubmitApiService {
     @POST("/api/v1/pantry/share/code")
     suspend fun postShareCodeSubmit(
-        @Query("code") code: Int
+        @Query("code") code: String
     ): BaseResponseNullable<ResponseShareCodeSubmitDto>
 }
