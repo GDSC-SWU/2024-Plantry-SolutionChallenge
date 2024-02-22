@@ -1,4 +1,4 @@
-package com.plantry.presentation.home.ui
+package com.plantry.presentation.home.ui.home
 
 import android.util.Log
 import android.view.View
