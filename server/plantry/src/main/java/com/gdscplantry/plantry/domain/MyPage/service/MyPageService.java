@@ -61,8 +61,13 @@ public class MyPageService {
         return new NotificationTimeResDto(time);
     }
 
+    @Transactional(readOnly = true)
+    public NotificationPermissionResDto getNotificationPermission(User user) {
+        return new NotificationPermissionResDto(user.getIsNotificationPermitted());
+    }
+
     @Transactional
-    public UpdateNotificationPermissionResDto updateNotificationPermission(User user) {
+    public NotificationPermissionResDto updateNotificationPermission(User user) {
         user = userRepository.findById(user.getId()).orElseThrow(() -> new AppException(GlobalErrorCode.AUTHORIZATION_FAILED));
 
         // Update data
@@ -72,7 +77,7 @@ public class MyPageService {
         // Update Notification data
         relatedNotificationService.updateNotificationPermission(user, result);
 
-        return new UpdateNotificationPermissionResDto(result);
+        return new NotificationPermissionResDto(result);
     }
 
     @Transactional(readOnly = true)
