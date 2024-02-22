@@ -1,10 +1,7 @@
 package com.gdscplantry.plantry.domain.MyPage.service;
 
 import com.gdscplantry.plantry.domain.MyPage.domain.TermsRepository;
-import com.gdscplantry.plantry.domain.MyPage.dto.NotificationTimeResDto;
-import com.gdscplantry.plantry.domain.MyPage.dto.TermsResDto;
-import com.gdscplantry.plantry.domain.MyPage.dto.UpdateNicknameResDto;
-import com.gdscplantry.plantry.domain.MyPage.dto.UserProfileResDto;
+import com.gdscplantry.plantry.domain.MyPage.dto.*;
 import com.gdscplantry.plantry.domain.MyPage.error.MyPageErrorCode;
 import com.gdscplantry.plantry.domain.MyPage.vo.TermsItemVo;
 import com.gdscplantry.plantry.domain.Notification.service.RelatedNotificationService;
@@ -62,6 +59,20 @@ public class MyPageService {
         relatedNotificationService.updateNotificationTime(user, time);
 
         return new NotificationTimeResDto(time);
+    }
+
+    @Transactional
+    public UpdateNotificationPermissionResDto updateNotificationPermission(User user) {
+        user = userRepository.findById(user.getId()).orElseThrow(() -> new AppException(GlobalErrorCode.AUTHORIZATION_FAILED));
+
+        // Update data
+        boolean result = !user.getIsNotificationPermitted();
+        user.updateIsNotificationPermitted(result);
+
+        // Update Notification data
+        relatedNotificationService.updateNotificationPermission(user, result);
+
+        return new UpdateNotificationPermissionResDto(result);
     }
 
     @Transactional(readOnly = true)

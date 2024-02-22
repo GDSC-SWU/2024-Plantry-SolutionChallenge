@@ -56,13 +56,13 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
 
     // Find user's sent notification list
     @Query(value = "select new com.gdscplantry.plantry.domain.Notification.dto.NotificationItemResDto(n) " +
-            "from Notification n where n.user = :user and n.isOff = false and n.isDeleted = false and n.notifiedAt < current time " +
+            "from Notification n where n.user = :user and n.isOff = false and n.isDeleted = false and n.isPermitted = true and n.notifiedAt < current time " +
             "order by n.notifiedAt desc ")
     ArrayList<NotificationItemResDto> findAllByUserWithJPQL(User user);
 
     // Find all messages to send with notifiedAt
     @Query(value = "select new com.gdscplantry.plantry.domain.Notification.vo.MessageVo(u.id, u.deviceToken, n.typeKey, n.title, n.body, n.entityId) " +
-            "from Notification n join User u on n.user = u " +
+            "from Notification n join User u on n.user = u and u.isNotificationPermitted = true " +
             "where n.notifiedAt = :notifiedAt and n.isOff = false and n.isDeleted = false ")
     ArrayList<MessageVo> findAllByNotifiedAtWithJPQL(LocalDateTime notifiedAt);
 

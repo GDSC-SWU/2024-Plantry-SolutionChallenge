@@ -120,6 +120,17 @@ public class RelatedNotificationService {
     }
 
     @Transactional
+    public void updateNotificationPermission(User user, Boolean isPermitted) {
+        // Find all notifications not notified yet
+        LocalDateTime now = LocalDateTime.now();
+        ArrayList<Notification> notifications = notificationRepository.findAllByUserAndNotifiedAtIsGreaterThanEqual(user, now);
+
+        // Update data
+        for (Notification notification : notifications)
+            notification.updateIsPermitted(isPermitted);
+    }
+
+    @Transactional
     public void sharePantry(User owner, User user, Long pantryId) {
         // Find all notifications
         ArrayList<ExpNotificationProductVo> ownerNotifications = notificationRepository.findAllByUserAndPantryIdJoinProductWithJPQL(owner, pantryId);
