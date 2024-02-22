@@ -20,13 +20,13 @@ import com.plantry.presentation.addfood.adapter.PantryNameListAdapter
 import com.plantry.presentation.addfood.bottomsheet.AddFoodIconSelectBottomSheet
 import com.plantry.presentation.addfood.viewmodel.product.FoodViewModel
 import com.plantry.presentation.addfood.viewmodel.product.ProductAddSingleViewModel
-import com.plantry.presentation.home.ui.FragmentHomePantry.Companion.ALL
-import com.plantry.presentation.home.ui.FragmentHomePantry.Companion.COLD
-import com.plantry.presentation.home.ui.FragmentHomePantry.Companion.ETC
-import com.plantry.presentation.home.ui.FragmentHomePantry.Companion.FOR_ADD_FROM_BASE
-import com.plantry.presentation.home.ui.FragmentHomePantry.Companion.FOR_ADD_FROM_NO_BASE
-import com.plantry.presentation.home.ui.FragmentHomePantry.Companion.FOR_EDIT
-import com.plantry.presentation.home.ui.FragmentHomePantry.Companion.FREEZE
+import com.plantry.presentation.home.ui.home.FragmentHomePantry.Companion.ALL
+import com.plantry.presentation.home.ui.home.FragmentHomePantry.Companion.COLD
+import com.plantry.presentation.home.ui.home.FragmentHomePantry.Companion.ETC
+import com.plantry.presentation.home.ui.home.FragmentHomePantry.Companion.FOR_ADD_FROM_BASE
+import com.plantry.presentation.home.ui.home.FragmentHomePantry.Companion.FOR_ADD_FROM_NO_BASE
+import com.plantry.presentation.home.ui.home.FragmentHomePantry.Companion.FOR_EDIT
+import com.plantry.presentation.home.ui.home.FragmentHomePantry.Companion.FREEZE
 import com.plantry.presentation.home.viewmodel.pantry.PantryListViewModel
 import com.plantry.presentation.home.viewmodel.product.ProductDeleteViewModel
 import com.plantry.presentation.home.viewmodel.product.ProductEditViewModel
@@ -471,6 +471,7 @@ class AddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.popup_a
                     viewModelProuductEdit.patchEditProduct(productId, requestAddProduct)
                 } else {
                     viewModelProuductAdd.postAddSingleProduct(requestAddProduct)
+                    Log.d("Aaa", " addfoodpopup")
                 }
 
                 changedPantryId = 0
