@@ -84,6 +84,9 @@ class SignInActivity : BindingActivity<ActivitySigninBinding>(R.layout.activity_
             val pref = this.getSharedPreferences("token", Context.MODE_PRIVATE)
             val savedToken = pref.getString("token", null)
 
+            Log.d("Aaa", pref.toString())
+            Log.d("Aaa", savedToken.toString())
+
             if (!googleTokenAuth.isNullOrBlank()) {
                 viewModel.getGoogleLogin(googleTokenAuth, savedToken.toString())
             }

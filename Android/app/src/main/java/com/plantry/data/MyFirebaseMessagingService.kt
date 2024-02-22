@@ -19,6 +19,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
+        Log.d(TAG, "From: " + token)
 
         // 토큰 값 따로 저장
         val pref = this.getSharedPreferences("token", Context.MODE_PRIVATE)
@@ -32,19 +33,22 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
         Log.d(TAG, "From: " + remoteMessage.from)
+        Log.d(TAG, "From: " + remoteMessage.toString())
 
         if (remoteMessage.data.isNotEmpty()) {
-            Log.i("바디", remoteMessage.data["body"].toString())
-            Log.i("타이틀", remoteMessage.data["title"].toString())
+            Log.i(TAG, "수신됨")
+            Log.i(TAG, remoteMessage.data["body"].toString())
+            Log.i(TAG, remoteMessage.data["title"].toString())
             sendNotification(remoteMessage)
         } else {
-            Log.i("수신에러 : ", "data가 비어있습니다. 메시지를 수신하지 못했습니다.")
-            Log.i("data값 :", remoteMessage.data.toString())
+            Log.i(TAG, "data가 비어있습니다. 메시지를 수신하지 못했습니다.")
+            Log.i(TAG, remoteMessage.data.toString())
         }
     }
 
     // 알림 생성 (아이콘, 알림 소리 등)
     private fun sendNotification(remoteMessage: RemoteMessage) {
+        Log.d(TAG, "From: " + remoteMessage.toString())
         val uniId = (System.currentTimeMillis() / 7).toInt()
         val intent = Intent(this, SignInActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -72,9 +76,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setAutoCancel(true)
             .setSound(soundUri)
             .setContentIntent(pendingIntent)
+        Log.d(TAG, "From: " + notificationBuilder.toString())
 
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        Log.d(TAG, "From: " + notificationManager.toString())
 
         // 오레오 버전 이후에는 채널이 필요
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
