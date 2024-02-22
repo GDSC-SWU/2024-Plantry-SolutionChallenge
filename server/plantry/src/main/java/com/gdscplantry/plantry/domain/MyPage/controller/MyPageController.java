@@ -53,11 +53,18 @@ public class MyPageController {
         return ResponseEntity.status(201).body(DataResponseDto.of(notificationTimeResDto, 201));
     }
 
+    @GetMapping("/notif/permission")
+    public ResponseEntity<ResponseDto> getNotificationPermission(@RequestAttribute User user) {
+        NotificationPermissionResDto notificationPermissionResDto = myPageService.getNotificationPermission(user);
+
+        return ResponseEntity.ok(DataResponseDto.of(notificationPermissionResDto, 200));
+    }
+
     @PatchMapping("/notif/permission")
     public ResponseEntity<ResponseDto> updateNotificationPermission(@RequestAttribute User user) {
-        UpdateNotificationPermissionResDto updateNotificationPermissionResDto = myPageService.updateNotificationPermission(user);
+        NotificationPermissionResDto notificationPermissionResDto = myPageService.updateNotificationPermission(user);
 
-        return ResponseEntity.status(201).body(DataResponseDto.of(updateNotificationPermissionResDto, 201));
+        return ResponseEntity.status(201).body(DataResponseDto.of(notificationPermissionResDto, 201));
     }
 
     @GetMapping("/terms")
