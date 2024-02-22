@@ -70,10 +70,12 @@ class FragmentProfileNotification :
                 is UiState.Success -> {
                     if (it.data != 0) {
                         binding.tvProfileAlarmProductDeadlineNotificationToggle.isSelected = true
+                        binding.tvProfileAlarmTimeContent.visibility = View.VISIBLE
                         binding.tvProfileAlarmTimeContent.setText(convertToHourFormat(it.data))
                         setRadioGroupCheckedItem(it.data)
                     } else {
                         binding.tvProfileAlarmProductDeadlineNotificationToggle.isSelected = false
+                        binding.tvProfileAlarmTimeContent.visibility = View.GONE
                     }
                 }
 
@@ -108,6 +110,7 @@ class FragmentProfileNotification :
         }
 
         val dateFormat = SimpleDateFormat("h a", Locale.getDefault())
+        dateFormat.applyPattern("h a")
         val formattedTime = dateFormat.format(calendar.time).toString()
         val dotFormattedTime = formattedTime.replace("AM", "A.M").replace("PM", "P.M")
 
