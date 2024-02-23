@@ -2,6 +2,7 @@ package com.gdscplantry.plantry.domain.Pantry.controller;
 
 import com.gdscplantry.plantry.domain.Pantry.dto.pantry.PantryResDto;
 import com.gdscplantry.plantry.domain.Pantry.dto.share.CodeResDto;
+import com.gdscplantry.plantry.domain.Pantry.dto.share.MemberDeleteResDto;
 import com.gdscplantry.plantry.domain.Pantry.dto.share.PantryMemberResDto;
 import com.gdscplantry.plantry.domain.Pantry.service.PantryShareService;
 import com.gdscplantry.plantry.domain.User.domain.User;
@@ -47,6 +48,13 @@ public class PantryShareController {
         PantryMemberResDto pantryMemberResDto = pantryShareService.getPantryMember(user, pantryId);
 
         return ResponseEntity.ok(DataResponseDto.of(pantryMemberResDto, 200));
+    }
+
+    @DeleteMapping("/member")
+    public ResponseEntity<ResponseDto> deletePantryMember(@RequestParam("pantry") @NotNull Long pantryId, @RequestParam("user") @NotNull Long userId, @RequestAttribute User user) {
+        MemberDeleteResDto memberDeleteResDto = pantryShareService.deletePantryMember(user, pantryId, userId);
+
+        return ResponseEntity.ok(DataResponseDto.of(memberDeleteResDto, 200));
     }
 
     @GetMapping("/member/query")
