@@ -7,6 +7,8 @@ import com.gdscplantry.plantry.domain.Pantry.service.PantryShareService;
 import com.gdscplantry.plantry.domain.User.domain.User;
 import com.gdscplantry.plantry.global.common.DataResponseDto;
 import com.gdscplantry.plantry.global.common.ResponseDto;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +45,13 @@ public class PantryShareController {
     @GetMapping("/member")
     public ResponseEntity<ResponseDto> getPantryMember(@RequestParam("pantry") Long pantryId, @RequestAttribute User user) {
         PantryMemberResDto pantryMemberResDto = pantryShareService.getPantryMember(user, pantryId);
+
+        return ResponseEntity.ok(DataResponseDto.of(pantryMemberResDto, 200));
+    }
+
+    @GetMapping("/member/query")
+    public ResponseEntity<ResponseDto> searchPantryMember(@RequestParam("pantry") @NotNull Long pantryId, @RequestParam("query") @NotBlank String query, @RequestAttribute User user) {
+        PantryMemberResDto pantryMemberResDto = pantryShareService.searchPantryMember(user, pantryId, query);
 
         return ResponseEntity.ok(DataResponseDto.of(pantryMemberResDto, 200));
     }

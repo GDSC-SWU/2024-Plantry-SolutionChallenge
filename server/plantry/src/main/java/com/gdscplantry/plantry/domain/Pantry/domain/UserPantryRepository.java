@@ -46,4 +46,11 @@ public interface UserPantryRepository extends JpaRepository<UserPantry, Long> {
             "case when u.isOwner = true then 0 when u.user = :user then 1 else 2 end, " +
             "u.createdAt asc ")
     ArrayList<PantryMemberVo> findAllByPantryIdWithJPQL(User user, Long pantryId);
+
+    @Query(value = "select new com.gdscplantry.plantry.domain.Pantry.vo.PantryMemberVo(u.user.id, u.user.nickname, u.user.profileImagePath, u.isOwner) " +
+            "from UserPantry u where u.pantryId = :pantryId and u.user.nickname like %:query% " +
+            "order by " +
+            "case when u.isOwner = true then 0 when u.user = :user then 1 else 2 end, " +
+            "u.createdAt asc ")
+    ArrayList<PantryMemberVo> findAllByPantryIdAndQueryWithJPQL(User user, Long pantryId, String query);
 }

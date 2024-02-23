@@ -103,4 +103,16 @@ public class PantryShareService {
 
         return new PantryMemberResDto(userPantry.getIsOwner(), list);
     }
+
+    @Transactional(readOnly = true)
+    public PantryMemberResDto searchPantryMember(User user, Long pantryId, String query) {
+        // Validate pantry id
+        UserPantry userPantry = userPantryRepository.findByPantryIdAndUser(pantryId, user)
+                .orElseThrow(() -> new AppException(PantryErrorCode.PANTRY_NOT_FOUND));
+
+        // Find member with query
+        ArrayList<PantryMemberVo> list = userPantryRepository.findAllByPantryIdAndQueryWithJPQL(user, pantryId, query);
+
+        return new PantryMemberResDto(userPantry.getIsOwner(), list);
+    }
 }
