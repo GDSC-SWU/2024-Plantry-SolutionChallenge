@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -68,20 +69,25 @@ public class PantryShareService {
                 .orElseThrow(() -> new AppException(PantryErrorCode.INVALID_SHARE_CODE));
 
         // Find owner's pantry
-        UserPantry userPantry = userPantryRepository.findByPantryIdAndIsOwner(pantry.getId(), true)
+        UserPantry ownerUserPantry = userPantryRepository.findByPantryIdAndIsOwner(pantry.getId(), true)
                 .orElseThrow(() -> new AppException(PantryErrorCode.OWNER_NOT_FOUND));
+
+        // Find if user already has one
+        Optional<UserPantry> userPantry = userPantryRepository.findByPantryIdAndUser(pantry.getId(), user);
+        if (userPantry.isPresent())
+            throw new AppException(PantryErrorCode.PANTRY_ALREADY_EXISTS);
 
         // Add user pantry
         UserPantry newUserPantry = userPantryRepository.save(UserPantry.builder()
                 .user(user)
                 .pantryId(pantry.getId())
-                .title(userPantry.getTitle())
-                .color(userPantry.getColor())
+                .title(ownerUserPantry.getTitle())
+                .color(ownerUserPantry.getColor())
                 .isOwner(false)
                 .build());
 
         // Add notifications
-        relatedNotificationService.sharePantry(userPantry.getUser(), user, pantry.getId());
+        relatedNotificationService.sharePantry(ownerUserPantry.getUser(), user, pantry.getId());
 
         return new PantryResDto(newUserPantry);
     }

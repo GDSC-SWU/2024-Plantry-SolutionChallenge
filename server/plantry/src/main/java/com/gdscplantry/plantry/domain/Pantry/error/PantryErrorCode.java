@@ -10,6 +10,7 @@ public enum PantryErrorCode implements ErrorCode {
     INVALID_COUNT(HttpStatus.BAD_REQUEST, "Invalid count value."),
     INVALID_DELETE_COUNT(HttpStatus.BAD_REQUEST, "Deletion failed. Result value is less than 0."),
     INVALID_STORAGE(HttpStatus.BAD_REQUEST, "Invalid storage value."),
+    PANTRY_ALREADY_EXISTS(HttpStatus.FORBIDDEN, "Pantry already exists."),
     PANTRY_ACCESS_DENIED(HttpStatus.FORBIDDEN, "Pantry access denied."),
     PANTRY_CODE_ACCESS_DENIED(HttpStatus.FORBIDDEN, "Pantry code access denied."),
     PRODUCT_ACCESS_DENIED(HttpStatus.FORBIDDEN, "Product access denied."),
