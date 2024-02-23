@@ -7,6 +7,7 @@ import com.gdscplantry.plantry.domain.Pantry.domain.UserPantry;
 import com.gdscplantry.plantry.domain.Pantry.domain.UserPantryRepository;
 import com.gdscplantry.plantry.domain.Pantry.dto.pantry.PantryResDto;
 import com.gdscplantry.plantry.domain.Pantry.dto.share.CodeResDto;
+import com.gdscplantry.plantry.domain.Pantry.dto.share.MemberDeleteResDto;
 import com.gdscplantry.plantry.domain.Pantry.dto.share.PantryMemberResDto;
 import com.gdscplantry.plantry.domain.Pantry.error.PantryErrorCode;
 import com.gdscplantry.plantry.domain.Pantry.vo.PantryMemberVo;
@@ -114,5 +115,26 @@ public class PantryShareService {
         ArrayList<PantryMemberVo> list = userPantryRepository.findAllByPantryIdAndQueryWithJPQL(user, pantryId, query);
 
         return new PantryMemberResDto(userPantry.getIsOwner(), list);
+    }
+
+    @Transactional
+    public MemberDeleteResDto deletePantryMember(User user, Long pantryId, Long userId) {
+        // Find pantry data
+        PantryWithCodeVo vo = userPantryRepository.findPantryByUserAndPantryIdWithJPQL(user, pantryId)
+                .orElseThrow(() -> new AppException(PantryErrorCode.PANTRY_NOT_FOUND));
+
+        // Check owner
+        if (!vo.getIsOwner())
+            throw new AppException(PantryErrorCode.PANTRY_CODE_ACCESS_DENIED);
+
+        // Check user to be deleted
+        if (user.getId().equals(userId)) throw new AppException(PantryErrorCode.OWNER_CANNOT_BE_DELETED);
+        UserPantry userPantry = userPantryRepository.findByPantryIdAndUserIdWithJPQL(pantryId, userId)
+                .orElseThrow(() -> new AppException(PantryErrorCode.MEMBER_NOT_FOUND));
+
+        // Delete Member
+        userPantryRepository.delete(userPantry);
+
+        return new MemberDeleteResDto(pantryId, userId);
     }
 }

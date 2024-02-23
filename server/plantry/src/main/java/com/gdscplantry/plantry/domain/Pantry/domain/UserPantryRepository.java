@@ -53,4 +53,7 @@ public interface UserPantryRepository extends JpaRepository<UserPantry, Long> {
             "case when u.isOwner = true then 0 when u.user = :user then 1 else 2 end, " +
             "u.createdAt asc ")
     ArrayList<PantryMemberVo> findAllByPantryIdAndQueryWithJPQL(User user, Long pantryId, String query);
+
+    @Query(value = "select u from UserPantry u where u.user.id = :userId and u.pantryId = :pantryId")
+    Optional<UserPantry> findByPantryIdAndUserIdWithJPQL(Long pantryId, Long userId);
 }
