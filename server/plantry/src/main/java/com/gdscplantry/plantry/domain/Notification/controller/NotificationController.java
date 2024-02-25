@@ -25,7 +25,7 @@ public class NotificationController {
     private final FcmUtil fcmUtil;
 
     @GetMapping("/test")
-    public ResponseEntity<ResponseDto> fcmTest(@RequestParam(value = "token") String deviceToken) {
+    public ResponseEntity<ResponseDto> fcmTest(@RequestAttribute("user") User user, @RequestParam(value = "token") String deviceToken) {
         fcmUtil.sendMessage(new MessageVo(0L, deviceToken, -1));
 
         return ResponseEntity.ok(ResponseDto.of(200));

@@ -37,6 +37,8 @@ public class User {
 
     private Integer notificationTime;
 
+    private Boolean isNotificationPermitted;
+
     @CreatedDate
     private LocalDateTime createdAt;
 
@@ -49,6 +51,7 @@ public class User {
         this.nickname = nickname;
         this.profileImagePath = profileImagePath;
         this.notificationTime = 9;
+        this.isNotificationPermitted = true;
     }
 
     public void updateUser(String profileImagePath, String deviceToken) {
@@ -62,6 +65,10 @@ public class User {
 
     public void updateNotificationTime(Integer notificationTime) {
         this.notificationTime = notificationTime;
+    }
+
+    public void updateIsNotificationPermitted(Boolean isNotificationPermitted) {
+        this.isNotificationPermitted = isNotificationPermitted;
     }
 
     @Override
