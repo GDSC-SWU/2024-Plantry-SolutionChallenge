@@ -1,4 +1,4 @@
-2024 Google Solution Challenge - Plantry
+![2024 Google Solution Challenge - Plantry Banner](https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/68212300/fb2abb46-b7a0-46ac-a8e5-2cfbe7372f3f)
 
 ## Contents
 
@@ -39,10 +39,12 @@ With Plantry, consumers can **manage food inventory** and **record how the food 
 <br>
 
 # Our SDGs Goal
+![Plantry SDGs_Goal](https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/68212300/37771e9f-6741-47ea-821f-cc2f8e4d0c4d)
 
 <br>
 
 # Technology Stack
+![Plantry Tech Stack](https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/68212300/7f2cc7a8-6584-4298-a9b4-b3999b117386)
 
 <br>
 
@@ -53,38 +55,39 @@ With Plantry, consumers can **manage food inventory** and **record how the food 
 <br>
 
 # Design
+![readme-mockup](https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/68212300/5108c44b-4ce8-4813-b46e-43d255e5ee51)
 
 <br>
 
 # How to Start
 
-### 1. Download APK file
+#### 1. Download APK file
 
 [APK Download Link](https://drive.google.com/file/d/1SL2hSk1qXrK29oom35dne_aCEHyjMbyX/view?usp=sharing)
 
-### 2. Install APK and Run the app
+#### 2. Install APK and Run the app
 
 <br>
 
 # How to Run on Local
 
-### 1. Clone this Repository
+#### 1. Clone this Repository
 
 ```bash
-$ git clone https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge.git
+git clone https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge.git
 ```
 
-### 2. Open Android Source Code on Android Studio
+#### 2. Open Android Source Code on Android Studio
 
 Giraffe Version or higher recommended
 <br>
 [Android Studio Giraffe Download Link](https://teamandroid.com/android-studio-giraffe-download/)
 
-### 3. Download Emulator
+#### 3. Download Emulator
 
 Pixel XL API 34 recommended
 
-### 4. Run the app
+#### 4. Run the app
 
 <br>
 
@@ -92,42 +95,51 @@ Pixel XL API 34 recommended
 
 The server is deployed, but if you want to run it on local, do the following:
 
-### 1. Create `application.properties` file on `server/plantry/src/main/resources`
+#### 1. Create `application.properties` file on `server/plantry/src/main/resources`
 
 ```properties
 # DATABASE
+
 SPRING_DATASOURCE_URL={YOUR_MYSQL_DATABASE_URL}
 SPRING_DATASOURCE_USERNAME={YOUR_MYSQL_DATABASE_USERNAME}
 SPRING_DATASOURCE_PASSWORD={YOUR_MYSQL_DATABASE_PASSWORD}
 
+
 # Redis
+
 SPRING_DATA_REDIS_HOST={YOUR_REDIS_DATABASE_HOST}
 SPRING_DATA_REDIS_PORT={YOUR_REDIS_DATABASE_PORT}
 SPRING_DATA_REDIS_PASSWORD={YOUR_REDIS_DATABASE_PASSWORD}
 
+
 # Google OAuth
+
 GOOGLE_OAUTH_CLIENT_ID={YOUR_GOOGLE_OAUTH_CLIENT_ID}
 
+
 # JWT
+
 JWT_SECRET_KEY=some-random-secret-key-plantry-9876
 JWT_ISSUER=gdsc
 
+
 # Server profile
+
 PROFILE=local
 ```
 
-### 2. Store the service account JSON file containing the key on `server/plantry/src/main/resources/firebase`
+#### 2. Store the service account JSON file containing the key on `server/plantry/src/main/resources/firebase`
 
 Refer to the docs<br>
 [Firebase DOCS](https://firebase.google.com/docs/admin/setup?hl=ko#set-up-project-and-service-account)
 
-### 3. Run the server
+#### 3. Run the server
 
 <br>
 
 # Contribution
 
-|                        |                  |                |                 |
+| <img alt="Plantry Yusun Choi" src="https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/68212300/9aca10a1-06d4-42ea-b8f6-5585a582468e"> | <img alt="Plantry Yerim Lee" src="https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/68212300/37ba797a-658d-4d27-8a38-2b613abf418c"> | <img alt="Plantry Yehan Shin" src="https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/68212300/2d052916-7fac-40a8-a2d9-b91f572690f0"> | <img alt="Plantry Eunji Jung" src="https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/68212300/4e8b46ea-4503-4432-9861-5e7d14ce79b5"> |
 | :--------------------: | :--------------: | :------------: | :-------------: |
 |     **Yusun Choi**     |  **Yerim Lee**   | **Yehan Shin** | **Eunji Jung**  |
 | PM<br>Server Developer | Client Developer | UX/UI Designer | AI/ML Developer |
