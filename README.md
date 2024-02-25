@@ -1,65 +1,72 @@
-![2024 Google Solution Challenge - Plantry Banner](https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/68212300/fb2abb46-b7a0-46ac-a8e5-2cfbe7372f3f)
+![2024 Google Solution Challenge - Plantry Banner](https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/68212300/b2f36158-5221-465b-afdf-a10551e69a63)
 
-## Contents
+## 💡 Contents
 
-1. [Problem](#problem)
-2. [About Plantry](#about-plantry)
-3. [Our SDGs Goal](#our-sdgs-goal)
-4. [Technology Stack](#technology-stack)
-5. [Demo Video](#demo-video)
-6. [Design](#design)
-7. [How to Start](#how-to-start)
-8. [How to Run on Local](#how-to-run-on-local)
-9. [Contribution](#contribution)
+1. [Problem](#-problem)
+2. [About Plantry](#-about-plantry)
+3. [Our SDGs Goal](#-our-sdgs-goal)
+4. [Technology Stack](#-technology-stack)
+5. [Demo Video](#-demo-video)
+6. [Design](#-Design)
+7. [How to Start](#-how-to-start)
+8. [How to Run on Local](#-how-to-run-on-local)
+9. [Contributors](#-contributors)
 
 <br>
 
-# Problem
+# 📌 Problem
 
 According to the **United Nations World Food Programme(WFP)**, around 1.3 billion tons of **food is wasted** globally every year without being used as food. That's enough to feed nearly 800 million people who suffer from hunger.
 <br>
+<br>
 Wasted food is a major contributor to **greenhouse gases**, with methane emitted as it decays in landfills having 80 times the greenhouse effect of carbon dioxide. According to the **Food and Agriculture Organization of the United Nations(FAO)**, greenhouse gases from waste in the production and consumption of food account for 8-10% of global greenhouse gas emissions. The life cycle of food already emits a lot of carbon when it's produced, but when it's disposed of, additional carbon is released.
 <br>
+<br>
 Consumers buy more food than they can actually eat, or store food incorrectly, resulting in food being thrown away before it is consumed. Not only does consumer overbuying create waste, it also contributes to producer overproduction.
+<br>
 <br>
 Food is an essential part of human life, so it is essential that consumers consume it responsibly.
 
 <br>
 
-# About Plantry
+# ✨ About Plantry
 
 To solve this problem, Plantry **focuses on the consumer** as one of the many contributors to the problem.
 <br>
+<br>
 With Plantry, consumers can **manage food inventory** and **record how the food is consumed (discarded, ingested, shared)**.
 <br>
+<br>
 **The data is visualized in graphs** to help consumers be more aware of food waste, and to help them buy the right amount of food when they make future purchases, taking into account their previous consumption. It also helps consumers learn how to store food properly to avoid throwing it away when it's still edible, and encourages them to **use use-by dates instead of sell-by dates** to ensure that food is safe to consume for a longer period of time.
+<br>
 <br>
 **Reminder notifications** are provided for food items that are nearing their expiration date to help consumers eat food within the expiration date.
 
 <br>
 
-# Our SDGs Goal
+# 🚀 Our SDGs Goal
 ![Plantry SDGs_Goal](https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/68212300/37771e9f-6741-47ea-821f-cc2f8e4d0c4d)
 
 <br>
 
-# Technology Stack
+# 🛠 Technology Stack
 ![Plantry Tech Stack](https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/68212300/7f2cc7a8-6584-4298-a9b4-b3999b117386)
 
 <br>
 
-# Demo Video
+# 📹 Demo Video
 
-[YouTube Link]()
+[![Plantry Demo Video Link](https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/68212300/47598a0a-4399-43c5-9d57-44ec57dd425e)]()
 
 <br>
 
-# Design
+# ✍️ Design
+
 ![readme-mockup](https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/68212300/5108c44b-4ce8-4813-b46e-43d255e5ee51)
 
 <br>
 
-# How to Start
+# 📱 How to Start
 
 #### 1. Download APK file
 
@@ -69,7 +76,7 @@ With Plantry, consumers can **manage food inventory** and **record how the food 
 
 <br>
 
-# How to Run on Local
+# 📲 How to Run on Local
 
 #### 1. Clone this Repository
 
@@ -137,7 +144,7 @@ Refer to the docs<br>
 
 <br>
 
-# Contribution
+# 👩🏻‍💻 Contributors
 
 | <img alt="Plantry Yusun Choi" src="https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/68212300/9aca10a1-06d4-42ea-b8f6-5585a582468e"> | <img alt="Plantry Yerim Lee" src="https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/68212300/37ba797a-658d-4d27-8a38-2b613abf418c"> | <img alt="Plantry Yehan Shin" src="https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/68212300/2d052916-7fac-40a8-a2d9-b91f572690f0"> | <img alt="Plantry Eunji Jung" src="https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/68212300/4e8b46ea-4503-4432-9861-5e7d14ce79b5"> |
 | :--------------------: | :--------------: | :------------: | :-------------: |
