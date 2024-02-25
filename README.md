@@ -128,7 +128,7 @@ JWT_ISSUER=gdsc
 PROFILE=local
 ```
 
-#### 2. Store the service account JSON file containing the key on `server/plantry/src/main/resources/firebase`
+#### 2. Store the service account JSON file `firebase_account_file.json` containing the key on `server/plantry/src/main/resources/firebase`
 
 Refer to the docs<br>
 [Firebase DOCS](https://firebase.google.com/docs/admin/setup?hl=ko#set-up-project-and-service-account)
