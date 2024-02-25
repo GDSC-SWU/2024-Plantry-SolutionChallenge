@@ -7,7 +7,7 @@
 3. [Our SDGs Goal](#-our-sdgs-goal)
 4. [Technology Stack](#-technology-stack)
 5. [Demo Video](#-demo-video)
-6. [Design](#-Design)
+6. [Design](https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge?tab=readme-ov-file#%EF%B8%8F-design)
 7. [How to Start](#-how-to-start)
 8. [How to Run on Local](#-how-to-run-on-local)
 9. [Contributors](#-contributors)
