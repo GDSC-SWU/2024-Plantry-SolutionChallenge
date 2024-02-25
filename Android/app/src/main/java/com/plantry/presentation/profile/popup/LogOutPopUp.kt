@@ -2,17 +2,19 @@ package com.plantry.presentation.profile.popup
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
 import androidx.fragment.app.viewModels
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.plantry.R
 import com.plantry.coreui.base.BindingDialogFragment
 import com.plantry.coreui.view.UiState
 import com.plantry.databinding.PopupProfileLogoutBinding
-import com.plantry.presentation.auth.LogoutViewModel
-import com.plantry.presentation.auth.SignInActivity
+import com.plantry.presentation.auth.viewmodel.LogoutViewModel
+import com.plantry.presentation.auth.ui.SignInActivity
 
 class LogOutPopUp  : BindingDialogFragment<PopupProfileLogoutBinding>(R.layout.popup_profile_logout) {
 
-    private val viewModelMissionList by viewModels<LogoutViewModel>()
+    private val viewModelLogout by viewModels<LogoutViewModel>()
 
     override fun initView() {
         clickCancleButton()
@@ -23,7 +25,7 @@ class LogOutPopUp  : BindingDialogFragment<PopupProfileLogoutBinding>(R.layout.p
 
     private fun clickLogOutButton(){
         binding.tvProfileLogoutPopupDelete.setOnClickListener {
-            viewModelMissionList.deleteGoogleLogout()
+            viewModelLogout.deleteGoogleLogout()
         }
     }
 
@@ -34,7 +36,7 @@ class LogOutPopUp  : BindingDialogFragment<PopupProfileLogoutBinding>(R.layout.p
     }
 
     private fun observe(){
-        viewModelMissionList.logout.observe(this) {
+        viewModelLogout.logout.observe(this) {
             when (it) {
                 is UiState.Success -> {
                     navigateTo<SignInActivity>()
@@ -48,7 +50,12 @@ class LogOutPopUp  : BindingDialogFragment<PopupProfileLogoutBinding>(R.layout.p
     private inline fun <reified T : Activity> navigateTo() {
         Intent(requireActivity(), T::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(this)
+            putExtra("sign_state", LOGOUT)
+            startActivity(this, arguments)
         }
+    }
+
+    companion object{
+        const val LOGOUT = 1
     }
 }

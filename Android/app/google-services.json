@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "29775346424",
+    "project_id": "plantry24-01",
+    "storage_bucket": "plantry24-01.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:29775346424:android:745a9430b6c4bb7773d90d",
+        "android_client_info": {
+          "package_name": "com.plantry"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "29775346424-ckfbab33cikkr863gat1itq57s2a3e5q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.plantry",
+            "certificate_hash": "582eb84b096e6348c54377d9ca63773d759e7b2a"
+          }
+        },
+        {
+          "client_id": "29775346424-c3ocpsd6pv76lu9bgdi046lft97ftkkn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRBWPknOiC-tc8teHL4PgkAnTZtS544_Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "29775346424-c3ocpsd6pv76lu9bgdi046lft97ftkkn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

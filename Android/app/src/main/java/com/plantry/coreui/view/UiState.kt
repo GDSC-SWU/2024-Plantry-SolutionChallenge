@@ -10,7 +10,7 @@ sealed interface UiState<out T> {
     ) : UiState<T>
 
     data class Failure(
-        val msg: String,
+        val msg: String?,
     ) : UiState<Nothing>
 
     fun getUiStateModel(): UiStateModel {

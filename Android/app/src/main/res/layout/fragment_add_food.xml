@@ -48,11 +48,5 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@id/tv_add_food_recipt" />
 
-        <ImageView
-            android:id="@+id/iv_add_food_result_img"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

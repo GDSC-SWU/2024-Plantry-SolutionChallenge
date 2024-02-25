@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_home_share_code_register_member_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/share_code_register_join"
+            android:textAppearance="@style/TextAppearance.Plantry.Body6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <EditText
+            android:id="@+id/et_home_share_code_register_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/shape_line_line2_8_rec"
+            android:maxLines="1"
+            android:paddingVertical="12dp"
+            android:paddingStart="16dp"
+            android:textAppearance="@style/TextAppearance.Plantry.Body5"
+            android:textColorHint="@color/gray3"
+            android:hint="@string/share_code_registration_enter_code"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_share_code_register_member_title" />
+
+        <TextView
+            android:id="@+id/tv_share_code_success"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="28dp"
+            android:visibility="gone"
+            android:background="@drawable/shape_fill_white2_8_rec"
+            android:backgroundTint="@color/dark"
+            android:drawableStart="@drawable/ic_profile_check_on"
+            android:drawablePadding="8dp"
+            android:paddingVertical="14dp"
+            android:paddingStart="16dp"
+            android:text="@string/share_code_registration_sucess"
+            android:textAppearance="@style/TextAppearance.Plantry.Body6"
+            android:textColor="@color/white1"
+            android:layout_marginBottom="7dp"
+            app:layout_constraintBottom_toTopOf="@id/tv_share_code_register_confirm" />
+
+        <TextView
+            android:id="@+id/tv_share_code_failure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="28dp"
+            android:visibility="gone"
+            android:background="@drawable/shape_fill_white2_8_rec"
+            android:backgroundTint="@color/dark"
+            android:drawableStart="@drawable/ic_register_faliure_error"
+            android:drawablePadding="8dp"
+            android:paddingVertical="14dp"
+            android:paddingStart="16dp"
+            android:text="@string/share_code_registration_failure"
+            android:textAppearance="@style/TextAppearance.Plantry.Body6"
+            android:textColor="@color/white1"
+            android:layout_marginBottom="7dp"
+            app:layout_constraintBottom_toTopOf="@id/tv_share_code_register_confirm" />
+
+        <TextView
+            android:id="@+id/tv_share_code_register_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/shape_fill_primary_color_8_rec"
+            android:paddingVertical="16dp"
+            android:text="@string/popup_button_confirm"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.Plantry.Body3"
+            android:textColor="@color/gray1"
+            android:layout_marginHorizontal="28dp"
+            android:layout_marginBottom="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

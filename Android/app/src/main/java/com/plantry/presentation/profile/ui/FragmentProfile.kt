@@ -42,14 +42,15 @@ class FragmentProfile : BindingFragment<FragmentProfileBinding>(R.layout.fragmen
     var nowSelectedItem = 0
     val firstChartData =
         listOf(
-            PieEntry(25.0F),
-            PieEntry(25.0F),
-            PieEntry(25.0F),
-            PieEntry(25.0F),
+            PieEntry(0F),
+            PieEntry(0F),
+            PieEntry(0F),
+            PieEntry(0F),
         )
 
    var userImgPath: String = ""
     override fun initView() {
+        resetScrollPosition()
         setChartData(firstChartData)
         observeMissionList()
         observeMissionSuccess()
@@ -65,6 +66,10 @@ class FragmentProfile : BindingFragment<FragmentProfileBinding>(R.layout.fragmen
         clickTerms()
         clickDeleteId()
         clickAlramCheck()
+    }
+
+    private fun resetScrollPosition() {
+        binding.svProfileScroll.smoothScrollTo(0, 0)
     }
 
     private fun setChartData(entries: List<PieEntry>) {
@@ -247,7 +252,7 @@ class FragmentProfile : BindingFragment<FragmentProfileBinding>(R.layout.fragmen
                         )
                     }
                     else{
-                        binding.tvProfilePercent.text ="${25.0} %"
+                        binding.tvProfilePercent.text ="${0.0} %"
                     }
 
 

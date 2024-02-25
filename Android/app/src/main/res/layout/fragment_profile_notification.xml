@@ -72,7 +72,6 @@
             android:paddingStart="24dp"
             android:text="@string/profile_alarm_marketing_notification"
             android:textAppearance="@style/TextAppearance.Plantry.Body6"
-            android:visibility="invisible"
             app:layout_constraintTop_toBottomOf="@id/tv_profile_alarm_allow_notification_toggle" />
 
         <ImageView
@@ -81,7 +80,6 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
             android:background="@drawable/selector_profile_alarm_toggle"
-            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@id/tv_profile_alarm_allow_marketing_notification"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_profile_alarm_allow_marketing_notification" />
@@ -93,7 +91,7 @@
             android:layout_marginTop="24dp"
             android:paddingVertical="27dp"
             android:paddingStart="24dp"
-            android:text="@string/profile_alarm_marketing_notification"
+            android:text="@string/profile_alarm_deadline_notification"
             android:textAppearance="@style/TextAppearance.Plantry.Body6"
             app:layout_constraintTop_toBottomOf="@id/tv_profile_alarm_allow_marketing_notification_toggle" />
 
@@ -114,6 +112,7 @@
             android:layout_marginHorizontal="23dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
+            android:visibility="gone"
             android:background="@drawable/shape_line_line2_8_rec"
             android:drawableEnd="@drawable/ic_add_food_down"
             android:paddingHorizontal="16dp"

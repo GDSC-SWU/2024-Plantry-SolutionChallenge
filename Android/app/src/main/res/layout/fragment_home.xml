@@ -33,11 +33,21 @@
                     android:textColor="@color/white1" />
 
                 <ImageView
+                    android:id="@+id/iv_home_notification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginEnd="16dp"
                     android:src="@drawable/ic_toolbar_alram" />
+
+
+                <ImageView
+                    android:id="@+id/iv_home_share_invitation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_home_share_invitaion" />
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -56,7 +66,7 @@
             android:id="@+id/iv_home_chacracter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="13.5dp"
             android:src="@drawable/ic_home_character"
             app:layout_constraintEnd_toEndOf="@id/v_home_white_background"
             app:layout_constraintStart_toStartOf="@id/v_home_white_background"
@@ -97,6 +107,24 @@
                     tools:listitem="@layout/item_home_pantry" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
+
+        <TextView
+            android:id="@+id/tv_add_pantry_success"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="28dp"
+            android:background="@drawable/shape_fill_white2_8_rec"
+            android:backgroundTint="@color/dark"
+            android:drawableStart="@drawable/ic_profile_check_on"
+            android:drawablePadding="8dp"
+            android:paddingVertical="14dp"
+            android:paddingStart="16dp"
+            android:visibility="gone"
+            android:text="@string/share_code_registration_sucess"
+            android:textAppearance="@style/TextAppearance.Plantry.Body6"
+            android:textColor="@color/white1"
+            android:layout_marginBottom="7dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
