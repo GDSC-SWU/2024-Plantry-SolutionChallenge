@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class RequestNotificationProductEditDto (
     @SerialName("list")
-    val list: List<Int?>?
+    val list: MutableList<Int?>?
 )

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_share_owner_code_show"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_line_line2_8_rec"
+        android:paddingHorizontal="28dp"
+        android:paddingVertical="24dp">
+
+        <TextView
+            android:id="@+id/tv_share_owner_item_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_fill_white2_8_rec"
+            android:paddingVertical="11dp"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.Plantry.Body3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/item_share_owner_code" />
+
+        <ImageView
+            android:id="@+id/iv_share_code_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="16dp"
+            android:src="@drawable/ic_home_share_refresh_code"
+            app:layout_constraintBottom_toBottomOf="@id/tv_share_owner_item_code"
+            app:layout_constraintEnd_toEndOf="@id/tv_share_owner_item_code"
+            app:layout_constraintTop_toTopOf="@id/tv_share_owner_item_code" />
+
+        <TextView
+            android:id="@+id/tv_share_owner_item_copy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:drawableStart="@drawable/ic_home_share_code_copy"
+            android:drawablePadding="8dp"
+            android:text="@string/item_share_owner_copy_code"
+            android:textAppearance="@style/TextAppearance.Plantry.Body6"
+            android:textColor="@color/gray1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_share_owner_item_code" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

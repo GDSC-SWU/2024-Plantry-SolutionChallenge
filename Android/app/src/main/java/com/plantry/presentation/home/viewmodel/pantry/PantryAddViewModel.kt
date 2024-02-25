@@ -26,4 +26,9 @@ class PantryAddViewModel : ViewModel() {
             Log.d("Aaa13", it.message.toString())
         })
     }
+
+    fun setPantryItemFaliure(){
+        _pantryItem.value = UiState.Failure("")
+        Log.d("Aaa13", _pantryItem.toString())
+    }
 }

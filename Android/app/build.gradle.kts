@@ -2,6 +2,7 @@ import java.util.Properties
 
 plugins {
     id("com.android.application")
+    id ("com.google.gms.google-services")
     kotlin("android")
     kotlin("kapt")
     kotlin("plugin.serialization") version "1.7.20"
@@ -13,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId = "com.plantry"
-        minSdk = 24
+        minSdk = 27
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -29,6 +30,9 @@ android {
             buildConfigField("String", "BASE_URL", Properties().apply {
                 load(project.rootProject.file("local.properties").inputStream())
             }["base.url"].toString())
+            buildConfigField("String", "AI_BASE_URL", Properties().apply {
+                load(project.rootProject.file("local.properties").inputStream())
+            }["ai_base.url"].toString())
         }
         release {
             isMinifyEnabled = false
@@ -39,6 +43,9 @@ android {
             buildConfigField("String", "BASE_URL", Properties().apply {
                 load(project.rootProject.file("local.properties").inputStream())
             }["base.url"].toString())
+            buildConfigField("String", "AI_BASE_URL", Properties().apply {
+                load(project.rootProject.file("local.properties").inputStream())
+            }["ai_base.url"].toString())
         }
     }
     compileOptions {
@@ -88,4 +95,10 @@ dependencies {
     implementation("io.coil-kt:coil:2.3.0")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation ("me.relex:circleindicator:2.1.6")
+    implementation ("com.airbnb.android:lottie:3.7.0")
+
+    // firebase
+    implementation ("com.google.firebase:firebase-bom:32.7.2")
+    implementation ("com.google.firebase:firebase-messaging:23.4.1")
+    implementation ("com.google.firebase:firebase-analytics-ktx:21.1.1")
 }

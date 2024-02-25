@@ -28,7 +28,8 @@ class ProductListSearchViewModel : ViewModel() {
                         icon = "🍉",
                         isNotified = true,
                         isUseBydate = false,
-                        name = "Example Product"
+                        name = "Example Product",
+                        storage = null
                     )
                 )
             )
@@ -42,7 +43,7 @@ class ProductListSearchViewModel : ViewModel() {
             _productListSearch.value =
                 UiState.Success(it.data ?:exampleData)
         }, {
-            Log.d("Aaa13", it.message.toString())
+            Log.d("Aaa22", it.message.toString())
         })
     }
 

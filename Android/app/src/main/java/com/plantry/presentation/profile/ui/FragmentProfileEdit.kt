@@ -104,7 +104,7 @@ class FragmentProfileEdit :
         }
     }
 
-    fun dpToPx(context: Context, dp: Int): Int {
+    private fun dpToPx(context: Context, dp: Int): Int {
         val px = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP,
             dp.toFloat(),

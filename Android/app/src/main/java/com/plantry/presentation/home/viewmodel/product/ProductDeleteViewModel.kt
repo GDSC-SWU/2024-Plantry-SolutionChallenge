@@ -20,10 +20,13 @@ class ProductDeleteViewModel : ViewModel() {
         runCatching {
             ApiPool.deleteProduct.deleteProduct(product, type, count)
         }.fold({
-            _productDelete.value =
-                UiState.Success(it.data?.id ?: -1)
+            _productDelete.value = UiState.Success(it.data?.id ?: -1)
         }, {
             Log.d("Aaa13", it.message.toString())
         })
+    }
+
+    fun setProductDeleteEmpty(){
+        _productDelete.value = UiState.Empty
     }
 }

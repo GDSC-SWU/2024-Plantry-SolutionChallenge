@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="23dp"
+        android:visibility="gone"
         android:background="@drawable/shape_fill_white1_8_rec"
         android:elevation="3dp"
         android:paddingVertical="8dp">
@@ -198,17 +199,6 @@
                         android:paddingHorizontal="12dp"
                         android:paddingVertical="10dp"
                         android:textAppearance="@style/TextAppearance.Plantry.Body6" />
-                    <RadioButton
-                        android:id="@+id/rb_profile_alarm_content17"
-                        android:text="@string/profile_alarm17"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background = "@drawable/selector_add_food_popup_pantry_name"
-                        android:button="@null"
-                        android:paddingHorizontal="12dp"
-                        android:paddingVertical="10dp"
-                        android:textAppearance="@style/TextAppearance.Plantry.Body6" />
-
                 </RadioGroup>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

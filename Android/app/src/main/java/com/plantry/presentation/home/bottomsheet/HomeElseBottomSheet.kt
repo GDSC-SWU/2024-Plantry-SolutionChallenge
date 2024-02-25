@@ -15,9 +15,6 @@ class HomeElseBottomSheet :
         clickEdit()
     }
 
-    private fun throwPantryId() {
-    }
-
     private fun clickDelete() {
         binding.tvHomeBottomSheetDelete.setOnClickListener {
             val pantryDeletePopUp = HomeDeletePopUp()

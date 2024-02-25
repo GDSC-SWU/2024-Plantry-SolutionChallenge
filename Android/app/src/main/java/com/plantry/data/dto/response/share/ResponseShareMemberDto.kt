@@ -12,8 +12,8 @@ data class ResponseShareMemberDto(
 ) {
     @Serializable
     data class User(
-        @SerialName("UserId")
-        val UserId: Int?,
+        @SerialName("userId")
+        val userId: Int?,
         @SerialName("isOwner")
         val isOwner: Boolean?,
         @SerialName("nickname")

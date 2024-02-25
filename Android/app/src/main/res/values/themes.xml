@@ -10,7 +10,9 @@
         <item name="colorOnSecondary">@color/dark</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/primary_color</item>
+
     </style>
+
 
     <style name="Theme.Toolbar" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/white1</item>

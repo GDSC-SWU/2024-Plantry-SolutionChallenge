@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="40dp"
+        android:background="@drawable/shape_fill_white1_28_rec">
+
+        <TextView
+            android:id="@+id/tv_home_share_join_popup_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home_share_join_id_title"
+            android:textAppearance="@style/TextAppearance.Plantry.Button1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tv_home_share_code_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Plantry.Body6"
+            android:layout_marginStart="22dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_share_join_popup_title"
+            android:text="@string/home_share_join_popup_invitation_code"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:id="@+id/et_home_share_join_popup_invitation_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="22dp"
+            android:layout_marginTop="12dp"
+            android:hint="@string/home_share_join_popup_enter_code"
+            android:maxLines="1"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="13dp"
+            android:background="@drawable/shape_line_line2_8_rec"
+            android:textAppearance="@style/TextAppearance.Plantry.Body5"
+            android:textColorHint="@color/gray3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_share_code_title" />
+
+
+        <TextView
+            android:id="@+id/tv_share_join_error_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:visibility="gone"
+            android:drawableStart="@drawable/ic_home_popup_error"
+            android:drawablePadding="6dp"
+            android:text="@string/share_code_registration_failure"
+            android:textAppearance="@style/TextAppearance.Plantry.Caption"
+            android:textColor="@color/error_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/et_home_share_join_popup_invitation_code"
+            app:layout_constraintTop_toBottomOf="@id/et_home_share_join_popup_invitation_code" />
+
+        <TextView
+            android:id="@+id/tv_home_share_join_popup_cancle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/shape_line_line2_8_rec"
+            android:paddingHorizontal="36dp"
+            android:textColor="@color/gray3"
+            android:paddingVertical="16dp"
+            android:text="@string/popup_button_cancle"
+            android:textAppearance="@style/TextAppearance.Plantry.Body3"
+            app:layout_constraintEnd_toStartOf="@id/tv_home_share_join_popup_confrim"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_share_join_error_message" />
+
+        <TextView
+            android:id="@+id/tv_home_share_join_popup_confrim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/shape_fill_primary_color_8_rec"
+            android:paddingHorizontal="36dp"
+            android:paddingVertical="16dp"
+            android:text="@string/popup_button_confirm"
+            android:textAppearance="@style/TextAppearance.Plantry.Body3"
+            android:textColor="@color/white1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@id/tv_home_share_join_popup_cancle"
+            app:layout_constraintTop_toBottomOf="@id/tv_share_join_error_message" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
