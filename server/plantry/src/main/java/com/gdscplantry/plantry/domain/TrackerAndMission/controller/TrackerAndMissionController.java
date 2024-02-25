@@ -2,7 +2,6 @@ package com.gdscplantry.plantry.domain.TrackerAndMission.controller;
 
 import com.gdscplantry.plantry.domain.TrackerAndMission.dto.MissionAchieveResDto;
 import com.gdscplantry.plantry.domain.TrackerAndMission.dto.MissionListResDto;
-import com.gdscplantry.plantry.domain.TrackerAndMission.dto.TrackerResDto;
 import com.gdscplantry.plantry.domain.TrackerAndMission.service.MissionService;
 import com.gdscplantry.plantry.domain.TrackerAndMission.service.TrackerService;
 import com.gdscplantry.plantry.domain.User.domain.User;
@@ -12,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -23,9 +24,9 @@ public class TrackerAndMissionController {
 
     @GetMapping("/track")
     public ResponseEntity<ResponseDto> getTrackerResult(@RequestAttribute User user) {
-        TrackerResDto trackerResDto = trackerService.getTrackerResult(user);
+        Map<String, Double> trackerResult = trackerService.getTrackerResult(user);
 
-        return ResponseEntity.ok(DataResponseDto.of(trackerResDto, 200));
+        return ResponseEntity.ok(DataResponseDto.of(trackerResult, 200));
     }
 
     @GetMapping("/mission")
