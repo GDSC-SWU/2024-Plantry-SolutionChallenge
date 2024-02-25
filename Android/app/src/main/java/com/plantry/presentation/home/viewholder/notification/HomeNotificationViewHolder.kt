@@ -8,8 +8,11 @@ import com.plantry.data.dto.response.notification.ResponseNortificationAllListDt
 import com.plantry.data.dto.response.profile.ResponseProfileMissionListDto
 import com.plantry.databinding.ItemNotificationBinding
 import com.plantry.databinding.ItemProfileMissionBinding
+import java.time.Duration
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 class HomeNotificationViewHolder(private val binding: ItemNotificationBinding) :
     RecyclerView.ViewHolder(binding.root) {
@@ -26,19 +29,30 @@ class HomeNotificationViewHolder(private val binding: ItemNotificationBinding) :
     }
 
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     fun calculateTimeDifference(dateTimeString: String): String {
-        val formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
-        val targetDateTime = LocalDateTime.parse(dateTimeString, formatter)
-        val currentDateTime = LocalDateTime.now()
+        val formatterIso = DateTimeFormatter.ISO_LOCAL_DATE_TIME
+        val targetDateTime = LocalDateTime.parse(dateTimeString, formatterIso)
+        val currentDate = LocalDate.now()
 
-        val daysDifference = currentDateTime.toLocalDate().toEpochDay() - targetDateTime.toLocalDate().toEpochDay()
+        val targetDate = formatDateString(targetDateTime.toString().substringBefore("T"))
+        val formatterDate = DateTimeFormatter.ofPattern("yyyy.MM.dd")
 
-        return when (daysDifference) {
-            0L -> "Just now"
-            in 1..7L -> "$daysDifference days ago"
-            else -> targetDateTime.format(DateTimeFormatter.ofPattern("YYYY.MM.DD"))
+        val daysDifference = currentDate.toEpochDay() - LocalDate.parse(targetDate, formatterDate).toEpochDay()
+
+        return when {
+            daysDifference == 0L -> "Just now"
+            daysDifference in 1..7L -> "$daysDifference days ago"
+            else -> targetDate
         }
     }
+
+    fun formatDateString(inputDateString: String): String {
+        val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val outputFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
+
+        val date = LocalDate.parse(inputDateString, inputFormatter)
+        return outputFormatter.format(date)
+    }
+
 }
