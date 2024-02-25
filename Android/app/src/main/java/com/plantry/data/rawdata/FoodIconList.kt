@@ -1,4 +1,4 @@
-package com.plantry.presentation.addfood.rawdata
+package com.plantry.data.rawdata
 
 import com.plantry.data.dto.response.product.ResponseProductIconListDto
 

@@ -7,7 +7,7 @@ import com.plantry.data.dto.response.product.ResponseProductIconListDto
 import com.plantry.databinding.BottomsheetAddFoodIconSelectBinding
 import com.plantry.presentation.addfood.adapter.FoodGroupNameListAdapter
 import com.plantry.presentation.addfood.adapter.OnFoodItemClickListener
-import com.plantry.presentation.addfood.rawdata.FoodIconList
+import com.plantry.data.rawdata.FoodIconList
 import com.plantry.presentation.addfood.viewmodel.product.FoodViewModel
 
 class AddFoodIconSelectBottomSheet :

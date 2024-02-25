@@ -1,20 +1,28 @@
 package com.plantry.presentation.share.popup
 
+import android.util.Log
+import android.view.View
 import androidx.fragment.app.viewModels
 import com.plantry.R
 import com.plantry.coreui.base.BindingDialogFragment
+import com.plantry.coreui.fragment.toast
+import com.plantry.coreui.view.UiState
 import com.plantry.databinding.PopupProfileDeleteFoodBinding
 import com.plantry.databinding.PopupShareMemberDeleteBinding
+import com.plantry.presentation.share.viewmodel.ShareMemberDeleteViewModel
 import com.plantry.presentation.share.viewmodel.ShareMemberViewModel
 
 class DeleteMemberPopUp :
     BindingDialogFragment<PopupShareMemberDeleteBinding>(R.layout.popup_share_member_delete) {
 
     private val viewModelShareMemberList by viewModels<ShareMemberViewModel>({ requireParentFragment() })
+    private val viewModelMemberDelete by viewModels<ShareMemberDeleteViewModel>()
 
 
     override fun initView() {
         clickClick()
+        clickDelete()
+        observeDelete()
     }
 
     private fun clickClick() {
@@ -24,12 +32,39 @@ class DeleteMemberPopUp :
     }
 
     private fun clickDelete(){
-        // 확인 누르면 받은 memberId 전달해서 member 삭제하기
         binding.tvHomeShareMemberDeletePopupDelete.setOnClickListener {
-            dismiss()
+            val pantry_id = arguments?.getInt("pantry_id")
+            val member_id = arguments?.getInt("member_id")
+            Log.d("retrofit", member_id.toString())
+            Log.d("retrofit", pantry_id.toString())
+
+            if (pantry_id != null && member_id != null) {
+                viewModelMemberDelete.deleteShareMember(pantryId = pantry_id, userId = member_id)
+            }
         }
     }
 
-    // observe 성공하면 list 다시 부르고 dismiss() 하기!!
+    private fun observeDelete(){
+        viewModelMemberDelete.shareMemberDelete.observe(this) {
+            when (it) {
+                is UiState.Success -> {
+                    val pantry_id = arguments?.getInt("pantry_id")
+                    if (pantry_id != null) {
+                        viewModelShareMemberList.getShareCodeMember(pantryId = pantry_id)
+                        dismiss()
+                    }
+                }
+                is UiState.Failure -> {
+                    if(it.msg.equals("HTTP 403 ")) {
+                        toast("Sorry, You are not the owner of the refrigerator, so you cannot delete it.")
+                        dismiss()
+                    }
+                }
+
+                else -> Unit
+            }
+        }
+
+    }
 
 }

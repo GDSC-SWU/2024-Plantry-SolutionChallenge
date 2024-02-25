@@ -8,7 +8,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import com.plantry.MainActivity
+import com.plantry.presentation.MainActivity
 
 
 // 의존성 분리를 위한 interface 선언
