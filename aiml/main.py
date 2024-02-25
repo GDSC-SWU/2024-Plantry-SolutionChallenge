@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, UploadFile
 from google.cloud import vision
 from google.oauth2 import service_account
 import re
@@ -7,16 +7,17 @@ import pytesseract
 from starlette.responses import JSONResponse
 import os
 
+
 #Service account key file path
 service_account_key_file_path = "plantryocr-account.json"
 
 #FastAPI app
-app = FastAPI()
+app = FastAPI(form_data_limit=1024 * 1024 * 100)
 
 #API endpoint
 @app.post("/api/v1/parse-receipt")
-async def parse_receipt_endpoint(image: UploadFile = File(...)):
-  #Read image bytes
+async def parse_receipt_endpoint(image: UploadFile):
+  #Read image file content as bytes
   image_bytes = await image.read()
 
   #Google Cloud Vision API request
@@ -31,13 +32,13 @@ async def parse_receipt_endpoint(image: UploadFile = File(...)):
   google_vision_text = response.text_annotations[0].description
 
   #Tessdata directory configuration
-  print(os.getcwd())
   tessdata_dir_config = '--tessdata-dir ' + os.getcwd() + '/tessdata'
 
   #Extract text using Tesseract OCR
   with open("image.png", "wb") as f:
       f.write(image_bytes)
-  tesseract_text = pytesseract.image_to_string(Image.open("image.png"), lang="eng+kor", config=tessdata_dir_config)
+  tesseract_text = pytesseract.image_to_string(image=Image.open("image.png"), lang="eng+kor",
+                                               config=tessdata_dir_config)
 
   #Combine both results
   text = google_vision_text + "\n" + tesseract_text
