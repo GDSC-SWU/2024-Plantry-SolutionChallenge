@@ -186,5 +186,6 @@
     <string name="share_code_member_owmer">Pantry Owner</string>
     <string name="share_code_registration_sucess">Successfully registered!</string>
     <string name="share_code_registration_failure">Pantry not found.</string>
+    <string name="profile_alarm_deadline_notification">Notification of product deadline</string>
 
 </resources>

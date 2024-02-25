@@ -32,10 +32,10 @@ class FragmentHome : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     override fun initView() {
         resetScrollPosition()
         viewModelList.getPantryList()
+        observeSubmitResult()
         observe_list()
         observe_star()
         clickNotification()
-        observeSubmitResult()
         observe_add()
         clickAddPantryByCode()
     }
@@ -162,7 +162,7 @@ class FragmentHome : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         Handler().postDelayed({
             binding.tvAddPantrySuccess.visibility = View.GONE
             viewModelList.getPantryList()
-        }, 1000)
+        }, 500)
     }
 
     companion object {

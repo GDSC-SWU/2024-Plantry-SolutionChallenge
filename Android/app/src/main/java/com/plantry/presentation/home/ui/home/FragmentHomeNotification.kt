@@ -19,8 +19,8 @@ class FragmentHomeNotification :
 
     override var bnvVisibility = View.GONE
 
-    private val viewModeAlarmlList by viewModels<NotificationAllListViewModel>()
-    private val viewModeAlarmConfirm by viewModels<NotificationConfirmViewModel>()
+    private val viewModelAlarmList by viewModels<NotificationAllListViewModel>()
+    private val viewModelAlarmConfirm by viewModels<NotificationConfirmViewModel>()
 
 
     override fun initView() {
@@ -42,7 +42,7 @@ class FragmentHomeNotification :
                 when (view.id) {
                     R.id.cl_notification_item_layout -> {
                         if(item.result?.get(position)?.isChecked != true){
-                            viewModeAlarmConfirm.patchNotificationComfirm(item.result?.get(position)?.id ?: 0)
+                            viewModelAlarmConfirm.patchNotificationComfirm(item.result?.get(position)?.id ?: 0)
                         }
                         findNavController().navigate(R.id.action_notification_to_home)
                     }
@@ -52,7 +52,7 @@ class FragmentHomeNotification :
     }
 
     private fun observeNoriConfirm(){
-        viewModeAlarmConfirm.notificationConfirm.observe(this) {
+        viewModelAlarmConfirm.notificationConfirm.observe(this) {
             when (it) {
                 is UiState.Success -> {
                     Log.d("aaa", it.data.toString())
@@ -64,7 +64,7 @@ class FragmentHomeNotification :
     }
 
     private fun observeNotiList() {
-        viewModeAlarmlList.notificationAllList.observe(this) {
+        viewModelAlarmList.notificationAllList.observe(this) {
             when (it) {
                 is UiState.Success -> {
                     val adapter = HomeNotificationAdapter()

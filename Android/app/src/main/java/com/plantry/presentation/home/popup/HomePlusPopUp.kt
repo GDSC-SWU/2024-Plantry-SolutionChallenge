@@ -20,7 +20,6 @@ class HomePlusPopUp :
 
     override fun initView() {
         val pantry_id = arguments?.getInt("pantry_id")
-        Log.d("ddd", pantry_id.toString())
         if (pantry_id != null) { // edit 으로 들어온 경우
             setEditTitle()
             setEditColor()
@@ -43,7 +42,6 @@ class HomePlusPopUp :
     }
 
     private fun setEditColor() {
-        Log.d("ddd", arguments?.getString("pantry_color").toString())
         when (arguments?.getString("pantry_color")) {
             "FFA5A0" -> {
                 checkedColor =  "FFA5A0"
@@ -92,6 +90,10 @@ class HomePlusPopUp :
         }
     }
 
+    override fun dismiss() {
+        super.dismiss()
+        viewModel_add.setPantryItemFaliure()
+    }
 
     private fun getClickedColor() {
         binding.rgHomePlusPopupColorSelect.setOnCheckedChangeListener { group, checkedId ->
@@ -125,7 +127,7 @@ class HomePlusPopUp :
 
     private fun clickCancleButton() {
         binding.tvHomePlusPopupCancle.setOnClickListener {
-            dialog?.dismiss()
+            dismiss()
         }
     }
 
@@ -134,7 +136,7 @@ class HomePlusPopUp :
         viewModel_add.pantryItem.observe(this) {
             when (it) {
                 is UiState.Success -> {
-                    dialog?.dismiss()
+                    dismiss()
                 }
 
                 else -> Unit
@@ -147,7 +149,7 @@ class HomePlusPopUp :
         viewModel_edit.pantryEdit.observe(this) {
             when (it) {
                 is UiState.Success -> {
-                    dialog?.dismiss()
+                    dismiss()
                     viewModel_list.getPantryList()
                     Log.d("Aaa13", it.data.toString())
                 }

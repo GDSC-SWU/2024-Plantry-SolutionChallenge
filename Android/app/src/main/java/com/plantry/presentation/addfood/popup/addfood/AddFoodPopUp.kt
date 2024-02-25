@@ -210,7 +210,7 @@ class AddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.popup_a
         val currentDate: LocalDate = LocalDate.now()
 
         // 해당 날짜 계산
-        val targetDate: LocalDate = currentDate.plusDays((days).toLong())
+        val targetDate: LocalDate = currentDate.plusDays((days).toLong()+ 1)
 
         // 날짜를 yy.MM.dd 형식으로 포맷팅
         val dateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yy.MM.dd")

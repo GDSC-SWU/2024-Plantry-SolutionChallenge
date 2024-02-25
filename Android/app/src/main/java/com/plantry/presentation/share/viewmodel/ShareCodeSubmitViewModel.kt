@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.plantry.coreui.view.UiState
 import com.plantry.data.ApiPool
-import com.plantry.data.dto.response.notification.ResponseNotificationCheckDto
 import com.plantry.data.dto.response.share.ResponseShareCodeSubmitDto
 import kotlinx.coroutines.launch
 
@@ -31,5 +30,9 @@ class ShareCodeSubmitViewModel : ViewModel() {
             Log.d("Aaa13", it.message.toString())
             _shareCodeSubmit.value = UiState.Failure("${it.message}")
         })
+    }
+
+    fun setShareCodeFaliure(){
+        _shareCodeSubmit.value = UiState.Failure("")
     }
 }

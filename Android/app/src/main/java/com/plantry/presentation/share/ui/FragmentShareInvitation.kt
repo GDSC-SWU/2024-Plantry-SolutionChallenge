@@ -4,13 +4,15 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.plantry.R
 import com.plantry.coreui.adapter.ItemClick
 import com.plantry.coreui.base.BindingFragment
-import com.plantry.coreui.fragment.toast
 import com.plantry.coreui.view.UiState
 import com.plantry.data.dto.response.share.ResponseShareMemberDto
 import com.plantry.databinding.FragmentShareCodeInvitationBinding
@@ -18,6 +20,7 @@ import com.plantry.presentation.share.adapter.ShareMemberAdapter
 import com.plantry.presentation.share.popup.DeleteMemberPopUp
 import com.plantry.presentation.share.viewmodel.ShareCodeResearchViewModel
 import com.plantry.presentation.share.viewmodel.ShareCodeSearchViewModel
+import com.plantry.presentation.share.viewmodel.ShareMemberSearchViewModel
 import com.plantry.presentation.share.viewmodel.ShareMemberViewModel
 
 class FragmentShareInvitation :
@@ -27,6 +30,7 @@ class FragmentShareInvitation :
     private val viewModelShareMemberList by viewModels<ShareMemberViewModel>({ requireParentFragment() })
     private val viewModelShareCodeSearch by viewModels<ShareCodeSearchViewModel>()
     private val viewModelShareCodeReSearch by viewModels<ShareCodeResearchViewModel>()
+    private val viewModelShareMemberSearch by viewModels<ShareMemberSearchViewModel>()
 
     override fun initView() {
         observeMemberList()
@@ -38,6 +42,10 @@ class FragmentShareInvitation :
 
         clickRefreshCode()
         observeRefreshCode()
+
+        observeSearch()
+        stopSearch()
+        checkDateValidate()
 
 
     }
@@ -52,7 +60,6 @@ class FragmentShareInvitation :
                 binding.layoutHomeShareCodeInvitationCodeView.tvShareOwnerItemCode.text.toString()
             )
             clipboardManager.setPrimaryClip(clipData)
-            toast("Text copied to clipboard")
         }
     }
 
@@ -73,12 +80,16 @@ class FragmentShareInvitation :
             override fun onClick(view: View, position: Int) {
                 when (view.id) {
                     R.id.iv_share_code_member_delete -> {
+                        val pantry_id = arguments?.getInt("pantry_id")
                         val memberDeletePopup = DeleteMemberPopUp()
                         memberDeletePopup.setStyle(
                             DialogFragment.STYLE_NO_TITLE, R.style.Theme_Plantry_AlertDialog
                         )
                         memberDeletePopup.arguments = Bundle().apply {
                             list[position].userId?.let { putInt("member_id", it) }
+                            pantry_id?.let { putInt("pantry_id", it) }
+                            Log.d("retrofit", list[position].userId.toString())
+                            Log.d("retrofit", pantry_id.toString())
                         }
                         memberDeletePopup.show(parentFragmentManager, POP_UP_MEMEBER_DELETE)
                     }
@@ -91,16 +102,8 @@ class FragmentShareInvitation :
         viewModelShareMemberList.shareMember.observe(this) {
             when (it) {
                 is UiState.Success -> {
-                    val isOwner = it.data.isUserOwner
-                    if (isOwner != null) {
-                        checkOwnerAndSetVisibilty(isOwner)
-                        val adapter = ShareMemberAdapter(requireContext(), isOwner)
+                    setRcvList(it.data)
 
-                        binding.rcvHomeShareCodeItemMemberList.adapter = adapter
-                        val pantryList = it.data.list
-                        adapter.submitList(pantryList)
-                        it.data.list?.let { list -> clickItem(adapter, list) }
-                    }
 
                     if(it.data.list != null){
                         binding.tvHomeShareCodeMemberTitle.text = "Pantry Member(${it.data.list.size})"
@@ -150,6 +153,71 @@ class FragmentShareInvitation :
         }
     }
 
+    private fun setRcvList(it : ResponseShareMemberDto){
+        val isOwner = it.isUserOwner
+        if (isOwner != null) {
+            checkOwnerAndSetVisibilty(isOwner)
+            val adapter = ShareMemberAdapter(requireContext(), isOwner)
+
+            binding.rcvHomeShareCodeItemMemberList.adapter = adapter
+            val pantryList = it.list
+            adapter.submitList(pantryList)
+            it.list?.let { list -> clickItem(adapter, list) }
+        }
+
+    }
+
+    private fun observeSearch() {
+        viewModelShareMemberSearch.shareMemberSearch.observe(this) {
+            when (it) {
+                is UiState.Success -> {
+                    setRcvList(it.data)
+                }
+
+                else -> Unit
+            }
+        }
+    }
+
+    private fun stopSearch() {
+        val pantryId = arguments?.getInt("pantry_id")
+        binding.ivHomeShareCodeSearchClose.setOnClickListener {
+            binding.etHomeShareCodeSearch.setText("")
+            binding.ivHomeShareCodeSearchClose.visibility = View.GONE
+            if (pantryId != null) {
+                viewModelShareMemberList.getShareCodeMember(pantryId = pantryId)
+            }
+        }
+    }
+
+    private fun checkDateValidate() {
+        val pantryId = arguments?.getInt("pantry_id")
+        binding.etHomeShareCodeSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                binding.ivHomeShareCodeSearchClose.visibility = View.VISIBLE
+            }
+
+            override fun afterTextChanged(text: Editable?) {
+                if (pantryId != null) {
+                    if (text.toString().isEmpty()) {
+                        viewModelShareMemberList.getShareCodeMember(pantryId)
+                    } else {
+                        if (text.toString().contains("\n")) {
+                            val searchKeyWord = binding.etHomeShareCodeSearch.text.toString().trim()
+                            viewModelShareMemberSearch.getShareMemberSearch(
+                                pantryId, searchKeyWord
+                            )
+                            binding.etHomeShareCodeSearch.setText(searchKeyWord)
+                        }
+                    }
+                }
+            }
+        }
+        )
+    }
     companion object {
         const val POP_UP_MEMEBER_DELETE = "share_invitation_to_delete_member"
     }

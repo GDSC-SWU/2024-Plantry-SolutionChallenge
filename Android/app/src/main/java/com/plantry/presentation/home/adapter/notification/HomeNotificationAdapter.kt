@@ -1,7 +1,9 @@
 package com.plantry.presentation.home.adapter.notification
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.plantry.coreui.adapter.ItemClick
@@ -30,6 +32,7 @@ class HomeNotificationAdapter:
         return HomeNotificationViewHolder(binding)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: HomeNotificationViewHolder, position: Int) {
             holder.bind(getItem(position))
         if (notificationClick != null) {

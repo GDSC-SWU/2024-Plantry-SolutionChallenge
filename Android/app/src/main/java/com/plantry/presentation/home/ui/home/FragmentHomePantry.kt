@@ -357,13 +357,11 @@ class FragmentHomePantry :
         viewModelSearch.productSearch.observe(this) {
             when (it) {
                 is UiState.Success -> {
-                    Log.d("aaass", it.data.toString())
                     val adapter = PantryDayAdapter(this)
                     binding.rcvHomePantryItemFoodList.adapter = adapter
                     val pantryList = it.data.result
                     setEmptyViewVisibility(it.data)
                     adapter.submitList(pantryList)
-                    Log.d("aaa", pantryList.toString())
                 }
 
                 else -> Unit

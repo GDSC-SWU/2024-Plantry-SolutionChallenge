@@ -23,6 +23,8 @@ import com.plantry.data.api.product.ProductListApiService
 import com.plantry.data.api.product.ProductSearchApiService
 import com.plantry.data.api.profile.ProfileAlarmChangeApiService
 import com.plantry.data.api.profile.ProfileAlarmGetApiService
+import com.plantry.data.api.profile.ProfileAlarmPermittedSearchService
+import com.plantry.data.api.profile.ProfileAlarmPermittedSetService
 import com.plantry.data.api.profile.ProfileInfoApiService
 import com.plantry.data.api.profile.ProfileMisssionApiService
 import com.plantry.data.api.profile.ProfileMisssionSuccessApiService
@@ -33,6 +35,8 @@ import com.plantry.data.api.share.ShareCodeMemberApiService
 import com.plantry.data.api.share.ShareCodeReSearchApiService
 import com.plantry.data.api.share.ShareCodeSearchApiService
 import com.plantry.data.api.share.ShareCodeSubmitApiService
+import com.plantry.data.api.share.ShareMemberDeleteApiService
+import com.plantry.data.api.share.ShareMemberSearchApiService
 import com.plantry.data.api.signin.LogoutApiService
 import com.plantry.data.api.signin.RefreshTokenApiService
 import com.plantry.data.api.signin.SignInApiService
@@ -53,7 +57,6 @@ object ApiPool {
     val deleteSignOut = RetrofitPool.retrofit.create(SignoutApiService::class.java)
     val getRefreshToken = RetrofitPool.retrofit.create(RefreshTokenApiService::class.java)
     val deleteLogOut = RetrofitPool.retrofit.create(LogoutApiService::class.java)
-
 
     val getPantryList = RetrofitPool.retrofit.create(PantryListApiService::class.java)
     val postAddPantry = RetrofitPool.retrofit.create(PantryAddApiService::class.java)
@@ -87,9 +90,11 @@ object ApiPool {
     val patchShareCodeResearch = RetrofitPool.retrofit.create(ShareCodeReSearchApiService::class.java)
     val getShareCodeSearch = RetrofitPool.retrofit.create(ShareCodeSearchApiService::class.java)
     val postShareCodeSubmit = RetrofitPool.retrofit.create(ShareCodeSubmitApiService::class.java)
+    val getProfilePermittedSearch = RetrofitPool.retrofit.create(ProfileAlarmPermittedSearchService::class.java)
+    val patchProfilePermittedSet = RetrofitPool.retrofit.create(ProfileAlarmPermittedSetService::class.java)
 
-
-
+    val getShareMemberSearch = RetrofitPool.retrofit.create(ShareMemberSearchApiService::class.java)
+    val deleteShareMember = RetrofitPool.retrofit.create(ShareMemberDeleteApiService::class.java)
 }
 
 

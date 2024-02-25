@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.plantry.coreui.view.UiState
 import com.plantry.data.AIApiPool
-import com.plantry.data.ApiPool
 import com.plantry.data.dto.response.notification.ResponseNoficationProductListDto
 import com.plantry.data.dto.response.ocr.ResponseOcrSubmit
 import kotlinx.coroutines.launch

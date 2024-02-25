@@ -32,6 +32,11 @@ class ShareJoinPopUp :
         }
     }
 
+    override fun dismiss() {
+        super.dismiss()
+        viewModelSubmit.setShareCodeFaliure()
+    }
+
     private fun observeSubmitResult() {
         viewModelSubmit.shareCodeSubmit.observe(this) {
             when (it) {

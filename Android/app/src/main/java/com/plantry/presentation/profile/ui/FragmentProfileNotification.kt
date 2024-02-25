@@ -2,6 +2,7 @@ package com.plantry.presentation.profile.ui
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -10,15 +11,21 @@ import android.provider.Settings
 import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.plantry.R
 import com.plantry.coreui.base.BindingFragment
+import com.plantry.coreui.context.toast
+import com.plantry.coreui.fragment.toast
 import com.plantry.coreui.view.UiState
 import com.plantry.databinding.FragmentProfileNotificationBinding
+import com.plantry.presentation.auth.ui.SignInActivity
+import com.plantry.presentation.auth.ui.SignInActivity.Companion.ALARM_STATE_REQUESTED
 import com.plantry.presentation.profile.viewmodel.ProfileAlarmTimeViewModel
 import com.plantry.presentation.profile.viewmodel.ProfileAlarmViewModel
+import com.plantry.presentation.profile.viewmodel.ProfileSetPermittedViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -28,6 +35,7 @@ class FragmentProfileNotification :
 
     private val viewModelAlarmTime by viewModels<ProfileAlarmTimeViewModel>()
     private val viewModelAlarmTimeEdit by viewModels<ProfileAlarmViewModel>()
+    private val viewModelSetPermitted by viewModels<ProfileSetPermittedViewModel>()
 
     override var bnvVisibility = View.GONE
 
@@ -38,15 +46,25 @@ class FragmentProfileNotification :
 
         observeAlarmTime()
         observeAlarmTimeEdit()
+        observePermitted()
 
         setAllNotificationView()
         setMarketingNotificationView()
         setDeadLineNotificationView()
         clickTimeContent()
+        settvProfileAlarmTimeContentView() // 다시 생각해보기
 
         setDeadLine()
     }
 
+    private fun settvProfileAlarmTimeContentView(){
+        if(binding.tvProfileAlarmAllowNotificationToggle.isSelected){
+            binding.tvProfileAlarmTimeContent.visibility = View.VISIBLE
+        }
+        else{
+            binding.tvProfileAlarmTimeContent.visibility = View.GONE
+        }
+    }
     private fun setNotificationPermission() {
         val initNotificationPermission = ContextCompat.checkSelfPermission(
             requireActivity(),
@@ -60,7 +78,25 @@ class FragmentProfileNotification :
         } else {
             setAllNotificationVisibilty(View.GONE)
             binding.tvProfileAlarmAllowNotificationToggle.isSelected = false
+        }
+    }
 
+    private fun observePermitted() {
+        viewModelSetPermitted.alarmPermitted.observe(this) {
+            when (it) {
+                is UiState.Success -> {
+                    val prefsAlarm = requireContext().getSharedPreferences(SignInActivity.ALARM_STATE, Context.MODE_PRIVATE)
+
+                    with(prefsAlarm.edit()) {
+                        putBoolean(ALARM_STATE_REQUESTED, it.data)
+                        apply()
+                    }
+                    Log.d("aaa 알림1", it.data.toString())
+                    Log.d("aaa 알림2", prefsAlarm.getBoolean(SignInActivity.ALARM_STATE_REQUESTED, true).toString())
+                }
+
+                else -> Unit
+            }
         }
     }
 
@@ -141,28 +177,20 @@ class FragmentProfileNotification :
 
     private val notificationSettingsLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            // 권한 설정 후의 처리 코드
-            if (result.resultCode == Activity.RESULT_OK) { // 허락
-                binding.tvProfileAlarmAllowNotificationToggle.isSelected = true
-                setAllNotificationVisibilty(View.VISIBLE)
-                viewModelAlarmTimeEdit.patchAlarmProfile(9)
-                checkNotificationPermission()
-            } else { // 거부
-                binding.tvProfileAlarmAllowNotificationToggle.isSelected = false
-                setAllNotificationVisibilty(View.GONE)
-                viewModelAlarmTimeEdit.patchAlarmProfile(0)
-            }
-            setNotificationPermission()
-        }
-
-    private fun checkNotificationPermission() {
-        // 권한에 따라 toggle 설정
-        binding.tvProfileAlarmAllowNotificationToggle.isSelected =
-            ContextCompat.checkSelfPermission(
+            val initNotificationPermission = ContextCompat.checkSelfPermission(
                 requireActivity(),
                 Manifest.permission.POST_NOTIFICATIONS
             ) == PackageManager.PERMISSION_GRANTED
-    }
+
+            val prefsAlarm = requireContext().getSharedPreferences(SignInActivity.ALARM_STATE, Context.MODE_PRIVATE)
+            val alarmStateRequested = prefsAlarm.getBoolean(ALARM_STATE_REQUESTED, true)
+
+            if(initNotificationPermission != alarmStateRequested){
+                viewModelSetPermitted.patchProfilePermittedSet()
+
+            }
+            setNotificationPermission()
+        }
 
     private fun setMarketingNotificationView() {
         binding.tvProfileAlarmAllowMarketingNotificationToggle.setOnClickListener {
@@ -178,7 +206,7 @@ class FragmentProfileNotification :
             if (binding.tvProfileAlarmProductDeadlineNotificationToggle.isSelected) {
                 binding.tvProfileAlarmTimeContent.visibility = View.VISIBLE
                 viewModelAlarmTimeEdit.patchAlarmProfile(9)
-            } else {
+            } else if(!binding.tvProfileAlarmProductDeadlineNotificationToggle.isSelected ) {
                 binding.tvProfileAlarmTimeContent.visibility = View.GONE
                 viewModelAlarmTimeEdit.patchAlarmProfile(0)
             }
@@ -187,6 +215,7 @@ class FragmentProfileNotification :
 
 
     private fun setAllNotificationVisibilty(visiblity: Int) {
+        !binding.tvProfileAlarmAllowNotificationToggle.isSelected
         binding.tvProfileAlarmProductDeadlineNotification.visibility = visiblity
         binding.tvProfileAlarmProductDeadlineNotificationToggle.visibility = visiblity
         binding.tvProfileAlarmAllowMarketingNotification.visibility = visiblity
