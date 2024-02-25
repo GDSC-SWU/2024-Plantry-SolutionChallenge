@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.plantry.presentation.home.ui.home.FragmentHome"
+        android:label="HomeFragment">
+        <action
+            android:id="@+id/action_home_to_home_pantry"
+            app:destination="@id/detail_home_pantry" />
+        <action
+            android:id="@+id/action_home_to_else"
+            app:destination="@id/home_else_bottom_sheet" />
+        <action
+            android:id="@+id/action_home_to_home_notification"
+            app:destination="@id/home_notification" />
+
+        <action
+            android:id="@+id/action_add_food_to_ocr_loading"
+            app:destination="@id/ocr_loading" />
+    </fragment>
+    <fragment
+        android:id="@+id/home_else_bottom_sheet"
+        android:name="com.plantry.presentation.home.bottomsheet.HomeElseBottomSheet"
+        android:label="home_else_bottom_sheet">
+        <action
+            android:id="@+id/action_else_to_home"
+            app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_else_to_delete"
+            app:destination="@id/home_delete_popoup" />
+    </fragment>
+    <fragment
+        android:id="@+id/home_alarm_bottom_sheet"
+        android:name="com.plantry.presentation.home.bottomsheet.HomeAlarmBottomSheet"
+        android:label="home_alarm_bottom_sheet">
+        <action
+            android:id="@+id/action_alarm_to_pantry_content"
+            app:destination="@id/detail_home_pantry" />
+    </fragment>
+    <fragment
+        android:id="@+id/home_delete_popoup"
+        android:name="com.plantry.presentation.home.popup.HomeDeletePopUp"
+        android:label="HomeDeletePopUp">
+        <action
+            android:id="@+id/action_delete_to_else"
+            app:destination="@id/home_else_bottom_sheet" />
+    </fragment>
+    <fragment
+        android:id="@+id/detail_home_pantry"
+        android:name="com.plantry.presentation.home.ui.home.FragmentHomePantry"
+        android:label="HomePantryFragment">
+        <action
+            android:id="@+id/action_home_pantry_to_share_code"
+            app:destination="@id/home_share_code" />
+        <action
+            android:id="@+id/action_home_pantry_to_home"
+            app:destination="@id/navigation_home"/>
+        <action
+            android:id="@+id/action_home_pantry_to_alarm"
+            app:destination="@id/home_alarm_bottom_sheet" />
+    </fragment>
+    <fragment
+        android:id="@+id/home_share_code"
+        android:name="com.plantry.presentation.share.ui.FragmentShareCode"
+        android:label="HomeShareCode">
+        <action
+            android:id="@+id/action_share_code_to_home_pantry"
+            app:destination="@id/detail_home_pantry" />
+    </fragment>
+    <fragment
+        android:id="@+id/home_notification"
+        android:name="com.plantry.presentation.home.ui.home.FragmentHomeNotification"
+        android:label="HomeNotificationFragment">
+        <action
+            android:id="@+id/action_notification_to_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.plantry.presentation.profile.ui.FragmentProfile"
+        android:label="ProfileFragment">
+        <action
+            android:id="@+id/action_add_food_to_ocr_loading"
+            app:destination="@id/ocr_loading" />
+        <action
+            android:id="@+id/action_profile_to_about_us"
+            app:destination="@id/profile_about_us" />
+        <action
+            android:id="@+id/action_profile_to_edit"
+            app:destination="@id/profile_edit_name" />
+        <action
+            android:id="@+id/action_profile_to_delete"
+            app:destination="@id/profile_delete_id" />
+        <action
+            android:id="@+id/action_profile_to_alarm"
+            app:destination="@id/profile_alarm_check" />
+        <action
+            android:id="@+id/action_profile_to_terms"
+            app:destination="@id/profile_terms" />
+    </fragment>
+    <fragment
+        android:id="@+id/profile_about_us"
+        android:name="com.plantry.presentation.profile.ui.FragmentProfileAboutUs"
+        android:label="ProfileAboutUsFragment" />
+    <fragment
+        android:id="@+id/profile_edit_name"
+        android:name="com.plantry.presentation.profile.ui.FragmentProfileEdit"
+        android:label="ProfileEditFragment">
+        <action
+            android:id="@+id/action_profile_edit_name_to_delete"
+            app:destination="@id/profile_delete_id" />
+    </fragment>
+    <fragment
+        android:id="@+id/profile_alarm_check"
+        android:name="com.plantry.presentation.profile.ui.FragmentProfileNotification"
+        android:label="ProfileNotificationFragment" />
+    <fragment
+        android:id="@+id/profile_delete_id"
+        android:name="com.plantry.presentation.profile.ui.FragmentProfileDelete"
+        android:label="ProfileDeleteIdFragment" />
+    <fragment
+        android:id="@+id/profile_terms"
+        android:name="com.plantry.presentation.profile.ui.FragmentProfileTerms"
+        android:label="ProfileTermsFragment" />
+    <fragment
+        android:id="@+id/ocr_loading"
+        android:name="com.plantry.presentation.home.ui.ocr.FragmentOcrLoading"
+        android:label="OcrLoadingFragment" />
+</navigation>

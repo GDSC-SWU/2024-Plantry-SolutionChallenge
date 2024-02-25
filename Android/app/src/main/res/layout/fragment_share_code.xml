@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/ab_home_share_code_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/tb_home_share_code_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_home_share_code_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="8dp"
+                    android:src="@drawable/ic_home_pantry_back" />
+
+                <TextView
+                    android:id="@+id/tv_home_share_code_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Plantry.Heding2"
+                    android:text="@string/home_share_code_name" />
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tl_home_share_code_tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ab_home_share_code_appbar"
+            app:tabIndicatorColor="@color/primary_color"
+            app:tabIndicatorFullWidth="false"
+            app:tabRippleColor="@null"
+            app:tabSelectedTextAppearance="@style/TextAppearance.Plantry.Body2"
+            app:tabSelectedTextColor="@color/dark"
+            app:tabTextAppearance="@style/TextAppearance.Plantry.Body3"
+            app:tabTextColor="@color/gray3">
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/ti_home_share_code_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_share_code_invitation" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/ti_home_share_code_cold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_share_code_registration" />
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_share_code_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tl_home_share_code_tab" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

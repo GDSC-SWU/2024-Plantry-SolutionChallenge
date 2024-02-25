@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/primary_color">
+
+        <ImageView
+            android:id="@+id/iv_signin_character"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="44dp"
+            android:src="@drawable/ic_signin_character"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_signin_appname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/app_name"
+            android:textAppearance="@style/TextAppearance.Plantry.Heding1"
+            android:textColor="@color/white1"
+            android:textSize="40sp"
+            app:layout_constraintEnd_toEndOf="@id/iv_signin_character"
+            app:layout_constraintStart_toStartOf="@id/iv_signin_character"
+            app:layout_constraintTop_toBottomOf="@id/iv_signin_character" />
+
+        <TextView
+            android:id="@+id/tv_signin_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp"
+            android:background="@drawable/shape_fill_white1_8_rec"
+            android:drawableStart="@drawable/ic_signin_google_logo"
+            android:drawablePadding="16dp"
+            android:paddingHorizontal="63.5dp"
+            android:paddingVertical="14dp"
+            android:text="@string/signin_google_login"
+            android:textAppearance="@style/TextAppearance.Plantry.Button1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data></data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_alarm_popup_pantry_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="23dp"
+        android:visibility="gone"
+        android:background="@drawable/shape_fill_white1_8_rec"
+        android:elevation="3dp"
+        android:paddingVertical="8dp">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RadioGroup
+                    android:id="@+id/rg_alarm_option_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/rb_profile_alarm_content1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background = "@drawable/selector_add_food_popup_pantry_name"
+                        android:button="@null"
+                        android:checked="true"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="10dp"
+                        android:text="@string/profile_alarm1"
+                        android:textAppearance="@style/TextAppearance.Plantry.Body6" />
+
+                    <RadioButton
+                        android:id="@+id/rb_profile_alarm_content2"
+                        android:text="@string/profile_alarm2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background = "@drawable/selector_add_food_popup_pantry_name"
+                        android:button="@null"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="10dp"
+                        android:textAppearance="@style/TextAppearance.Plantry.Body6" />
+
+                    <RadioButton
+                        android:id="@+id/rb_profile_alarm_content3"
+                        android:text="@string/profile_alarm3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background = "@drawable/selector_add_food_popup_pantry_name"
+                        android:button="@null"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="10dp"
+                        android:textAppearance="@style/TextAppearance.Plantry.Body6" />
+
+                    <RadioButton
+                        android:id="@+id/rb_profile_alarm_content4"
+                        android:text="@string/profile_alarm4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background = "@drawable/selector_add_food_popup_pantry_name"
+                        android:button="@null"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="10dp"
+                        android:textAppearance="@style/TextAppearance.Plantry.Body6" />
+
+                    <RadioButton
+                        android:id="@+id/rb_profile_alarm_content5"
+                        android:text="@string/profile_alarm5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background = "@drawable/selector_add_food_popup_pantry_name"
+                        android:button="@null"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="10dp"
+                        android:textAppearance="@style/TextAppearance.Plantry.Body6" />
+
+                    <RadioButton
+                        android:id="@+id/rb_profile_alarm_content6"
+                        android:text="@string/profile_alarm6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background = "@drawable/selector_add_food_popup_pantry_name"
+                        android:button="@null"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="10dp"
+                        android:textAppearance="@style/TextAppearance.Plantry.Body6" />
+
+                    <RadioButton
+                        android:id="@+id/rb_profile_alarm_content7"
+                        android:text="@string/profile_alarm7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background = "@drawable/selector_add_food_popup_pantry_name"
+                        android:button="@null"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="10dp"
+                        android:textAppearance="@style/TextAppearance.Plantry.Body6" />
+
+                    <RadioButton
+                        android:id="@+id/rb_profile_alarm_content8"
+                        android:text="@string/profile_alarm8"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background = "@drawable/selector_add_food_popup_pantry_name"
+                        android:button="@null"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="10dp"
+                        android:textAppearance="@style/TextAppearance.Plantry.Body6" />
+
+                    <RadioButton
+                        android:id="@+id/rb_profile_alarm_content9"
+                        android:text="@string/profile_alarm9"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background = "@drawable/selector_add_food_popup_pantry_name"
+                        android:button="@null"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="10dp"
+                        android:textAppearance="@style/TextAppearance.Plantry.Body6" />
+
+                    <RadioButton
+                        android:id="@+id/rb_profile_alarm_content10"
+                        android:text="@string/profile_alarm10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background = "@drawable/selector_add_food_popup_pantry_name"
+                        android:button="@null"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="10dp"
+                        android:textAppearance="@style/TextAppearance.Plantry.Body6" />
+                    <RadioButton
+                        android:id="@+id/rb_profile_alarm_content11"
+                        android:text="@string/profile_alarm11"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background = "@drawable/selector_add_food_popup_pantry_name"
+                        android:button="@null"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="10dp"
+                        android:textAppearance="@style/TextAppearance.Plantry.Body6" />
+                    <RadioButton
+                        android:id="@+id/rb_profile_alarm_content12"
+                        android:text="@string/profile_alarm12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background = "@drawable/selector_add_food_popup_pantry_name"
+                        android:button="@null"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="10dp"
+                        android:textAppearance="@style/TextAppearance.Plantry.Body6" />
+                    <RadioButton
+                        android:id="@+id/rb_profile_alarm_content13"
+                        android:text="@string/profile_alarm13"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background = "@drawable/selector_add_food_popup_pantry_name"
+                        android:button="@null"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="10dp"
+                        android:textAppearance="@style/TextAppearance.Plantry.Body6" />
+                    <RadioButton
+                        android:id="@+id/rb_profile_alarm_content14"
+                        android:text="@string/profile_alarm14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background = "@drawable/selector_add_food_popup_pantry_name"
+                        android:button="@null"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="10dp"
+                        android:textAppearance="@style/TextAppearance.Plantry.Body6" />
+                    <RadioButton
+                        android:id="@+id/rb_profile_alarm_content15"
+                        android:text="@string/profile_alarm15"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background = "@drawable/selector_add_food_popup_pantry_name"
+                        android:button="@null"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="10dp"
+                        android:textAppearance="@style/TextAppearance.Plantry.Body6" />
+                    <RadioButton
+                        android:id="@+id/rb_profile_alarm_content16"
+                        android:text="@string/profile_alarm16"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background = "@drawable/selector_add_food_popup_pantry_name"
+                        android:button="@null"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="10dp"
+                        android:textAppearance="@style/TextAppearance.Plantry.Body6" />
+                </RadioGroup>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

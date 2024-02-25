@@ -1,0 +1,191 @@
+<resources>
+    <string name="app_name">Plantry</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_community">Community</string>
+    <string name="menu_add_food">Add Foods</string>
+    <string name="menu_store">Store</string>
+    <string name="menu_profile">Profile</string>
+
+    <string name="signin_google_login">Sign In with Google</string>
+
+    <string name="home_sub_title">Your Plantry</string>
+
+    <string name="home_item_add_pantry">Add Pantry</string>
+    <string name="home_item_pantry_name">pantry name</string>
+
+    <string name="home_plus_popup_title">Cover</string>
+    <string name="home_plus_popup_subtitle">Show your Pantry Cover!</string>
+    <string name="home_plus_popup_cover_title">Title</string>
+    <string name="home_plus_popup_pantry_name">Pantry’s Name (0/12)</string>
+    <string name="home_plus_popup_cover_color">Cover Color</string>
+    <string name="home_plus_popup_error_message2">Please write another name because is already used.</string>
+    <string name="home_plus_popup_error_message1">Please write within 12 letters!</string>
+
+    <string name="popup_button_delete">Delete</string>
+    <string name="popup_button_cancle">Cancel</string>
+    <string name="popup_button_confirm">Confirm</string>
+
+    <string name="home_delete_popup_subtitle">This action cannot be undone.</string>
+    <string name="home_delete_popup_title">Delete Pantry</string>
+
+    <string name="home_bottom_sheet_edit">Edit</string>
+    <string name="home_bottom_sheet_delete">Delete</string>
+
+    <string name="home_pantry_name">Pantry Name</string>
+    <string name="home_pantry_search">Search</string>
+
+    <string name="home_pantry_item_d_day_expired">Expired</string>
+    <string name="home_pantry_item_d_day_text">D-day (2)</string>
+    <string name="home_pantry_item_content_food_name">food_name</string>
+    <string name="home_pantry_item_content_sell_by_date">Sell-by Date</string>
+    <string name="home_pantry_item_content_use_by_date">Use-by Date</string>
+    <string name="home_pantry_item_content_d_day">D+21</string>
+    <string name="home_pantry_item_content_food_img">🪸</string>
+    <string name="home_pantry_item_content_count">1</string>
+
+    <string name="home_bottom_sheet_alarm_title">Deadline Alarm (Can be duplicated)</string>
+    <string name="home_bottomsheet_alarm_deadline">Alarm at Deadline (9 A.M)</string>
+    <string name="home_bottom_sheet_alarm_one">Alarm 1 days ago</string>
+    <string name="home_bottom_sheet_alarm_three">Alarm 3 days ago</string>
+    <string name="home_bottom_sheet_alarm_seven">Alarm 7 days ago</string>
+
+    <string name="home_pantry_all">All</string>
+    <string name="home_pantry_cold">Cold</string>
+    <string name="home_pantry_freeze">Freeze</string>
+    <string name="home_pantry_etc">etc</string>
+
+    <string name="home_pantry_empty_fill_ingrefients">"There's no food in your pantry.\n Please fill the pantry with <font color="#828282">Your Ingredients!"</font></string>
+    <string name="home_pantry_empty_add_food">Going to Add Foods</string>
+
+    <string name="add_food_recipt">Receipt</string>
+    <string name="add_food_direct">Direct Input</string>
+    <string name="add_foods_popup_title">Add Foods</string>
+    <string name="add_food_pantry_select">Your Plantry</string>
+    <string name="add_food_pantry_food_name_title">Product</string>
+    <string name="add_food_pantry_day_title">Day</string>
+    <string name="add_food_popup_yy_mm_dd">YY.MM.DD</string>
+    <string name="add_food_pantry_storage_title">Storage</string>
+    <string name="add_food_pantry_count">Product Count</string>
+    <string name="popup_add_food_half_unit">Half Unit</string>
+    <string name="popup_add_food_error_message3">Please write it in the order of year, month, and day.</string>
+    <string name="popup_add_food_error_message4">You cannot enter less than 0.</string>
+    <string name="popup_add_food_error_message5">You cannot delete more than you have.</string>
+    <string name="add_food_date_ask">What’s ‘Use-by Date’ and ‘Sell-by Date’?</string>
+    <string name="add_food_date_description">"‘Use-by Date‘ <font color="#ACACAC">means the final time limit for consuming a food that is safe to consume.</font>\n\n ‘Sell-by Date‘ <font color="#ACACAC">means Deadline for product to be distributed/sold on the market.</font>"</string>
+    <string name="server_client_id_web">"29775346424-ckfbab33cikkr863gat1itq57s2a3e5q.apps.googleusercontent.com"</string>
+    <string name="profile_title">Profile</string>
+    <string name="profile_user_name">Profile Name</string>
+    <string name="profile_user_email">googlekorea@google.com</string>
+    <string name="profile_delete_food">Delete Food</string>
+    <string name="profile_this_week">This week</string>
+    <string name="profile_ingestion">Ingestion</string>
+    <string name="profile_disposal">Disposal</string>
+    <string name="profile_share">Sharing</string>
+    <string name="profile_mistake">Mistake</string>
+    <string name="add_food_delete_option_title">Choose some options</string>
+    <string name="add_food_delete_option_sub_title1">Why do you delete food products?</string>
+    <string name="add_food_delete_option_sub_title2">We can measure <font color="#203A40">Carbon Emissions</font>!"</string>
+    <string name="add_food_delete_option_count_title">Delete</string>
+    <string name="add_food_delete_ingestion">Ingestion</string>
+    <string name="add_food_delete_disposal">Disposal</string>
+    <string name="add_food_delete_share">Sharing</string>
+    <string name="add_food_delete_mistake">Register by Mistake</string>
+    <string name="add_food_select_title_animal_foods">Animal Foods</string>
+    <string name="add_food_item_icon">🍇</string>
+    <string name="add_food_item_food_name">Bovines</string>
+    <string name="add_food_popup_food_name">Product name</string>
+    <string name="home_pantry_item_content_count_zero">0</string>
+    <string name="home_pantry_item_content_count_half">0.5</string>
+    <string name="item_profile_mission_title">This Week’s Mission</string>
+    <string name="item_profile_mission_name">Registering Products in the Pantry!</string>
+    <string name="profile_delete_percent">30%</string>
+    <string name="profile_delete_all">/ Delete</string>
+    <string name="profile_notification_title">Notification</string>
+    <string name="profile_norification_content">Notifications</string>
+    <string name="profile_support_title">Support</string>
+    <string name="profile_term_use_content">Terms of Use</string>
+    <string name="profile_help_content">Help</string>
+    <string name="profile_about_us_content">About us</string>
+    <string name="profile_etc_title">Etc</string>
+    <string name="profile_log_out_content">Log out</string>
+    <string name="profile_delete_id_content">This action cannot be undone.</string>
+    <string name="profile_delete_id_title">Delete ID</string>
+    <string name="profile_logout_popup_title">Log out</string>
+    <string name="profile_logout_popup_subtitle">This action cannot be undone.</string>
+    <string name="profile_delete_food_popup_title">What’s ‘Delete Food’?</string>
+    <string name="profile_delete_food_popup_subtitle">\n<font color="#203A40">Delete Food</font> means that you deleted after registering in the refrigerator.\n\nYou can understand <font color="#203A40">the eating habits of your environment</font> based on \n\n<font color="#203A40">1. Ingestion</font>: Eat Foods\n<font color="#203A40">2. Disposal</font>: Throw in the trash\n<font color="#203A40">3. Sharing</font>: Share food with others\n<font color="#203A40">4. Mistake</font>: Register by Mistake</string>
+    <string name="profile_about_us_title">About us</string>
+    <string name="profile_about_us_comments">Hi, Everyone :)\n\nWe are part of the Google Development Student Clubs at <b> Seoul Women`s University, \nIn South Korea!</b> 🇰🇷\n\nIf you have any question, \nPlease contact us.  ♥ </string>
+    <string name="profile_about_us_server">Yusun Choi</string>
+    <string name="profile_about_us_server_title">Server</string>
+    <string name="profile_about_us_client">Yerim Lee</string>
+    <string name="profile_about_us_client_title">Client</string>
+    <string name="profile_about_us_design">Yehan Shin</string>
+    <string name="profile_about_us_design_title">Design</string>
+    <string name="profile_about_us_aiml">Eunji Jung</string>
+    <string name="profile_about_us_aiml_title">AI/ML</string>
+    <string name="profile_about_us_contact">Going to Contact</string>
+    <string name="profile_edit_title">Edit Profile</string>
+    <string name="profile_edit_name">Nickname</string>
+    <string name="profile_edit_email">Email</string>
+    <string name="profile_delete_title">Delete ID</string>
+    <string name="profile_delete_id_main_title">Are you sure you\'re leaving?</string>
+    <string name="profile_delete_id_reason">Please tell me why you\'re leaving.</string>
+    <string name="profile_delete_reason_1">Dissatisfaction with content quality</string>
+    <string name="profile_delete_reason_2">Rejoin with another email</string>
+    <string name="profile_delete_reason_3">Concerns over personal information exposure</string>
+    <string name="profile_delete_reason_4">Because of Application Error</string>
+    <string name="profile_delete_reason_5">Don\'t use it often</string>
+    <string name="profile_delete_reason_6">etc</string>
+    <string name="profile_alarm1">9 A.M</string>
+    <string name="profile_alarm2">10 A.M</string>
+    <string name="profile_alarm3">11 A.M</string>
+    <string name="profile_alarm4">12 A.M</string>
+    <string name="profile_alarm5">1 P.M</string>
+    <string name="profile_alarm6">2 P.M</string>
+    <string name="profile_alarm7">"3 P.M "</string>
+    <string name="profile_alarm8">4 P.M</string>
+    <string name="profile_alarm9">5 P.M</string>
+    <string name="profile_alarm10">6 P.M</string>
+    <string name="profile_alarm11">7 P.M</string>
+    <string name="profile_alarm12">8 P.M</string>
+    <string name="profile_alarm13">9 P.M</string>
+    <string name="profile_alarm14">10 P.M</string>
+    <string name="profile_alarm15">11 P.M</string>
+    <string name="profile_alarm16">12 P.M</string>
+    <string name="profile_alarm_title">Notifications</string>
+    <string name="profile_terms_title">Terms of Use</string>
+    <string name="profile_alarm_allow_notification">Allow Notifications</string>
+    <string name="profile_alarm_marketing_notification">Notification of receipt of marketing</string>
+    <string name="notification_just_now">Just now</string>
+    <string name="notification_days_ago">" days ago"</string>
+    <string name="notification_title">[D-day] Shrimp 🚀</string>
+    <string name="home_notification_title">Notifications</string>
+    <string name="home_notification_explain">Checked notifications will be automatically deleted after 7 days.</string>
+    <string name="home_noti_empty">There\'s no new Notification.</string>
+    <string name="home_share_join_id_title">Joining in pantry</string>
+    <string name="home_share_join_popup_invitation_code">Invitation Code</string>
+    <string name="home_share_join_popup_enter_code">Enter the invitation code.</string>
+    <string name="home_share_member_delete_id_title">Delete</string>
+    <string name="home_share_member_delete_id_content">This action cannot be undone.</string>
+    <string name="share_code_member_count">Pantry Memeber (1)</string>
+    <string name="home_share_code_name">Share</string>
+    <string name="home_share_code_invitation">Invitation</string>
+    <string name="home_share_code_registration">Registration</string>
+    <string name="home_share_code_member_count">Member (1)</string>
+    <string name="home_ocr_loading">I\'m currently analyzing the picture!\nPlease wait a moment :)</string>
+    <string name="popup_button_next">Next</string>
+    <string name="add_foods_popup_count_title">1/3 Food</string>
+    <string name="share_code_member_owner_code_title">Invitation Code</string>
+    <string name="item_share_owner_code">2kked83c</string>
+    <string name="item_share_owner_copy_code">Share My Invitation Code</string>
+    <string name="share_code_owner_invitation_count">Invitation Code</string>
+    <string name="share_code_registration_enter_code">Enter the invitation code.</string>
+    <string name="share_code_register_join">Joining in pantry</string>
+    <string name="share_code_member_owmer">Pantry Owner</string>
+    <string name="share_code_registration_sucess">Successfully registered!</string>
+    <string name="share_code_registration_failure">Pantry not found.</string>
+    <string name="profile_alarm_deadline_notification">Notification of product deadline</string>
+
+</resources>

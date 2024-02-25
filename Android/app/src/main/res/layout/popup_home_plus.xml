@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/shape_fill_white1_28_rec"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="40dp">
+
+        <TextView
+            android:id="@+id/tv_home_plus_popup_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home_plus_popup_title"
+            android:textAppearance="@style/TextAppearance.Plantry.Button1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_home_plus_popup_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/home_plus_popup_subtitle"
+            android:textAppearance="@style/TextAppearance.Plantry.Body5"
+            android:textColor="@color/gray3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_plus_popup_title" />
+
+        <TextView
+            android:id="@+id/tv_home_plus_popup_cover_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="21dp"
+            android:text="@string/home_plus_popup_cover_title"
+            android:textAppearance="@style/TextAppearance.Plantry.Body6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_plus_popup_subtitle" />
+
+        <EditText
+            android:id="@+id/et_home_plus_popup_pantry_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/shape_line_line2_8_rec"
+            android:hint="@string/home_plus_popup_pantry_name"
+            android:maxLength="12"
+            android:paddingVertical="12dp"
+            android:paddingStart="16dp"
+            android:textAppearance="@style/TextAppearance.Plantry.Body5"
+            android:textColorHint="@color/gray3"
+            app:layout_constraintEnd_toEndOf="@id/rg_home_plus_popup_color_select"
+            app:layout_constraintStart_toStartOf="@id/tv_home_plus_popup_cover_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_plus_popup_cover_title" />
+
+        <ImageView
+            android:id="@+id/iv_home_plus_popup_error_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/ic_home_popup_error"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/tv_home_plus_popup_cover_title"
+            app:layout_constraintTop_toBottomOf="@id/et_home_plus_popup_pantry_name" />
+
+        <TextView
+            android:id="@+id/tv_home_plus_popup_error_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:text="@string/home_plus_popup_error_message1"
+            android:textAppearance="@style/TextAppearance.Plantry.Caption"
+            android:textColor="@color/error_color"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/rg_home_plus_popup_color_select"
+            app:layout_constraintStart_toEndOf="@id/iv_home_plus_popup_error_icon"
+            app:layout_constraintTop_toTopOf="@id/iv_home_plus_popup_error_icon" />
+
+
+        <TextView
+            android:id="@+id/tv_home_plus_popup_cover_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/home_plus_popup_cover_color"
+            android:textAppearance="@style/TextAppearance.Plantry.Body6"
+            app:layout_constraintStart_toStartOf="@id/iv_home_plus_popup_error_icon"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_plus_popup_error_message" />
+
+
+        <RadioGroup
+            android:id="@+id/rg_home_plus_popup_color_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="18dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_home_plus_popup_cover_color"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_plus_popup_cover_color">
+
+            <RadioButton
+                android:id="@+id/rb_home_plus_popup_color_red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_home_popup_plus_color_red"
+                android:button="@null"
+                android:checked="true" />
+
+            <RadioButton
+                android:id="@+id/rb_home_plus_popup_color_orange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_home_popup_plus_color_orange"
+                android:button="@null" />
+
+            <RadioButton
+                android:id="@+id/rb_home_plus_popup_color_yellow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_home_popup_plus_color_yellow"
+                android:button="@null" />
+
+            <RadioButton
+                android:id="@+id/rb_home_plus_popup_color_green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_home_popup_plus_color_green"
+                android:button="@null" />
+
+            <RadioButton
+                android:id="@+id/rb_home_plus_popup_color_blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_home_popup_plus_color_blue"
+                android:button="@null" />
+
+            <RadioButton
+                android:id="@+id/rb_home_plus_popup_color_purple"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_home_popup_plus_color_purple"
+                android:button="@null" />
+        </RadioGroup>
+
+
+        <TextView
+            android:id="@+id/tv_home_plus_popup_cancle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/shape_line_line2_8_rec"
+            android:paddingHorizontal="36dp"
+            android:paddingVertical="16dp"
+            android:text="@string/popup_button_cancle"
+            android:textAppearance="@style/TextAppearance.Plantry.Body3"
+            app:layout_constraintEnd_toStartOf="@id/tv_home_plus_popup_confirm"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rg_home_plus_popup_color_select" />
+
+
+        <TextView
+            android:id="@+id/tv_home_plus_popup_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/shape_fill_primary_color_8_rec"
+            android:paddingHorizontal="36dp"
+            android:paddingVertical="16dp"
+            android:text="@string/popup_button_confirm"
+            android:textAppearance="@style/TextAppearance.Plantry.Body3"
+            android:textColor="@color/white1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@id/tv_home_plus_popup_cancle"
+            app:layout_constraintTop_toBottomOf="@id/rg_home_plus_popup_color_select" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

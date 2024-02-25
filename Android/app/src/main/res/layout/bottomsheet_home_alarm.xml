@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/v_home_bottom_sheet_top_line"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginHorizontal="147dp"
+            android:layout_marginTop="11dp"
+            android:background="@drawable/shape_fill_system_gray_4_rec"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_home_botom_sheet_alarm_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:paddingVertical="12dp"
+            android:paddingStart="16dp"
+            android:text="@string/home_bottom_sheet_alarm_title"
+            android:textAppearance="@style/TextAppearance.Plantry.Body5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/v_home_bottom_sheet_top_line" />
+
+        <TextView
+            android:id="@+id/tv_home_bottom_sheet_alarm_deadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="17dp"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="24dp"
+            android:paddingBottom="25dp"
+            android:text="@string/home_bottomsheet_alarm_deadline"
+            android:textAppearance="@style/TextAppearance.Plantry.Body6"
+            app:drawableEndCompat="@drawable/selector_home_bottom_sheet_alarm_check"
+            app:drawableStartCompat="@drawable/ic_home_panttry_bottom_sheet_alarm"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_botom_sheet_alarm_title" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="56dp"
+            android:background="@color/line1"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_bottom_sheet_alarm_deadline" />
+
+        <TextView
+            android:id="@+id/tv_home_bottom_sheet_alarm_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="17dp"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="25dp"
+            android:text="@string/home_bottom_sheet_alarm_one"
+            android:textAppearance="@style/TextAppearance.Plantry.Body6"
+            app:drawableEndCompat="@drawable/selector_home_bottom_sheet_alarm_check"
+            app:drawableStartCompat="@drawable/ic_home_panttry_bottom_sheet_one"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_bottom_sheet_alarm_deadline" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="56dp"
+            android:background="@color/line1"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_bottom_sheet_alarm_one" />
+
+        <TextView
+            android:id="@+id/tv_home_bottom_sheet_alarm_three"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="17dp"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="25dp"
+            android:text="@string/home_bottom_sheet_alarm_three"
+            android:textAppearance="@style/TextAppearance.Plantry.Body6"
+            app:drawableEndCompat="@drawable/selector_home_bottom_sheet_alarm_check"
+            app:drawableStartCompat="@drawable/ic_home_panttry_bottom_sheet_three"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_bottom_sheet_alarm_one" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="56dp"
+            android:background="@color/line1"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_bottom_sheet_alarm_three" />
+
+        <TextView
+            android:id="@+id/tv_home_bottom_sheet_alarm_seven"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="17dp"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="25dp"
+            android:text="@string/home_bottom_sheet_alarm_seven"
+            android:textAppearance="@style/TextAppearance.Plantry.Body6"
+            app:drawableEndCompat="@drawable/selector_home_bottom_sheet_alarm_check"
+            app:drawableStartCompat="@drawable/ic_home_panttry_bottom_sheet_seven"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_bottom_sheet_alarm_three" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="56dp"
+            android:background="@color/line1"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_bottom_sheet_alarm_seven" />
+
+        <TextView
+            android:id="@+id/tv_home_bottom_sheet_alarm_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:background="@drawable/shape_fill_primary_color_8_rec"
+            android:paddingVertical="16dp"
+            android:text="@string/popup_button_confirm"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_bottom_sheet_alarm_seven"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textAppearance="@style/TextAppearance.Plantry.Body3"
+            android:textColor="@color/white1" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginHorizontal="147dp"
+            android:layout_marginVertical="9dp"
+            android:background="@drawable/shape_fill_system_gray_4_rec"
+            android:backgroundTint="@color/primary_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_bottom_sheet_alarm_confirm" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--API 레벨 26이상만 사용 가능-->
+    <font
+        android:font="@font/roboto_medium"
+        android:fontStyle="normal"
+        android:fontWeight="500"/>
+    <font
+        android:font="@font/roboto_medium"
+        android:fontStyle="italic"
+        android:fontWeight="500"/>
+</font-family>
