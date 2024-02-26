@@ -37,8 +37,8 @@ class SignInActivity : BindingActivity<ActivitySigninBinding>(R.layout.activity_
     val googleSignInOption =
         GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
-            .requestIdToken("29775346424-c3ocpsd6pv76lu9bgdi046lft97ftkkn.apps.googleusercontent.com")
-            .requestServerAuthCode("29775346424-c3ocpsd6pv76lu9bgdi046lft97ftkkn.apps.googleusercontent.com")
+            .requestIdToken(resources.getString(R.string.client_id))
+            .requestServerAuthCode(resources.getString(R.string.client_id))
             .build()
 
     lateinit var mGoogleSignInClient : GoogleSignInClient
