@@ -27,7 +27,7 @@ class SignInViewModel : ViewModel() {
             },
             {
                 Log.d("Aaa23", it.message.toString())
-                _accessToken.value = UiState.Failure(it.message)
+                _accessToken.value = UiState.Failure("")
             }
         )
     }

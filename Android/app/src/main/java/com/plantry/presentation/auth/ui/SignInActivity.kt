@@ -108,9 +108,6 @@ class SignInActivity : BindingActivity<ActivitySigninBinding>(R.layout.activity_
                     navigateTo<MainActivity>()
                 }
 
-                is UiState.Failure -> {
-                    toast("Please, Try Login Again")
-                }
                 else -> Unit
             }
         }
