@@ -96,7 +96,12 @@ class FragmentProfileEdit :
             when (it) {
                 is UiState.Success -> {
                     binding.etProfileNicknameContent.setText(it.data)
-                    longToast("Your nickname has been changed successfully.\n")
+                    longToast("Your nickname has been changed successfully.")
+                }
+                is UiState.Failure -> {
+                    if(it.msg.equals("HTTP 400 ")) {
+                        longToast("Nickname already exists.")
+                    }
                 }
 
                 else -> Unit
