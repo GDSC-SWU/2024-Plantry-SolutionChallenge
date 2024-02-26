@@ -69,6 +69,12 @@ Proper storage and utilization of food can also help maintain a healthy lifestyl
 
 <br>
 
+<div align="center">
+<img alt="Plantry_all_feature gif" src="https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/68212300/cb66f366-e0ec-4017-8211-d2ffebc7551f">
+</div>
+
+<br>
+
 # 📱 How to Start
 
 #### 1. Download APK file
@@ -111,7 +117,7 @@ ai_base.url="http://34.47.86.239:8000"
 
 #### 6. Store google-service.json
 
-Store JSON file `google-service.json` containing the key on app/
+Store JSON file `google-service.json` containing the key on `/Android/app`
 
 #### 7. Run the app
 
