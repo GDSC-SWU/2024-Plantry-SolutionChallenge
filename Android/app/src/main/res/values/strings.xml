@@ -73,7 +73,6 @@
     <string name="popup_add_food_error_message5">You cannot delete more than you have.</string>
     <string name="add_food_date_ask">What’s ‘Use-by Date’ and ‘Sell-by Date’?</string>
     <string name="add_food_date_description">"‘Use-by Date‘ <font color="#ACACAC">means the final time limit for consuming a food that is safe to consume.</font>\n\n ‘Sell-by Date‘ <font color="#ACACAC">means Deadline for product to be distributed/sold on the market.</font>"</string>
-    <string name="server_client_id_web">"29775346424-ckfbab33cikkr863gat1itq57s2a3e5q.apps.googleusercontent.com"</string>
     <string name="profile_title">Profile</string>
     <string name="profile_user_name">Profile Name</string>
     <string name="profile_user_email">googlekorea@google.com</string>
