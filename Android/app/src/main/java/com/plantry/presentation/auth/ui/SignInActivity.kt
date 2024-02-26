@@ -34,22 +34,31 @@ class SignInActivity : BindingActivity<ActivitySigninBinding>(R.layout.activity_
     private lateinit var googleSignResultLauncher: ActivityResultLauncher<Intent>
     private val viewModel by viewModels<SignInViewModel>()
 
-    val googleSignInOption =
-        GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
-            .requestIdToken("29775346424-c3ocpsd6pv76lu9bgdi046lft97ftkkn.apps.googleusercontent.com")
-            .requestServerAuthCode("29775346424-c3ocpsd6pv76lu9bgdi046lft97ftkkn.apps.googleusercontent.com")
-            .build()
+
 
     lateinit var mGoogleSignInClient : GoogleSignInClient
 
 
     override fun initView() {
+
+        val clientId by lazy {
+            applicationContext.resources.getString(R.string.client_id)
+        }
+
+        val googleSignInOption =
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .requestIdToken(clientId)
+                .requestServerAuthCode(clientId)
+                .build()
+
         mGoogleSignInClient = GoogleSignIn.getClient(this, googleSignInOption)
+
         FirebaseApp.initializeApp(this)
         checkSignState()
         getGoogleClient()
         checkAlarmPermmission()
+
         googleSignResultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
