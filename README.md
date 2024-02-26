@@ -109,14 +109,18 @@ base.url="http://34.47.86.239:8080"
 ai_base.url="http://34.47.86.239:8000"
 ```
 
-#### 6. Run the app
+#### 6. Store google-service.json
+
+Store JSON file `google-service.json` containing the key on app/
+
+#### 7. Run the app
 
 press the green start button
 <br>
 ![Android Studio start button image](https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/97941141/e2d00e03-7ff0-46db-b299-15fd4f4c7fd2)
 
 
-#### 7. Send me your sha 1 key
+#### 8. Send me your sha 1 key
 
 If you can't log in, please do the process below:)
 
