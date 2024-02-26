@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+/app/src/main/res/values/api_secret_key.xml
+/app/google-services.json
