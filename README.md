@@ -47,6 +47,9 @@ With Plantry, consumers can **manage food inventory** and **record how the food 
 # 🚀 Our SDGs Goal
 ![Plantry SDGs_Goal](https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/68212300/37771e9f-6741-47ea-821f-cc2f8e4d0c4d)
 
+Improving food consumption habits among consumers can reduce greenhouse gas emissions from food waste by reducing unnecessary food waste and preventing overproduction by producers.<br>
+Proper storage and utilization of food can also help maintain a healthy lifestyle.
+
 <br>
 
 # 🛠 Technology Stack
@@ -56,7 +59,7 @@ With Plantry, consumers can **manage food inventory** and **record how the food 
 
 # 📹 Demo Video
 
-[![Plantry Demo Video Link](https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/68212300/47598a0a-4399-43c5-9d57-44ec57dd425e)]()
+[![Plantry Demo Video Link](https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/68212300/47598a0a-4399-43c5-9d57-44ec57dd425e)](https://youtu.be/fspKYlHi38A?si=x3TIBsasfWEiBI04)
 
 <br>
 
@@ -86,7 +89,7 @@ git clone https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge.git
 
 #### 2. Set your Environment variables
 
-Use this as a reference to set environment variables.
+Use this as a reference to set environment variables
 
 [https://developer.android.com/tools/variables](https://developer.android.com/tools/variables)
 
@@ -101,25 +104,28 @@ Giraffe Version or higher recommended
 Pixel XL API 34 recommended
 
 #### 5. Set Api Base url in local properties file
-`
+```properties
 base.url="http://34.47.86.239:8080"
 ai_base.url="http://34.47.86.239:8000"
-`
+```
 
 #### 6. Run the app
 
 press the green start button
-![image](https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/97941141/e2d00e03-7ff0-46db-b299-15fd4f4c7fd2)
+<br>
+![Android Studio start button image](https://github.com/GDSC-SWU/2024-Plantry-SolutionChallenge/assets/97941141/e2d00e03-7ff0-46db-b299-15fd4f4c7fd2)
 
 
 #### 7. Send me your sha 1 key
 
 If you can't log in, please do the process below:)
 
+```
 1. Enter `gradlew signalingReport` in the terminal window.
 2. Press `ctrl + enter` or `command + enter` to execute the command.
 3. please send your sha1 key `yearim1226@naver.com`.
 4. After receiving a reply, please try logging in again.
+```
 
 <br>
 
