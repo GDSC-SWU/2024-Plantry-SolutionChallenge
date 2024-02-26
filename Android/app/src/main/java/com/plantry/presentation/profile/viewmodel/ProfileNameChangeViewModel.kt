@@ -24,6 +24,7 @@ class ProfileNameChangeViewModel : ViewModel() {
                 UiState.Success(it.data?.nickname ?: "")
         }, {
             Log.d("Aaa13", it.message.toString())
+            _nameItem.value = UiState.Failure(it.message)
         })
     }
 }

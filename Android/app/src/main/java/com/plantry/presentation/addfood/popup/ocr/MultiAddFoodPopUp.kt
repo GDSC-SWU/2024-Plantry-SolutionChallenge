@@ -167,8 +167,10 @@ class MultiAddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.po
                     ItemCount += 1
 
                     setConfirmButtonText()
+                    val itemTotalCount = arguments?.getInt("itemCount")
                     Log.d("aaa_connect", binding.tvAddFoodPopupConfirm.visibility.toString())
-                    if (binding.tvAddFoodPopupConfirm.visibility == View.VISIBLE) {
+                    Log.d("aaa_connect3", itemTotalCount.toString())
+                    if ((ItemCount - 1) == itemTotalCount) {
                         viewModelOcrSubmit.setFaliureResult()
                         Log.d("aaa_c", viewModelOcrSubmit.ocrResult.toString())
                         dismiss()
@@ -188,8 +190,6 @@ class MultiAddFoodPopUp : BindingDialogFragment<PopupAddFoodBinding>(R.layout.po
             when (it) {
                 is UiState.Success -> {
                     ocrResult = it.data.data
-                    Log.d("Aaa", "ocr first itme")
-                    Log.d("Aaa", ocrResult.toString())
                     setFieldEmpty(0)
                 }
 
